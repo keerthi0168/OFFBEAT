@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+
+    --primary: 45 100% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 45 93% 47%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 45 100% 51%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 92%;
+    --input: 0 0% 96%;
+    --ring: 45 100% 51%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    @apply text-foreground;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #164e63 100%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+  }
+}
+
+/* Luxury Input Styling */
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='number'],
+input[type='tel'],
+textarea {
+  @apply my-3 w-full rounded-xl border border-white/20 bg-white py-3 px-4 text-black placeholder-gray-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/20 backdrop-blur-sm transition;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+input::placeholder {
+  @apply text-gray-400;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: black !important;
+}
+
+textarea {
+  height: 140px;
+}
+
+button {
+  @apply bg-transparent;
+}
+
+button.primary {
+  @apply w-full rounded-lg bg-gradient-to-r from-amber-500 to-yellow-600 p-3 text-white font-semibold hover:from-amber-600 hover:to-yellow-700 transition shadow-lg hover:shadow-xl;
+}
+
+button.social {
+  @apply w-full rounded-xl border border-white/20 bg-white/5 p-3 font-semibold text-white hover:bg-white/10 transition backdrop-blur-sm;
+}
+
+/* Premium Button Styling */
+.luxury-button {
+  @apply w-full py-4 px-6 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-600 text-slate-900 font-light tracking-wider hover:from-amber-300 hover:to-yellow-500 transition shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95;
+  cursor: pointer;
+  pointer-events: auto;
+  border: none;
+}
+
+.luxury-button:disabled {
+  @apply from-amber-300 to-yellow-500 opacity-70 cursor-not-allowed hover:scale-100 active:scale-100;
+  pointer-events: none;
+}
+
+/* Premium Input Styling */
+.luxury-input {
+  @apply w-full px-5 py-3 rounded-xl border border-white/20 bg-white text-black placeholder-gray-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 focus:outline-none backdrop-blur-sm transition overflow-visible;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  min-height: 3rem;
+}
+
+.luxury-input:focus {
+  overflow: visible;
+}
+
+.luxury-input.error {
+  @apply border-red-500 focus:border-red-500 focus:ring-red-500/30;
+}
