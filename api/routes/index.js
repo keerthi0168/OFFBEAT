@@ -8,6 +8,9 @@ const placeController = require('../controllers/placeController');
 const bookingController = require('../controllers/bookingController');
 const analyticsController = require('../controllers/analyticsController');
 const uploadController = require('../controllers/uploadController');
+const chatbotController = require('../controllers/chatbotController');
+const recommendationController = require('../controllers/recommendationController');
+const tourismController = require('../controllers/tourismController');
 const { isLoggedIn } = require('../middlewares/user');
 
 // Configure multer for file uploads
@@ -42,5 +45,25 @@ router.get('/analytics/summary', analyticsController.getSummary);
 router.post('/upload', upload.array('photos'), uploadController.uploadPhoto);
 router.post('/upload-by-link', uploadController.uploadByLink);
 
+// AI/ML routes - Chatbot
+router.post('/chatbot/chat', chatbotController.chat);
+router.post('/chatbot/train', chatbotController.train);
+router.get('/chatbot/stats', chatbotController.getStats);
+router.post('/chatbot/clear-context', chatbotController.clearContext);
+
+// AI/ML routes - Recommendations
+router.get('/recommendations/similar/:id', recommendationController.getSimilarProperties);
+router.get('/recommendations/personalized', recommendationController.getPersonalizedRecommendations);
+router.get('/recommendations/trending', recommendationController.getTrending);
+router.post('/recommendations/track', recommendationController.trackInteraction);
+
+// Tourism Information routes
+router.get('/tourism/destination/:name', tourismController.getDestinationInfo);
+router.get('/tourism/category/:category', tourismController.getDestinationsByCategory);
+router.get('/tourism/region/:region', tourismController.getDestinationsByRegion);
+router.get('/tourism/search', tourismController.searchDestinations);
+router.get('/tourism/categories', tourismController.getCategories);
+router.get('/tourism/regions', tourismController.getRegions);
+router.get('/tourism/random', tourismController.getRandomDestinations);
 
 module.exports = router;

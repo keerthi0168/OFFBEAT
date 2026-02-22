@@ -1,17 +1,53 @@
-# 🏠 SpaceBook - Luxury Property Booking Platform
+# 🏠 SpaceBook - AI-Powered Luxury Property Booking Platform
 
-A premium full-stack property booking application with a sophisticated luxury design system, featuring real property listings from across India.
+A premium full-stack property booking application with **AI/ML capabilities**, sophisticated luxury design system, and real property listings from across India.
 
 ![Tech Stack](https://img.shields.io/badge/MERN-Stack-green)
+![AI Powered](https://img.shields.io/badge/AI-Powered-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?logo=mongodb&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-404D59?logo=express)
 ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)
 
+## 🤖 AI/ML Features
+
+SpaceBook leverages artificial intelligence and machine learning to provide an intelligent, personalized booking experience:
+
+### **Intelligent Chatbot** 🎯
+- **Natural Language Processing** - Understands user queries in natural language
+- **Context-Aware Conversations** - Remembers conversation history for better responses
+- **Smart Suggestions** - Provides contextual quick-reply options
+- **Multi-Category Support** - Handles property search, booking help, pricing, amenities, policies, and **tourism information**
+- **Tourism Integration** - Real-time answers about 100+ Indian tourist destinations
+- **Trainable System** - Learns from custom CSV datasets
+- **Session Management** - Maintains user context across conversations
+
+### **Personalized Recommendations** ✨
+- **User Preference Learning** - Analyzes booking history and browsing patterns
+- **Location-Based Suggestions** - Recommends properties in preferred cities
+- **Price Range Matching** - Suggests properties within user's budget
+- **Amenity Preferences** - Learns favorite features (WiFi, parking, kitchen, etc.)
+- **Similar Properties** - Find properties similar to ones you like
+- **Trending Properties** - Discover popular and newly added listings
+
+### **Smart Analytics** 📊
+- **User Behavior Tracking** - Monitors page views, searches, and property views
+- **Interaction Analytics** - Tracks clicks, favorites, and booking patterns
+- **Real-time Dashboard** - Admin analytics with event aggregation
+- **ML Training Data** - Collected data used for continuous improvement
+
+### **Tourism Intelligence** 🗺️
+- **100+ Destination Database** - Information on major Indian tourist destinations
+- **Smart Destination Search** - Find destinations by name, state, category, or region
+- **Category-Based Discovery** - Heritage, Beach, Nature, Adventure, Religious sites
+- **Accessibility Information** - Easy, Moderate, or Difficult access levels
+- **Travel Planning** - Nearest airports and railway stations for each destination
+- **Integrated with Chatbot** - Ask about tourist places and get instant information
+
 ## ✨ Features
 
-### User Features
+### Core User Features
 - 🔐 **Secure Authentication** - JWT-based auth with bcrypt password hashing
 - 🏡 **Property Listings** - Browse 300+ real properties from Mumbai, Kolkata, Hyderabad, Gurgaon, and tourist destinations
 - 🔍 **Smart Search** - Filter by location, dates, and number of guests
@@ -71,32 +107,51 @@ A premium full-stack property booking application with a sophisticated luxury de
 - **Bcrypt** - Password hashing
 - **Cookie Parser** - Session management
 
+### AI/ML Technologies
+- **Natural Language Processing** - Custom NLP for chatbot intent matching
+- **Text Tokenization** - Query processing and keyword extraction
+- **Similarity Algorithms** - Property and conversation matching
+- **Recommendation Engine** - Collaborative and content-based filtering
+- **Context Memory** - Session-based conversation tracking
+- **Analytics Engine** - User behavior tracking and aggregation
+
 ## 📁 Project Structure
 
 ```
 myownspace/
-├── client/                  # React frontend
+├── client/                          # React frontend
 │   ├── src/
-│   │   ├── components/ui/   # Reusable UI components
-│   │   ├── pages/           # Page components
-│   │   ├── providers/       # Context providers
-│   │   ├── data/            # Tourism data modules
-│   │   ├── utils/           # Helper functions
-│   │   └── styles/          # Global styles
+│   │   ├── components/ui/           # Reusable UI components
+│   │   │   ├── ChatbotWidget.jsx   # AI chatbot interface
+│   │   │   ├── RecommendationsSection.jsx # ML recommendations
+│   │   │   └── ...
+│   │   ├── pages/                   # Page components
+│   │   │   ├── AdminDashboard.jsx  # Analytics dashboard
+│   │   │   └── ...
+│   │   ├── providers/               # Context providers
+│   │   ├── data/                    # Tourism data modules
+│   │   ├── utils/                   # Helper functions
+│   │   │   └── analytics.js        # Event tracking
+│   │   └── styles/                  # Global styles
 │   └── package.json
 │
-├── api/                     # Express backend
-│   ├── config/              # Database configurations
-│   ├── controllers/         # Route controllers
-│   ├── models/              # Database models
-│   ├── routes/              # API routes
-│   ├── middlewares/         # Custom middleware
-│   ├── utils/               # Helper functions
-│   ├── data/                # Seed datasets
-│   ├── scripts/             # Utility scripts
+├── api/                             # Express backend
+│   ├── config/                      # Database configurations
+│   ├── controllers/                 # Route controllers
+│   │   ├── chatbotController.js    # AI chatbot logic & NLP
+│   │   ├── recommendationController.js # ML recommendations
+│   │   ├── analyticsController.js  # Analytics tracking
+│   │   └── ...
+│   ├── models/                      # Database models
+│   ├── routes/                      # API routes (includes AI endpoints)
+│   ├── middlewares/                 # Custom middleware
+│   ├── utils/                       # Helper functions
+│   ├── data/                        # Seed datasets
+│   │   └── chatbot_dataset.csv     # Chatbot training data
+│   ├── scripts/                     # Utility scripts
 │   └── package.json
 │
-├── *.csv                    # Real property datasets (Git LFS)
+├── *.csv                            # Real property datasets (Git LFS)
 └── README.md
 ```
 
@@ -200,6 +255,7 @@ npm run dev
 3. **Access the application**
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:8000
+- AI Chatbot: Available on all pages (bottom-right corner)
 
 ### Production Build
 
@@ -213,11 +269,100 @@ cd ../api
 npm start
 ```
 
+## 🤖 AI/ML API Endpoints
+
+### Chatbot
+```http
+POST   /chatbot/chat              # Send message to chatbot
+POST   /chatbot/train             # Train/retrain chatbot with dataset
+GET    /chatbot/stats             # Get chatbot statistics
+POST   /chatbot/clear-context     # Clear conversation history
+```
+
+### Recommendations
+```http
+GET    /recommendations/similar/:id           # Get similar properties
+GET    /recommendations/personalized          # Get personalized recommendations
+GET    /recommendations/trending              # Get trending properties
+POST   /recommendations/track                 # Track user interactions
+```
+
+### Analytics
+```http
+POST   /analytics/track           # Track user events
+GET    /analytics/summary         # Get analytics summary
+```
+
+### Tourism Information
+```http
+GET    /tourism/destination/:name      # Get destination details
+GET    /tourism/category/:category     # Get destinations by category (Heritage/Beach/Nature/Adventure/Religious)
+GET    /tourism/region/:region         # Get destinations by region (North/South/East/West)
+GET    /tourism/search?query=          # Search destinations
+GET    /tourism/categories             # Get all categories with counts
+GET    /tourism/regions                # Get all regions with states
+GET    /tourism/random?limit=5         # Get random destination suggestions
+```
+
+### Example: Chat with Bot
+```bash
+curl -X POST http://localhost:8000/chatbot/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Show me properties in Mumbai", "sessionId": "user123"}'
+```
+
+Response:
+```json
+{
+  "response": "We have 50+ luxury properties in Mumbai including apartments, villas, and studios...",
+  "category": "property_search",
+  "confidence": "high",
+  "suggestions": ["Properties in Goa", "Show luxury villas", "Budget-friendly options"]
+}
+```
+
+### Example: Get Tourist Destination Info
+```bash
+curl -X GET http://localhost:8000/tourism/destination/Goa
+```
+
+Response:
+```json
+{
+  "destination": "Goa",
+  "state": "Goa",
+  "region": "West",
+  "category": "Beach",
+  "attraction": "Calangute Beach",
+  "accessibility": "Easy",
+  "airport": "Dabolim Airport",
+  "railway": "Madgaon Railway Station",
+  "description": "Goa in Goa is a popular beach destination known for Calangute Beach..."
+}
+```
+
+### Example: Search Destinations by Category
+```bash
+curl -X GET http://localhost:8000/tourism/category/Heritage
+```
+
+Response:
+```json
+{
+  "category": "Heritage",
+  "count": 8,
+  "destinations": [
+    {"name": "Taj Mahal", "state": "Uttar Pradesh", "region": "North", "attraction": "Taj Mahal", "accessibility": "Easy"},
+    {"name": "Jaipur", "state": "Rajasthan", "region": "West", "attraction": "Amber Fort", "accessibility": "Easy"}
+  ]
+}
+```
+
 ## 📜 Available Scripts
 
 ### Backend (api/)
 ```bash
-npm start                 # Start production server
+npm start                # Start production server
 npm run dev              # Start development server with nodemon
 npm run seed:places      # Seed places from tourism data
 npm run convert:csv      # Convert CSV files to Place format
@@ -230,6 +375,40 @@ npm run dev       # Start Vite dev server
 npm run build     # Build for production
 npm run preview   # Preview production build
 ```
+
+## 🤖 Customizing the AI Chatbot
+
+### Adding Your Own Training Data
+
+1. **Edit the chatbot dataset:**
+   - File: `api/data/chatbot_dataset.csv`
+   - Format: `question,answer,category,keywords`
+
+2. **Add new intents:**
+```csv
+"What is your refund policy?","Refunds are processed within 7 days...",policy,"refund,policy,money back"
+"Do you offer discounts?","Yes! Weekly stays get 10% off...",pricing,"discount,offer,deals"
+```
+
+3. **Train the chatbot:**
+```bash
+curl -X POST http://localhost:8000/chatbot/train
+```
+
+4. **Test your changes:**
+   - Open the chatbot widget on any page
+   - Ask questions matching your new training data
+   - The bot will learn and respond accordingly!
+
+### Supported Categories:
+- `greeting` - Welcome messages
+- `property_search` - Finding properties
+- `booking_help` - Booking assistance
+- `pricing` - Costs and payments
+- `features` - Amenities and facilities
+- `location` - Cities and areas
+- `support` - Help and issues
+- `cancellation` - Refunds and policies
 
 ## 📊 Dataset Information
 
@@ -244,6 +423,35 @@ The application includes **300+ real property listings** sourced from:
 All CSV datasets are managed with **Git LFS** for efficient version control.
 
 ## 🔑 Key Features Breakdown
+
+### AI/ML Capabilities
+
+#### **Intelligent Chatbot**
+- NLP-powered intent recognition
+- Context-aware responses
+- Multi-turn conversations
+- Customizable training dataset (CSV format)
+- Real-time suggestions based on conversation flow
+
+**Chatbot Dataset Format (CSV):**
+```csv
+question,answer,category,keywords
+"What properties are available in Mumbai?","We have 50+ luxury properties in Mumbai...",property_search,"mumbai,properties,available"
+```
+
+**Categories:** `greeting`, `property_search`, `booking_help`, `pricing`, `features`, `location`, `support`, `cancellation`
+
+#### **Recommendation System**
+- **Personalized**: Based on your booking history and preferences
+- **Similar Properties**: Find properties like ones you viewed
+- **Trending**: Popular properties across the platform
+- **Smart Filtering**: ML-powered property matching
+
+#### **Analytics & Tracking**
+- User journey tracking (page views, searches, property views)
+- Event aggregation for ML training
+- Admin dashboard with real-time insights
+- Behavioral pattern analysis
 
 ### Authentication
 - User registration and login
