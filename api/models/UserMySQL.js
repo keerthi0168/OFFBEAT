@@ -28,6 +28,15 @@ const User = sequelize.define('User', {
   picture: {
     type: DataTypes.STRING,
     defaultValue: 'https://res.cloudinary.com/rahul4019/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1695133265/pngwing.com_zi4cre.png'
+  },
+  preferences: {
+    type: DataTypes.JSON,
+    defaultValue: {
+      terms: [],
+      categories: [],
+      regions: [],
+      updatedAt: null
+    }
   }
 }, {
   hooks: {

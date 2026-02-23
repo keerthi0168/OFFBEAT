@@ -8,7 +8,8 @@
     "dev": "nodemon index.js",
     "seed:places": "node scripts/seedPlaces.js",
     "convert:csv": "node scripts/convertCSVtoPlaces.js",
-    "seed:converted": "node scripts/seedConverted.js"
+    "seed:converted": "node scripts/seedConverted.js",
+    "train:tourism": "node scripts/trainTourismModel.js"
   },
   "keywords": [
     "api",

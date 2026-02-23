@@ -3,6 +3,7 @@ import axiosInstance from '@/utils/axios';
 import { usePlaces } from '../../hooks';
 import Spinner from '@/components/ui/Spinner';
 import PlaceCard from '@/components/ui/PlaceCard';
+import TourismDestinations from '@/components/ui/TourismDestinations';
 import {
   destinations,
   uniqueStays,
@@ -36,7 +37,7 @@ const IndexPage = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-to-b from-[#C9A96E]/10 to-transparent rounded-full blur-3xl" />
         <div className="relative mx-auto flex min-h-[520px] max-w-6xl flex-col items-center justify-center px-6 py-24 text-center text-white">
           <h1 className="text-5xl font-light tracking-tight md:text-6xl lg:text-7xl">
-            Discover Hidden India with SpaceBook
+            Discover Hidden India with Offbeat Travel India
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-[#E5E7EB]/70 font-light">
             Swadeshi travel that supports local guides, homestays, and MSMEs.
@@ -75,6 +76,16 @@ const IndexPage = () => {
             </button>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <div className="space-y-3 mb-12">
+          <h2 className="text-4xl font-light text-white tracking-tight">Personalized Picks for You</h2>
+          <p className="text-lg text-[#E5E7EB]/60 font-light">
+            Tailored destinations based on your recent searches.
+          </p>
+        </div>
+        <TourismDestinations personalized limit={6} />
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-24">

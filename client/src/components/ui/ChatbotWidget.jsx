@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axiosInstance from '@/utils/axios';
+import { getPersonalizationSignals } from '@/utils/analytics';
 
 const ChatbotWidget = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
     { 
       from: 'bot', 
-      text: 'Hi! I\'m SpaceBook AI Assistant. Ask me about properties, bookings, pricing, or anything else! 🏡',
+      text: 'Hi! I\'m Offbeat Travel India AI Assistant. Ask me about hidden gems, destinations, and travel tips! 🏡',
       suggestions: ['Show properties in Mumbai', 'How do I book?', 'What amenities are available?']
     },
   ]);
@@ -37,6 +38,7 @@ const ChatbotWidget = () => {
       const { data } = await axiosInstance.post('/chatbot/chat', {
         message: trimmed,
         sessionId: sessionId.current,
+        personalization: getPersonalizationSignals(),
       });
 
       // Add bot response
@@ -88,7 +90,7 @@ const ChatbotWidget = () => {
           <div className="flex items-center justify-between rounded-t-2xl bg-gradient-to-r from-[#0B1220] to-[#1a2332] px-4 py-3 text-white border-b border-white/10">
             <div className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-[#1F8A8A] animate-pulse"></div>
-              <span className="font-light">SpaceBook AI Assistant</span>
+              <span className="font-light">Offbeat Travel India AI Assistant</span>
             </div>
             <div className="flex gap-2">
               <button
@@ -173,7 +175,7 @@ const ChatbotWidget = () => {
 
           {/* Powered by badge */}
           <div className="px-4 py-2 text-center text-xs text-[#E5E7EB]/40 border-t border-white/5">
-            Powered by SpaceBook AI 🤖
+            Powered by Offbeat Travel India AI 🤖
           </div>
         </div>
       )}
@@ -181,19 +183,15 @@ const ChatbotWidget = () => {
       {/* Toggle button */}
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className={`flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-[#C9A96E] to-[#D4B896] text-[#0B1220] shadow-2xl hover:shadow-[#C9A96E]/20 transition-all duration-300 ${
-          open ? 'scale-90' : 'scale-100 hover:scale-105'
+        className={`flex h-14 w-14 items-center justify-center rounded-full border border-[#C9A96E]/30 bg-gradient-to-r from-[#C9A96E] to-[#D4B896] text-[#0B1220] shadow-lg hover:shadow-[#C9A96E]/30 transition-all duration-300 ${
+          open ? 'scale-95' : 'scale-100 hover:scale-105'
         }`}
         aria-label="Toggle chatbot"
       >
         {open ? (
-          <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
+          <span className="text-lg">✕</span>
         ) : (
-          <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-          </svg>
+          <span className="text-xl">💬</span>
         )}
       </button>
     </div>

@@ -1,12 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 
+let cachedTourismData = null;
+
 // Load tourism data
 const loadTourismData = () => {
+  if (cachedTourismData) return cachedTourismData;
   try {
     const jsonPath = path.join(__dirname, '../data/indian_travel_dataset.json');
     const data = fs.readFileSync(jsonPath, 'utf-8');
-    return data.trim().split('\n').map(line => JSON.parse(line));
+    cachedTourismData = data.trim().split('\n').map(line => JSON.parse(line));
+    return cachedTourismData;
   } catch (error) {
     console.error('Error loading tourism data:', error);
     return [];
@@ -36,36 +40,63 @@ const chatbotData = {
   contextMemory: new Map() // Store conversation context per session
 };
 
-// Load chatbot dataset from CSV
+// Load chatbot dataset from JSON or CSV
 const loadChatbotData = () => {
   try {
+    const jsonPath = path.join(__dirname, '../data/chatbot_dataset.json');
     const csvPath = path.join(__dirname, '../data/chatbot_dataset.csv');
-    
-    if (!fs.existsSync(csvPath)) {
-      console.log('Chatbot dataset not found, using defaults');
-      return loadDefaultIntents();
+
+    if (fs.existsSync(jsonPath)) {
+      const rawJson = fs.readFileSync(jsonPath, 'utf8');
+      const parsed = JSON.parse(rawJson);
+      const jsonIntents = Array.isArray(parsed) ? parsed : parsed.intents || [];
+
+      const intents = jsonIntents.map((intent) => {
+        const patterns = intent.patterns || intent.questions || [];
+        const responses = intent.responses || intent.answers || [];
+        const keywords = intent.keywords || [];
+        const category = intent.category || intent.tag || 'general';
+
+        return {
+          patterns,
+          responses,
+          category,
+          tokens: tokenize([...patterns, ...keywords].join(' '))
+        };
+      }).filter((intent) => intent.patterns.length && intent.responses.length);
+
+      chatbotData.intents = intents;
+      chatbotData.trained = true;
+      console.log(`✓ Loaded ${intents.length} chatbot intents from JSON`);
+      return;
     }
 
-    const csvData = fs.readFileSync(csvPath, 'utf8');
-    const lines = csvData.split('\n').slice(1); // Skip header
-    
-    const intents = [];
-    lines.forEach(line => {
-      const [question, answer, category, keywords] = line.split(',').map(s => s.trim().replace(/^"|"$/g, ''));
-      
-      if (question && answer) {
-        intents.push({
-          patterns: [question, ...keywords.split(/\s+/).filter(k => k)],
-          responses: [answer],
-          category: category || 'general',
-          tokens: tokenize(question + ' ' + keywords)
-        });
-      }
-    });
+    if (fs.existsSync(csvPath)) {
+      const csvData = fs.readFileSync(csvPath, 'utf8');
+      const lines = csvData.split('\n').slice(1); // Skip header
 
-    chatbotData.intents = intents;
-    chatbotData.trained = true;
-    console.log(`✓ Loaded ${intents.length} chatbot intents`);
+      const intents = [];
+      lines.forEach(line => {
+        const [question, answer, category, keywords = ''] = line.split(',').map(s => s.trim().replace(/^"|"$/g, ''));
+
+        if (question && answer) {
+          intents.push({
+            patterns: [question, ...keywords.split(/\s+/).filter(k => k)],
+            responses: [answer],
+            category: category || 'general',
+            tokens: tokenize(question + ' ' + keywords)
+          });
+        }
+      });
+
+      chatbotData.intents = intents;
+      chatbotData.trained = true;
+      console.log(`✓ Loaded ${intents.length} chatbot intents from CSV`);
+      return;
+    }
+
+    console.log('Chatbot dataset not found, using defaults');
+    return loadDefaultIntents();
     
   } catch (error) {
     console.error('Error loading chatbot data:', error);
@@ -80,9 +111,9 @@ const loadDefaultIntents = () => {
       category: 'greeting',
       patterns: ['hi', 'hello', 'hey', 'good morning', 'good evening'],
       responses: [
-        'Hello! Welcome to SpaceBook. How can I help you find your perfect stay today?',
-        'Hi there! I\'m here to help you discover amazing properties. What are you looking for?',
-        'Hey! Looking for a place to stay? I can help you find the perfect property!'
+        'Hello! Welcome to Offbeat Travel India. How can I help you discover a hidden gem today?',
+        'Hi there! I\'m here to help you explore offbeat destinations across India. What are you looking for?',
+        'Hey! Looking for a unique place to visit? I can help you find the perfect destination!'
       ],
       tokens: tokenize('hi hello hey greeting welcome')
     },
@@ -90,8 +121,8 @@ const loadDefaultIntents = () => {
       category: 'property_search',
       patterns: ['show properties', 'find accommodation', 'available properties', 'search', 'listings'],
       responses: [
-        'I can help you search for properties! Which city are you interested in? We have listings in Mumbai, Kolkata, Hyderabad, Gurgaon, and tourist destinations like Goa and Manali.',
-        'Great! Let me help you find properties. What location are you looking at, and when do you plan to visit?'
+        'I can help you discover destinations! Which state or region are you interested in? We cover hidden gems across India, including Goa, Manali, Kerala, and more.',
+        'Great! Let me help you explore. What location are you looking at, and what kind of experience do you want?'
       ],
       tokens: tokenize('show find search properties accommodation listings available')
     },
@@ -99,8 +130,8 @@ const loadDefaultIntents = () => {
       category: 'booking_help',
       patterns: ['how to book', 'booking process', 'make reservation', 'book property'],
       responses: [
-        'Booking is easy! 1) Browse properties, 2) Select your dates and number of guests, 3) Click "Book Now", 4) Complete payment. You must be logged in to book.',
-        'To book a property: Find a property you like, check availability for your dates, and click the booking button. I\'ll guide you through the payment process!'
+        'Planning a trip is easy! Browse destinations, pick a region, and explore travel tips and stays. I can guide you to the best offbeat options.',
+        'To plan your journey: choose a destination, check travel highlights, and explore stays and experiences that match your interests.'
       ],
       tokens: tokenize('how book booking process reservation make')
     },
@@ -108,8 +139,8 @@ const loadDefaultIntents = () => {
       category: 'pricing',
       patterns: ['price', 'cost', 'how much', 'rates', 'charges'],
       responses: [
-        'Property prices vary by location, size, and amenities. You can see the per-night rate on each listing. The total is calculated based on your stay duration.',
-        'Our properties range from budget-friendly to luxury options. Check individual listings for specific rates. Prices are shown per night.'
+        'Costs vary by destination and travel style. You can explore budget, mid, and premium options for each region.',
+        'We highlight experiences across budget-friendly to premium stays. Filter by budget to find what fits you best.'
       ],
       tokens: tokenize('price cost how much rates charges pricing')
     },
@@ -117,8 +148,8 @@ const loadDefaultIntents = () => {
       category: 'features',
       patterns: ['amenities', 'facilities', 'what features', 'perks'],
       responses: [
-        'Our properties offer various amenities like WiFi, parking, TV, air conditioning, kitchen facilities, and more. Each listing shows specific amenities available.',
-        'Property features vary! Common amenities include WiFi, parking, kitchen, washing machine, AC, and pet-friendly options. Filter by your preferred amenities!'
+        'Destinations vary by experience — heritage walks, nature trails, beaches, food routes, and cultural stays. Tell me what you enjoy most!',
+        'Experiences include trekking, temple trails, food tours, and community stays. Filter by your interests to explore more.'
       ],
       tokens: tokenize('amenities facilities features perks what included')
     },
@@ -126,8 +157,8 @@ const loadDefaultIntents = () => {
       category: 'location',
       patterns: ['where', 'location', 'city', 'area', 'destinations'],
       responses: [
-        'We have 300+ properties across India! Major cities include Mumbai, Kolkata, Hyderabad, and Gurgaon. We also cover tourist destinations like Goa, Manali, and more.',
-        'SpaceBook covers major Indian cities and tourist hotspots. Where would you like to stay? I can show you available properties in that area!'
+        'We cover hidden gems across India — from the Himalayas to coastal villages. Tell me the region you want to explore!',
+        'Offbeat Travel India focuses on Indian destinations only. Where would you like to travel?'
       ],
       tokens: tokenize('where location city area destinations place')
     },
@@ -135,8 +166,8 @@ const loadDefaultIntents = () => {
       category: 'support',
       patterns: ['help', 'support', 'problem', 'issue', 'contact'],
       responses: [
-        'I\'m here to help! You can ask me about property search, booking process, pricing, amenities, or any other questions. What do you need help with?',
-        'Need assistance? I can help with property searches, bookings, account issues, or general questions. Just let me know what you need!'
+        'I\'m here to help! You can ask me about destinations, travel themes, best seasons, or hidden gems across India.',
+        'Need assistance? I can help with destination ideas, travel planning, or finding offbeat places.'
       ],
       tokens: tokenize('help support problem issue contact assistance')
     },
@@ -144,8 +175,8 @@ const loadDefaultIntents = () => {
       category: 'cancellation',
       patterns: ['cancel', 'cancellation', 'refund', 'cancel booking'],
       responses: [
-        'Cancellation policy: Free cancellation up to 24 hours before check-in. Cancellations after that may incur charges. Check your booking details for specific terms.',
-        'You can cancel bookings from your account page. Refund policies vary by property. Most offer free cancellation 24 hours before check-in.'
+        'For trip changes or cancellations, please review the specific stay or experience provider details.',
+        'Policies vary by partner. Check the experience details for the latest cancellation information.'
       ],
       tokens: tokenize('cancel cancellation refund policy')
     }
@@ -192,7 +223,7 @@ const getResponse = (intent) => {
 };
 
 // Check if message is about tourism and provide intelligent response
-const handleTourismQuery = (message) => {
+const handleTourismQuery = (message, personalization = {}) => {
   const lowerMessage = message.toLowerCase();
   const destinations = loadTourismData();
   
@@ -256,8 +287,28 @@ const handleTourismQuery = (message) => {
   }
   
   // General tourism query
+  const personalizedRegions = personalization.regions || [];
+  const personalizedCategories = personalization.categories || [];
+  let pool = destinations;
+
+  if (personalizedRegions.length) {
+    pool = pool.filter((d) =>
+      personalizedRegions.some((reg) =>
+        d.Region?.toLowerCase().includes(reg.toLowerCase())
+      )
+    );
+  }
+
+  if (personalizedCategories.length) {
+    pool = pool.filter((d) =>
+      personalizedCategories.some((cat) =>
+        d.Category?.toLowerCase().includes(cat.toLowerCase())
+      )
+    );
+  }
+
   const popularDests = Array.from(
-    new Set(destinations.slice(0, 20).map(d => d.Destination_Name))
+    new Set((pool.length ? pool : destinations).slice(0, 20).map(d => d.Destination_Name))
   ).slice(0, 6);
   
   return {
@@ -270,7 +321,7 @@ const handleTourismQuery = (message) => {
 // Chat endpoint
 exports.chat = (req, res) => {
   try {
-    const { message, sessionId = 'default' } = req.body;
+    const { message, sessionId = 'default', personalization = {} } = req.body;
 
     if (!message || typeof message !== 'string') {
       return res.status(400).json({ 
@@ -285,7 +336,7 @@ exports.chat = (req, res) => {
     }
 
     // Check for tourism-related queries first
-    const tourismResponse = handleTourismQuery(message);
+    const tourismResponse = handleTourismQuery(message, personalization);
     if (tourismResponse && tourismResponse.isTourism) {
       return res.json({
         response: tourismResponse.response,
@@ -339,6 +390,18 @@ exports.chat = (req, res) => {
         'What are the prices?',
         'Help me find accommodation'
       ];
+    }
+
+    if (personalization?.regions?.length && suggestions.length < 4) {
+      personalization.regions.slice(0, 2).forEach((region) => {
+        suggestions.push(`Top places in ${region} India`);
+      });
+    }
+
+    if (personalization?.categories?.length && suggestions.length < 4) {
+      personalization.categories.slice(0, 2).forEach((category) => {
+        suggestions.push(`${category.charAt(0).toUpperCase() + category.slice(1)} destinations`);
+      });
     }
 
     res.json({

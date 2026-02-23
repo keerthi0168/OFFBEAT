@@ -1,7 +1,8 @@
 import axiosInstance from '@/utils/axios';
+import { getItemFromLocalStorage } from '@/utils';
 
-const STORAGE_KEY = 'spacebook_analytics_events';
-const SESSION_KEY = 'spacebook_session_id';
+const STORAGE_KEY = 'offbeat_travel_india_analytics_events';
+const SESSION_KEY = 'offbeat_travel_india_session_id';
 
 const getSessionId = () => {
   const existing = localStorage.getItem(SESSION_KEY);
@@ -20,9 +21,25 @@ const saveLocalEvent = (event) => {
 };
 
 export const trackEvent = async (type, payload = {}) => {
+  let userId = payload?.userId;
+  if (!userId) {
+    try {
+      const storedUser = getItemFromLocalStorage('user');
+      if (storedUser) {
+        const parsed = JSON.parse(storedUser);
+        userId = parsed?.id || parsed?._id || userId;
+      }
+    } catch (error) {
+      // ignore JSON parse errors
+    }
+  }
+
   const event = {
     type,
-    payload,
+    payload: {
+      ...payload,
+      userId: userId || payload?.userId,
+    },
     path: window.location.pathname,
     referrer: document.referrer,
     userAgent: navigator.userAgent,
@@ -72,5 +89,57 @@ export const getLocalSummary = () => {
     ),
     topListings: toTopList(countBy(listingViews, (e) => e.payload?.title)),
     recentEvents: events.slice(-10).reverse(),
+  };
+};
+
+const CATEGORY_KEYWORDS = ['heritage', 'beach', 'nature', 'adventure', 'religious'];
+const REGION_KEYWORDS = ['north', 'south', 'east', 'west', 'north east', 'northeast'];
+
+const normalizeTerm = (term) => term?.toLowerCase().trim();
+
+const extractSignalsFromTerms = (terms = []) => {
+  const categories = new Set();
+  const regions = new Set();
+
+  terms.forEach((term) => {
+    const normalized = normalizeTerm(term);
+    if (!normalized) return;
+    CATEGORY_KEYWORDS.forEach((cat) => {
+      if (normalized.includes(cat)) categories.add(cat);
+    });
+    REGION_KEYWORDS.forEach((reg) => {
+      if (normalized.includes(reg)) regions.add(reg);
+    });
+  });
+
+  return {
+    categories: Array.from(categories),
+    regions: Array.from(regions),
+  };
+};
+
+export const getPersonalizationSignals = () => {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  const events = raw ? JSON.parse(raw) : [];
+  const searches = events.filter((e) => e.type === 'search');
+  const suggestionSelects = events.filter((e) => e.type === 'suggestion_select');
+  const tourismClicks = events.filter((e) => e.type === 'tourism_click');
+
+  const termCounts = {
+    ...countBy(searches, (e) => e.payload?.term?.toLowerCase()),
+    ...countBy(suggestionSelects, (e) => e.payload?.label?.toLowerCase()),
+    ...countBy(tourismClicks, (e) => e.payload?.name?.toLowerCase()),
+  };
+
+  const topTerms = toTopList(termCounts, 8)
+    .map((item) => item.label)
+    .filter(Boolean);
+
+  const { categories, regions } = extractSignalsFromTerms(topTerms);
+
+  return {
+    terms: topTerms,
+    categories,
+    regions,
   };
 };

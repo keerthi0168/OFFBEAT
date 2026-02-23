@@ -1,28 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '@/utils/axios';
+import { getPersonalizationSignals } from '@/utils/analytics';
 
-const TourismDestinations = ({ category, region, limit = 6 }) => {
+const TourismDestinations = ({ category, region, personalized = false, limit = 6 }) => {
   const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadDestinations();
-  }, [category, region]);
+  }, [category, region, personalized]);
 
   const loadDestinations = async () => {
     try {
       setLoading(true);
       let url = '/tourism/random?limit=' + limit;
+      let method = 'get';
+      let payload = null;
       
-      if (category) {
+      if (personalized) {
+        url = '/tourism/personalized';
+        method = 'post';
+        payload = {
+          query: '',
+          signals: getPersonalizationSignals(),
+          limit,
+        };
+      } else if (category) {
         url = `/tourism/category/${category}`;
       } else if (region) {
         url = `/tourism/region/${region}`;
       }
 
-      const { data } = await axiosInstance.get(url);
+      const { data } = await axiosInstance[method](url, payload);
       
-      if (category) {
+      if (personalized) {
+        setDestinations(data.results || []);
+      } else if (category) {
         setDestinations(data.destinations || []);
       } else if (region) {
         setDestinations(data.destinations || []);

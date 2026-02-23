@@ -62,6 +62,7 @@ router.get('/tourism/destination/:name', tourismController.getDestinationInfo);
 router.get('/tourism/category/:category', tourismController.getDestinationsByCategory);
 router.get('/tourism/region/:region', tourismController.getDestinationsByRegion);
 router.get('/tourism/search', tourismController.searchDestinations);
+router.post('/tourism/personalized', tourismController.getPersonalizedDestinations);
 router.get('/tourism/categories', tourismController.getCategories);
 router.get('/tourism/regions', tourismController.getRegions);
 router.get('/tourism/random', tourismController.getRandomDestinations);
