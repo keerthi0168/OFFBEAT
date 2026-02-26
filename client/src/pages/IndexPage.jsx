@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axiosInstance from '@/utils/axios';
 import { usePlaces } from '../../hooks';
 import Spinner from '@/components/ui/Spinner';
@@ -20,7 +21,6 @@ const IndexPage = () => {
     season: 'Any',
     region: 'Any',
   });
-  const [heroSearch, setHeroSearch] = useState('');
 
   const filteredRecommendations = recommendationPool.filter((item) => {
     if (filters.budget !== 'Any' && item.budget !== filters.budget) return false;
@@ -42,38 +42,23 @@ const IndexPage = () => {
           <p className="mt-4 max-w-2xl text-lg text-[#E5E7EB]/70 font-light">
             Swadeshi travel that supports local guides, homestays, and MSMEs.
           </p>
-          <div className="mt-8 inline-flex w-full max-w-3xl items-center rounded-full border border-white/10 bg-white/5 p-3 backdrop-blur-md shadow-lg">
-            <input
-              className="flex-1 rounded-full bg-transparent px-4 py-3 text-sm text-[#E5E7EB] placeholder-[#E5E7EB]/40 outline-none md:text-base"
-              placeholder="Search hidden gems across India"
-              value={heroSearch}
-              onChange={(e) => setHeroSearch(e.target.value)}
-              id="hero-search"
-              name="hero-search"
-              autoComplete="off"
-            />
-            <button
-              className="rounded-full bg-gradient-to-r from-[#C9A96E] to-[#D4B896] px-6 py-3 text-sm font-semibold text-[#0B1220] hover:from-[#D4B896] hover:to-[#E0C5A0] transition-all duration-300"
-              onClick={async () => {
-                const term = heroSearch.trim();
-                setLoading(true);
-                try {
-                  if (!term) {
-                    const { data } = await axiosInstance.get('/places');
-                    setPlaces(data.places || []);
-                  } else {
-                    const { data } = await axiosInstance.get(`/search/${term}`);
-                    setPlaces(data || []);
-                  }
-                } catch (error) {
-                  console.error('Hero search failed', error);
-                } finally {
-                  setLoading(false);
-                }
-              }}
+          <div className="mt-8">
+            <Link
+              to="/explore"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#C9A96E] to-[#D4B896] px-8 py-4 text-lg font-semibold text-[#0B1220] hover:from-[#D4B896] hover:to-[#E0C5A0] transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              Search
-            </button>
+              <span>Explore Destinations</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
@@ -94,8 +79,8 @@ const IndexPage = () => {
           <p className="text-lg text-[#E5E7EB]/60 font-light">Curated escapes beyond the usual trail.</p>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {destinations.map((dest) => (
-            <div key={dest.name} className="group relative h-64 overflow-hidden rounded-2xl">
+          {destinations.map((dest, idx) => (
+            <div key={`${dest.name}-${idx}`} className="group relative h-64 overflow-hidden rounded-2xl">
               <img
                 src={dest.image}
                 alt={dest.name}

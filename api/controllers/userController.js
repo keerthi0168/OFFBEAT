@@ -61,7 +61,7 @@ exports.login = async (req, res) => {
 
     if (!isPasswordCorrect) {
       return res.status(401).json({
-        message: 'Email or password is incorrect!',
+        message: 'Wrong password',
       });
     }
 

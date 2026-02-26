@@ -1,4 +1,4 @@
-# SpaceBook Luxury Design System
+# Offbeat Travel India Design System
 
 ## Color Palette
 

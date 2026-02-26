@@ -1,4 +1,6 @@
 require("dotenv").config();
+const fs = require('fs');
+const path = require('path');
 const express = require("express");
 const cors = require("cors");
 const { connectWithMySQL } = require("./config/mysql");
@@ -39,6 +41,35 @@ app.use(
 
 // middleware to handle json
 app.use(express.json());
+
+// Auth request logger (register/login/google-login/logout/update-user)
+app.use((req, res, next) => {
+  const authPaths = ['/register', '/login', '/google-login', '/logout', '/update-user'];
+  if (authPaths.includes(req.path)) {
+    const email = req.body?.email ? ` email=${req.body.email}` : '';
+    console.log(`[AUTH] ${req.method} ${req.path}${email}`);
+  }
+  next();
+});
+
+// basic health check
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'API is running' });
+});
+
+// dataset download (Raw Data.zip)
+app.get('/datasets/raw-data.zip', (req, res) => {
+  const datasetPath = path.join(__dirname, '../indian-tourist-destinations/Raw Data.zip');
+  if (!fs.existsSync(datasetPath)) {
+    return res.status(404).json({ message: 'Raw Data.zip not found' });
+  }
+  res.download(datasetPath, 'Raw Data.zip');
+});
+
+// favicon handler to avoid noisy 404s
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end();
+});
 
 // CORS
 app.use(

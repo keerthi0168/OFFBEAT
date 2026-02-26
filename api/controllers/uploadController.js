@@ -10,7 +10,7 @@ exports.uploadPhoto = async (req, res) => {
 
     const uploadPromises = files.map((file) =>
       cloudinary.uploader.upload(file.path, {
-        folder: 'SpaceBook/Places',
+        folder: 'OffbeatTravelIndia/Places',
         resource_type: 'auto',
       })
     );
@@ -38,7 +38,7 @@ exports.uploadByLink = async (req, res) => {
     }
 
     const result = await cloudinary.uploader.upload(link, {
-      folder: 'SpaceBook/Places',
+      folder: 'OffbeatTravelIndia/Places',
       resource_type: 'auto',
     });
 

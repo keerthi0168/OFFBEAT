@@ -12,7 +12,7 @@ const Logo = () => (
         </linearGradient>
       </defs>
     </svg>
-    <span className="text-2xl font-bold bg-gradient-to-r from-[#6C5BA7] to-[#9B8B5A] bg-clip-text text-transparent">SpaceBook</span>
+    <span className="text-2xl font-bold bg-gradient-to-r from-[#6C5BA7] to-[#9B8B5A] bg-clip-text text-transparent">Offbeat Travel India</span>
   </div>
 );
 

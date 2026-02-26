@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 
-const connectWithDB = () => {
+const connectWithDB = async () => {
   mongoose.set('strictQuery', false);
-  mongoose
-    .connect(process.env.DB_URL, {
+  try {
+    await mongoose.connect(process.env.DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    })
-    .then(console.log(`DB connected successfully`))
-    .catch((err) => {
-      console.log(`DB connection failed`);
-      console.log(err);
     });
+    console.log(`✓ MongoDB connected successfully`);
+  } catch (err) {
+    console.log(`⚠ MongoDB connection failed - running in demo mode`);
+    console.log(`  Error: ${err.message}`);
+    console.log(`  Tourism APIs & chatbot will work with static data.`);
+  }
 };
 
 module.exports = connectWithDB;

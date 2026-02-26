@@ -73,7 +73,7 @@ const Footer = () => {
             </p>
           </div>
           <div className="flex flex-col gap-3">
-            <strong className="font-semibold text-white">SpaceBook</strong>
+            <strong className="font-semibold text-white">Offbeat Travel India</strong>
             <p>
               <span className="cursor-pointer font-light text-[#E5E7EB]/70 decoration-1 underline-offset-1 hover:text-[#C9A96E] hover:underline transition-colors duration-300">
                 Newsroom
@@ -157,7 +157,7 @@ const Footer = () => {
           </div>
 
           <div className="flex w-full flex-col gap-2 px-1 font-light text-[#E5E7EB]/70 md:w-auto md:flex-row md:items-center md:gap-8">
-            <p className="text-sm">&copy; 2024 SpaceBook, Inc.</p>
+            <p className="text-sm">&copy; 2024 Offbeat Travel India</p>
             <div>
               <ul className=" flex gap-6 text-sm text-[#E5E7EB]/70">
                 <li className="cursor-pointer text-[#E5E7EB]/70 decoration-1 underline-offset-1 hover:text-[#C9A96E] hover:underline transition-colors duration-300 md:list-disc">

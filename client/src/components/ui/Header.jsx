@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
@@ -8,7 +8,9 @@ import { UserContext } from '@/providers/UserProvider';
 function Header() {
   const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
+  const isSearchVisible = user && ['/', '/home', '/explore'].includes(location.pathname);
 
   const handleLogout = async () => {
     const response = await logout();
@@ -27,7 +29,17 @@ function Header() {
         <Logo />
       </Link>
 
-      <SearchBar />
+      {isSearchVisible && (
+        <div className="flex flex-1 items-center justify-center gap-4">
+          <SearchBar />
+          <Link
+            to="/explore"
+            className="hidden md:inline-flex items-center rounded-2xl border border-[#C9A96E]/40 bg-white/5 px-4 py-2 text-sm text-[#E5E7EB] font-light transition hover:bg-white/10"
+          >
+            Explore India
+          </Link>
+        </div>
+      )}
 
       <div className="flex items-center gap-3">
         {!user && (
@@ -62,7 +74,7 @@ function Header() {
                 className="h-6 w-6"
               >
                 <path
-                  strokeLineCap="round"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                   d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                 />
@@ -95,29 +107,6 @@ function Header() {
                 >
                   My Profile
                 </Link>
-                <Link
-                  to="/account/places"
-                  className="block px-4 py-2 text-sm text-[#E5E7EB] hover:bg-[#C9A96E]/10 transition font-light"
-                  onClick={() => setShowMenu(false)}
-                >
-                  My Listings
-                </Link>
-                <Link
-                  to="/account/bookings"
-                  className="block px-4 py-2 text-sm text-[#E5E7EB] hover:bg-[#C9A96E]/10 transition font-light"
-                  onClick={() => setShowMenu(false)}
-                >
-                  My Bookings
-                </Link>
-                {user?.role === 'admin' && (
-                  <Link
-                    to="/account/admin"
-                    className="block px-4 py-2 text-sm text-[#E5E7EB] hover:bg-[#C9A96E]/10 transition font-light"
-                    onClick={() => setShowMenu(false)}
-                  >
-                    Analytics
-                  </Link>
-                )}
                 <button
                   onClick={handleLogout}
                   className="w-full border-t border-white/10 px-4 py-2 text-left text-sm text-[#C9A96E] hover:bg-[#C9A96E]/10 transition font-light"

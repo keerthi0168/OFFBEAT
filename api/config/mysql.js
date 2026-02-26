@@ -26,8 +26,8 @@ const connectWithMySQL = async () => {
     await sequelize.sync({ alter: true });
     console.log('All models synchronized successfully');
   } catch (error) {
-    console.error('Unable to connect to MySQL:', error);
-    process.exit(1);
+    console.error('Unable to connect to MySQL:', error.message);
+    console.warn('⚠ MySQL connection failed - running in demo mode. User data won\'t persist.');
   }
 };
 
