@@ -1,0 +1,31 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hi", "Hello", "Hey", "Good morning"],
+      "responses": [
+        "Hello! Welcome to Offbeat Travel India. How can I help you today?",
+        "Hi there! Looking for a hidden gem to explore?"
+      ],
+      "keywords": ["greeting", "welcome", "hello"]
+    },
+    {
+      "tag": "property_search",
+      "patterns": ["Show me properties in Mumbai", "Find stays in Goa"],
+      "responses": [
+        "Sure! Which dates and budget range are you looking for?",
+        "I can help with that. Do you prefer villas, apartments, or studios?"
+      ],
+      "keywords": ["properties", "search", "listing", "stay"]
+    },
+    {
+      "tag": "tourism",
+      "patterns": ["Best places to visit in India", "Heritage sites"],
+      "responses": [
+        "India has incredible destinations! Do you prefer heritage, beach, nature, or adventure?",
+        "Great choice! I can suggest top heritage sites like Taj Mahal and Jaipur forts."
+      ],
+      "keywords": ["tourism", "destination", "heritage", "beach", "adventure"]
+    }
+  ]
+}

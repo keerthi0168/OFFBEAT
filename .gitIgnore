@@ -2,3 +2,35 @@ node_modules
 .env
 .env.production
 .env.development
+
+# Old datasets & temporary files (cleaned up)
+*.csv
+facets/
+*.xml
+!.gitkeep
+
+# Large dataset files - store separately or use cloud storage
+client/public/assets/raw-dataset/
+indian-tourist-destinations/
+*.jfif
+*.JFIF
+
+# Build artifacts
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies
+yarn.lock
+package-lock.json
