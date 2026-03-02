@@ -10,7 +10,7 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
-  const isSearchVisible = user && ['/', '/home', '/explore'].includes(location.pathname);
+  const isSearchVisible = user && ['/explore'].includes(location.pathname);
 
   const handleLogout = async () => {
     const response = await logout();
