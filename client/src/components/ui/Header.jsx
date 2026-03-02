@@ -1,16 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Logo from './Logo';
-import SearchBar from './SearchBar';
 import { UserContext } from '@/providers/UserProvider';
 
 function Header() {
   const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
-  const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
-  const isSearchVisible = user && ['/explore'].includes(location.pathname);
 
   const handleLogout = async () => {
     const response = await logout();
@@ -28,18 +25,6 @@ function Header() {
       <Link to="/" className="flex items-center gap-1 hover:opacity-80 transition">
         <Logo />
       </Link>
-
-      {isSearchVisible && (
-        <div className="flex flex-1 items-center justify-center gap-4">
-          <SearchBar />
-          <Link
-            to="/explore"
-            className="hidden md:inline-flex items-center rounded-2xl border border-[#C9A96E]/40 bg-white/5 px-4 py-2 text-sm text-[#E5E7EB] font-light transition hover:bg-white/10"
-          >
-            Explore India
-          </Link>
-        </div>
-      )}
 
       <div className="flex items-center gap-3">
         {!user && (

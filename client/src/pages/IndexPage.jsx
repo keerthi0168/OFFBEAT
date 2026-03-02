@@ -65,12 +65,12 @@ const IndexPage = () => {
 
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="space-y-3 mb-12">
-          <h2 className="text-4xl font-light text-white tracking-tight">Personalized Picks for You</h2>
+          <h2 className="text-4xl font-light text-white tracking-tight">Featured Destinations</h2>
           <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Tailored destinations based on your recent searches.
+            Explore popular offbeat places across India.
           </p>
         </div>
-        <TourismDestinations personalized limit={6} />
+        <TourismDestinations limit={6} />
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-24">
