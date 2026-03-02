@@ -12,6 +12,7 @@ import SingleBookedPlace from './pages/SingleBookedPlace';
 import NotFoundPage from './pages/NotFoundPage';
 import AdminDashboard from './pages/AdminDashboard';
 import ExplorePage from './pages/ExplorePage';
+import DestinationDetailPage from './pages/DestinationDetailPage';
 import { UserProvider } from './providers/UserProvider';
 import { PlaceProvider } from './providers/PlaceProvider';
 import ErrorBoundary from './components/ui/ErrorBoundary';
@@ -32,6 +33,7 @@ function App() {
               <Route path="/account/places/new" element={<PlacesFormPage />} />
               <Route path="/account/places/:id" element={<PlacesFormPage />} />
               <Route path="/place/:id" element={<PlacePage />} />
+              <Route path="/destination/:name" element={<DestinationDetailPage />} />
               <Route path="/account/bookings" element={<BookingsPage />} />
               <Route path="/account/bookings/:id" element={<SingleBookedPlace />} />
               <Route path="/account/admin" element={<AdminDashboard />} />

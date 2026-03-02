@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '@/utils/axios';
 import TourismDestinations from '@/components/ui/TourismDestinations';
 import PlaceCard from '@/components/ui/PlaceCard';
@@ -9,6 +9,7 @@ import { getPersonalizationSignals } from '@/utils/analytics';
 
 const ExplorePage = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [tourismResults, setTourismResults] = useState([]);
   const [propertyResults, setPropertyResults] = useState([]);
@@ -200,7 +201,8 @@ const ExplorePage = () => {
                       return (
                         <div
                           key={index}
-                          className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300"
+                          onClick={() => navigate(`/destination/${encodeURIComponent(dest.name)}`)}
+                          className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-[#C9A96E]/50"
                         >
                           {imageUrl && (
                             <div className="h-48 overflow-hidden">
@@ -222,14 +224,11 @@ const ExplorePage = () => {
                               <div className="text-xs text-[#C9A96E]">
                                 {dest.city || dest.location || dest.region || 'India'}
                               </div>
-                              <a
-                                href={`https://www.google.com/search?q=${encodeURIComponent(dest.name + ' India tourist destination')}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                              <button
                                 className="text-sm text-[#C9A96E] hover:text-[#D4B896] transition-colors"
                               >
                                 View info →
-                              </a>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -268,9 +267,11 @@ const ExplorePage = () => {
               return (
                 <div
                   key={category.slug}
-                  className="group relative h-64 overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg cursor-pointer"
+                  className="group relative h-64 overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg cursor-pointer hover:border-[#C9A96E]/50 transition-all"
                   onClick={() => {
-                    window.open(`https://www.google.com/search?q=${encodeURIComponent(category.category + ' tourist places in India')}`, '_blank');
+                    setRegionFilter('Any');
+                    setQuery(category.category);
+                    handleSearch(category.category);
                   }}
                 >
                   {preview ? (

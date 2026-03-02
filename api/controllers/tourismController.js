@@ -210,15 +210,19 @@ exports.getDestinationInfo = (req, res) => {
     }
 
     res.json({
-      destination: destination.Destination_Name,
-      state: destination.State,
-      region: destination.Region,
-      category: destination.Category,
-      attraction: destination.Popular_Attraction,
-      accessibility: destination.Accessibility,
-      airport: destination.Nearest_Airport,
-      railway: destination.Nearest_Railway_Station,
-      description: `${destination.Destination_Name} in ${destination.State} is a popular ${destination.Category.toLowerCase()} destination known for ${destination.Popular_Attraction}. It's ${destination.Accessibility.toLowerCase()} to access via ${destination.Nearest_Airport}.`
+      destination: {
+        name: destination.Destination_Name,
+        state: destination.State,
+        Region: destination.Region,
+        region: destination.Region,
+        Category: destination.Category,
+        category: destination.Category,
+        attraction: destination.Popular_Attraction,
+        accessibility: destination.Accessibility,
+        airport: destination.Nearest_Airport,
+        railway: destination.Nearest_Railway_Station,
+        description: `${destination.Destination_Name} in ${destination.State} is a popular ${destination.Category.toLowerCase()} destination known for ${destination.Popular_Attraction}. It's ${destination.Accessibility.toLowerCase()} to access via ${destination.Nearest_Airport}.`
+      }
     });
 
   } catch (error) {
