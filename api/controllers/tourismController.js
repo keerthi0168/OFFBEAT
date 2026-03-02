@@ -248,7 +248,10 @@ exports.getDestinationsByCategory = (req, res) => {
       destinations: unique.map(d => ({
         name: d.Destination_Name,
         state: d.State,
+        Region: d.Region,
         region: d.Region,
+        Category: d.Category,
+        category: d.Category,
         attraction: d.Popular_Attraction,
         accessibility: d.Accessibility
       }))
@@ -332,7 +335,9 @@ exports.searchDestinations = (req, res) => {
       results: matches.map((d) => ({
         name: d.Destination_Name,
         state: d.State,
+        Region: d.Region,
         region: d.Region,
+        Category: d.Category,
         category: d.Category,
         attraction: d.Popular_Attraction,
         accessibility: d.Accessibility,
@@ -370,7 +375,9 @@ exports.getPersonalizedDestinations = (req, res) => {
         results: unique.slice(0, normalizedLimit).map((d) => ({
           name: d.Destination_Name,
           state: d.State,
+          Region: d.Region,
           region: d.Region,
+          Category: d.Category,
           category: d.Category,
           attraction: d.Popular_Attraction,
           accessibility: d.Accessibility,
@@ -425,8 +432,10 @@ exports.getPersonalizedDestinations = (req, res) => {
     const results = unique.slice(0, normalizedLimit).map((item) => ({
       name: item.destination.Destination_Name,
       state: item.destination.State,
+      Region: item.destination.Region,
       region: item.destination.Region,
       category: item.destination.Category,
+      Category: item.destination.Category,
       attraction: item.destination.Popular_Attraction,
       accessibility: item.destination.Accessibility,
       airport: item.destination.Nearest_Airport,

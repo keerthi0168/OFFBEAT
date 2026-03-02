@@ -58,10 +58,16 @@ A modern travel platform for exploring India's hidden gems and offbeat destinati
 ### 🤖 AI-Powered Features
 - **Smart Recommendations** - TF-IDF based similarity scoring
 - **Category Search** - Beach, Hill Station, Temple, Garden, National Park
-- **Tourism Dataset** - 500+ curated offbeat destinations
+- **Tourism Dataset** - 300+ property listings, 20+ curated offbeat destinations across 4 states
 - **Chatbot Integration** - Natural language travel queries
 
-### 📊 Admin Dashboard
+### 📊 Dataset Statistics
+- **States Covered** - 4 (Kerala, Uttar Pradesh, Jammu & Kashmir, Himachal Pradesh)
+- **Destinations** - 20+ handpicked offbeat tourist locations
+- **Properties** - 300+ listings including hotels, cottages, villas, and homestays
+- **Training/Testing Model** - TF-IDF vector model trained on destination metadata (names, categories, regions, attractions)
+
+### � Admin Dashboard
 - **User Management** - View and manage all users
 - **Booking Analytics** - Track all bookings and revenue
 - **Place Monitoring** - Manage listed properties

@@ -70,9 +70,10 @@ const ExplorePage = () => {
         regionFilter === 'Any'
           ? tourismRaw
           : tourismRaw.filter(
-              (dest) =>
-                String(dest.region || dest.Region || '').toLowerCase() ===
-                String(regionFilter).toLowerCase(),
+              (dest) => {
+                const destRegion = String(dest.region || dest.Region || '').trim();
+                return destRegion.toLowerCase() === regionFilter.toLowerCase();
+              }
             );
 
       setTourismResults(filteredTourism);
@@ -153,8 +154,6 @@ const ExplorePage = () => {
                 <option value="South">South India</option>
                 <option value="East">East India</option>
                 <option value="West">West India</option>
-                <option value="Central">Central India</option>
-                <option value="Northeast">Northeast India</option>
               </select>
               {regionFilter !== 'Any' && (
                 <button

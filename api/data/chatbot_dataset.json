@@ -2,30 +2,173 @@
   "intents": [
     {
       "tag": "greeting",
-      "patterns": ["Hi", "Hello", "Hey", "Good morning"],
+      "patterns": ["Hi", "Hello", "Hey", "Good morning", "Good evening", "Namaste"],
       "responses": [
-        "Hello! Welcome to Offbeat Travel India. How can I help you today?",
-        "Hi there! Looking for a hidden gem to explore?"
+        "Hello! Welcome to Offbeat Travel India. How can I help you discover hidden gems today?",
+        "Hi there! I'm here to help you explore offbeat destinations across India. What are you looking for?",
+        "Namaste! Ready to explore India's hidden treasures? Ask me anything!"
       ],
-      "keywords": ["greeting", "welcome", "hello"]
+      "keywords": ["greeting", "welcome", "hello", "hi"]
     },
     {
       "tag": "property_search",
-      "patterns": ["Show me properties in Mumbai", "Find stays in Goa"],
+      "patterns": ["Show me properties", "Find stays in Goa", "Properties in Kerala", "Accommodation in Manali", "Where can I stay"],
       "responses": [
-        "Sure! Which dates and budget range are you looking for?",
-        "I can help with that. Do you prefer villas, apartments, or studios?"
+        "I can help you find amazing stays! Which destination are you interested in - Goa, Kerala, Manali, Himachal, or somewhere else?",
+        "Great! I'll help you find properties. What's your preferred location and budget range?",
+        "Looking for a stay? We have villas, cottages, homestays across India. Which region interests you?"
       ],
-      "keywords": ["properties", "search", "listing", "stay"]
+      "keywords": ["properties", "search", "listing", "stay", "accommodation", "hotel"]
     },
     {
-      "tag": "tourism",
-      "patterns": ["Best places to visit in India", "Heritage sites"],
+      "tag": "tourism_general",
+      "patterns": ["Best places to visit in India", "Top destinations", "Where should I travel", "Tourist places"],
       "responses": [
-        "India has incredible destinations! Do you prefer heritage, beach, nature, or adventure?",
-        "Great choice! I can suggest top heritage sites like Taj Mahal and Jaipur forts."
+        "India has incredible offbeat destinations! Do you prefer beaches, mountains, heritage sites, or nature?",
+        "We cover 110+ destinations across North, South, East, and West India. What type of experience are you looking for?",
+        "Tell me your interests - adventure, culture, beaches, wildlife, or heritage - and I'll suggest perfect destinations!"
       ],
-      "keywords": ["tourism", "destination", "heritage", "beach", "adventure"]
+      "keywords": ["tourism", "destination", "travel", "visit", "places"]
+    },
+    {
+      "tag": "beaches",
+      "patterns": ["Beach destinations", "Best beaches", "Coastal places", "Seaside locations"],
+      "responses": [
+        "For stunning beaches, check out Goa (Calangute, Baga), Kerala (Kovalam, Varkala), and Andaman Islands (Radhanagar Beach)!",
+        "Beach lovers will enjoy Goa's vibrant shores, Kerala's serene cliffs at Varkala, and pristine Andaman beaches.",
+        "Top beach picks: Goa for nightlife, Kerala backwaters for serenity, Andaman for crystal-clear waters!"
+      ],
+      "keywords": ["beach", "coastal", "sea", "ocean", "sand"]
+    },
+    {
+      "tag": "mountains",
+      "patterns": ["Hill stations", "Mountain destinations", "Himalayan places", "Best hills to visit"],
+      "responses": [
+        "For mountains, explore Manali, Shimla, Darjeeling, Munnar, and Kashmir's Gulmarg & Pahalgam!",
+        "Hill station favorites: Manali for adventure, Shimla for scenic views, Munnar for tea gardens, Kashmir for breathtaking beauty.",
+        "Mountain options: Himachal Pradesh (Manali, Shimla), Uttarakhand (Rishikesh), Kashmir (Dal Lake, Gulmarg), and West Bengal (Darjeeling)!"
+      ],
+      "keywords": ["mountain", "hill", "himalaya", "trek", "snow"]
+    },
+    {
+      "tag": "heritage",
+      "patterns": ["Heritage sites", "Historical places", "Monuments", "Ancient temples", "Forts and palaces"],
+      "responses": [
+        "Heritage gems: Taj Mahal (Agra), Jaipur forts, Mysore Palace, Ajanta & Ellora Caves, and Mahabalipuram temples!",
+        "For history lovers: Taj Mahal, Amber Fort (Jaipur), Agra Fort, Ajanta Caves, and Udaipur palaces are must-visits!",
+        "Explore India's rich heritage - from Mughal wonders like Taj Mahal to ancient caves at Ajanta-Ellora!"
+      ],
+      "keywords": ["heritage", "historical", "monument", "fort", "palace", "temple"]
+    },
+    {
+      "tag": "wildlife",
+      "patterns": ["Wildlife sanctuaries", "National parks", "Where to see tigers", "Safari destinations"],
+      "responses": [
+        "Wildlife hotspots: Kaziranga (Assam) for rhinos, Periyar (Kerala), Sundarbans (West Bengal) for tigers!",
+        "For nature lovers: Kaziranga National Park has one-horned rhinos, Periyar offers elephant sightings!",
+        "Top wildlife destinations: Kaziranga, Periyar Wildlife Sanctuary, and Sundarbans National Park!"
+      ],
+      "keywords": ["wildlife", "national park", "safari", "animals", "nature"]
+    },
+    {
+      "tag": "kerala",
+      "patterns": ["Tell me about Kerala", "Kerala backwaters", "Places in Kerala", "God's own country"],
+      "responses": [
+        "Kerala offers stunning backwaters (Alleppey, Kumarakom), hill stations (Munnar), beaches (Kovalam, Varkala), and wildlife (Periyar)!",
+        "God's Own Country has it all - houseboat cruises, tea gardens, beaches, and Ayurvedic wellness retreats!",
+        "Must-visit in Kerala: Backwater houseboats, Munnar tea estates, Kovalam beaches, and Thekkady wildlife!"
+      ],
+      "keywords": ["kerala", "backwater", "houseboat", "munnar", "kovalam"]
+    },
+    {
+      "tag": "kashmir",
+      "patterns": ["Kashmir destinations", "Dal Lake", "Gulmarg", "Srinagar", "Paradise on Earth"],
+      "responses": [
+        "Kashmir's beauty: Dal Lake houseboats (Srinagar), Gulmarg meadows, Pahalgam valleys, and Sonamarg trails!",
+        "Experience Paradise on Earth - shikara rides on Dal Lake, skiing in Gulmarg, and scenic Pahalgam!",
+        "Kashmir highlights: Dal Lake, Mughal gardens (Shalimar Bagh), Gulmarg for snow, and Pahalgam for nature!"
+      ],
+      "keywords": ["kashmir", "dal lake", "srinagar", "gulmarg", "pahalgam"]
+    },
+    {
+      "tag": "goa",
+      "patterns": ["Goa beaches", "Things to do in Goa", "Goa nightlife", "Best time for Goa"],
+      "responses": [
+        "Goa offers beaches (Calangute, Baga), water sports, vibrant nightlife, Portuguese heritage, and coastal cuisine!",
+        "Enjoy Goa's famous beaches, beach shacks, water activities, and historic churches!",
+        "Goa is perfect for relaxation, parties, seafood, and beautiful sunsets along the Arabian Sea coast!"
+      ],
+      "keywords": ["goa", "beach", "party", "nightlife", "calangute"]
+    },
+    {
+      "tag": "booking_help",
+      "patterns": ["How to book", "Booking process", "How do I reserve", "Make a booking"],
+      "responses": [
+        "To book: Browse destinations on our Explore page, select a property, choose dates, and complete the booking!",
+        "Booking is easy - search for your destination, pick a stay, enter your details, and confirm!",
+        "Navigate to Explore, search your destination, click on a property, and follow the booking steps!"
+      ],
+      "keywords": ["book", "booking", "reserve", "how to"]
+    },
+    {
+      "tag": "pricing",
+      "patterns": ["How much does it cost", "Price range", "Budget options", "Expensive or cheap"],
+      "responses": [
+        "Prices vary by destination and property type - we have budget stays from ₹1000-2000/night to premium villas ₹5000+/night!",
+        "Budget-friendly options start at ₹1000/night, mid-range ₹2000-4000, and luxury stays ₹5000+/night!",
+        "Our properties range from affordable homestays to premium villas - filter by price on the Explore page!"
+      ],
+      "keywords": ["price", "cost", "budget", "expensive", "cheap"]
+    },
+    {
+      "tag": "best_time",
+      "patterns": ["Best time to visit", "When to go", "Ideal season", "Weather info"],
+      "responses": [
+        "Best time varies: Kashmir/Himachal (May-Sept), Kerala/South (Oct-March), Goa (Nov-Feb), Northeast (Oct-April)!",
+        "Visit hill stations in summer (Apr-Jun), beaches in winter (Nov-Feb), and most of India during pleasant Oct-March!",
+        "Peak seasons: Mountains in summer, beaches in winter. Monsoon (Jun-Sept) is beautiful for Kerala backwaters!"
+      ],
+      "keywords": ["best time", "when", "season", "weather", "visit"]
+    },
+    {
+      "tag": "regions",
+      "patterns": ["Which region to explore", "North vs South India", "East or West India"],
+      "responses": [
+        "We cover 4 regions: North (Himalayas, Taj Mahal), South (Kerala, beaches), East (Darjeeling, Kaziranga), West (Goa, Rajasthan)!",
+        "North India: Mountains & heritage. South: Beaches & backwaters. East: Tea gardens & wildlife. West: Deserts & beaches!",
+        "Use our region filter on Explore page - North, South, East, or West - to discover destinations!"
+      ],
+      "keywords": ["region", "north", "south", "east", "west"]
+    },
+    {
+      "tag": "offbeat",
+      "patterns": ["Offbeat destinations", "Hidden gems", "Less crowded places", "Unique locations"],
+      "responses": [
+        "Offbeat picks: Cherrapunji (Meghalaya), Sundarbans (West Bengal), Varkala cliffs (Kerala), Sonamarg (Kashmir)!",
+        "Hidden gems: Skip touristy spots for Pahalgam valleys, Thekkady forests, Sarnath heritage, and Munnar tea trails!",
+        "We specialize in offbeat travel - explore lesser-known destinations with authentic local experiences!"
+      ],
+      "keywords": ["offbeat", "hidden", "unique", "less crowded", "unexplored"]
+    },
+    {
+      "tag": "support",
+      "patterns": ["Help", "Support", "Contact", "Need assistance", "Have a question"],
+      "responses": [
+        "I'm here to help! Ask me about destinations, bookings, travel tips, or anything else you need!",
+        "Need assistance? I can help with destination recommendations, booking guidance, or travel planning!",
+        "How can I assist you today? Feel free to ask about any destination or travel-related queries!"
+      ],
+      "keywords": ["help", "support", "contact", "assistance", "question"]
+    },
+    {
+      "tag": "farewell",
+      "patterns": ["Bye", "Goodbye", "See you", "Thanks", "Thank you"],
+      "responses": [
+        "Happy travels! Feel free to reach out anytime you need travel inspiration!",
+        "Safe journey! Come back whenever you're planning your next adventure!",
+        "Thank you for choosing Offbeat Travel India. Have a wonderful trip!"
+      ],
+      "keywords": ["bye", "goodbye", "thanks", "thank you"]
     }
   ]
 }
