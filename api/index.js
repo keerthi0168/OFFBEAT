@@ -23,6 +23,56 @@ cloudinary.config({
 });
 
 const app = express();
+const isProduction = process.env.NODE_ENV === 'production';
+
+const configuredOrigins = (process.env.CLIENT_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const defaultDevOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "http://localhost:5174",
+  "http://127.0.0.1:5174",
+];
+
+const allowedOrigins = new Set([...configuredOrigins, ...defaultDevOrigins]);
+
+const isLocalNetworkOrigin = (origin) => {
+  try {
+    const { hostname } = new URL(origin);
+
+    if (["localhost", "127.0.0.1", "::1"].includes(hostname)) {
+      return true;
+    }
+
+    if (/^10\./.test(hostname) || /^192\.168\./.test(hostname)) {
+      return true;
+    }
+
+    const match = hostname.match(/^172\.(\d{1,3})\./);
+    if (match) {
+      const secondOctet = Number(match[1]);
+      return secondOctet >= 16 && secondOctet <= 31;
+    }
+
+    return false;
+  } catch (error) {
+    return false;
+  }
+};
+
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.has(origin) || isLocalNetworkOrigin(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`Origin ${origin} is not allowed by CORS`));
+  },
+  credentials: true,
+};
 
 // For handling cookies
 app.use(cookieParser());
@@ -33,8 +83,8 @@ app.use(
     name: "session",
     maxAge: process.env.COOKIE_TIME * 24 * 60 * 60 * 1000,
     keys: [process.env.SESSION_SECRET],
-    secure: true, // Only send over HTTPS
-    sameSite: "none", // Allow cross-origin requests
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
     httpOnly: true, // Makes the cookie accessible only on the server-side
   })
 );
@@ -72,12 +122,7 @@ app.get('/favicon.ico', (req, res) => {
 });
 
 // CORS
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 
 // use express router
 app.use("/", require("./routes"));

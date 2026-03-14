@@ -11,8 +11,17 @@ export default defineConfig({
     },
   },
   server: {
-    host: '0.0.0.0', // Expose to network
+    host: '0.0.0.0',
     port: 5173,
-    strictPort: true,
+    strictPort: false,
+    fs: {
+      allow: ['..'],
+    },
+    middlewareMode: false,
   },
+  appType: 'spa',
+  preview: {
+    port: 5173,
+  },
+  publicDir: 'public',
 });

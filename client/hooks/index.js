@@ -63,8 +63,9 @@ export const useProvideAuth = () => {
             }
             return { success: true, message: 'Login successful' }
         } catch (error) {
+            const errorCode = error.response?.data?.code || null;
             const errorMessage = error.response?.data?.message || error.message || 'Login failed';
-            return { success: false, message: errorMessage }
+            return { success: false, message: errorMessage, code: errorCode }
         }
     }
 

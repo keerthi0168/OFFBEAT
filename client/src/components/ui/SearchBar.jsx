@@ -37,7 +37,7 @@ const SearchBar = () => {
 
     sources.forEach((source) => {
       source.items.forEach((item) => {
-        if (item.name && item.name.toLowerCase().includes(term)) {
+        if (item.name && item.name.toLowerCase().startsWith(term)) {
           results.push({
             label: item.name,
             type: source.type,
@@ -51,10 +51,17 @@ const SearchBar = () => {
   };
 
   const buildSuggestions = ({ tourismResults, placeResults, query }) => {
+    const term = String(query || '').toLowerCase();
+    const startsWithPrefix = (value = '') => {
+      const normalized = String(value).toLowerCase();
+      if (!term) return true;
+      return normalized.startsWith(term);
+    };
+
     const tourismMatches = (tourismResults || []).map((dest) => ({
-      label: dest.name,
+      label: dest.title || dest.name || dest.Destination_Name || 'Destination',
       type: 'tourism',
-      meta: `${dest.state} • ${dest.category}`,
+      meta: `${dest.state || dest.State || dest.address || 'India'} • ${dest.category || dest.Category || 'Travel'}`,
     }));
 
     const placeMatches = (placeResults || []).map((place) => ({
@@ -70,6 +77,7 @@ const SearchBar = () => {
     const seen = new Set();
 
     return combined.filter((item) => {
+      if (!startsWithPrefix(item.label)) return false;
       const key = `${item.type}:${item.label}`;
       if (seen.has(key)) return false;
       seen.add(key);
@@ -106,11 +114,11 @@ const SearchBar = () => {
             setSuggesting(true);
             const encodedValue = encodeURIComponent(query);
             const [tourismResponse, placeResponse] = await Promise.all([
-              axiosInstance.get(`/tourism/search?query=${encodedValue}&limit=6`),
+              axiosInstance.get(`/tourism/suggest?starts_with=${encodedValue}&limit=12`),
               axiosInstance.get(`/search/${encodedValue}`),
             ]);
 
-            const tourismResults = tourismResponse.data?.results || [];
+            const tourismResults = tourismResponse.data?.suggestions || [];
             const placeResults = placeResponse.data || [];
 
             const nextSuggestions = buildSuggestions({

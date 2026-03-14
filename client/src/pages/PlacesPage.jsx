@@ -14,11 +14,12 @@ const PlacesPage = () => {
   useEffect(() => {
     const getPlaces = async () => {
       try {
-        const { data } = await axiosInstance.get('places/user-places');
+        const { data } = await axiosInstance.get('/user-places');
         setPlaces(data);
         setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     getPlaces();

@@ -1,0 +1,1298 @@
+{
+  "generatedAt": "2026-03-14T08:00:09.521Z",
+  "summary": {
+    "totalStates": 30,
+    "totalPlaceRecords": 271,
+    "totalTourismRecords": 311,
+    "totalCommonIds": 264,
+    "totalTitleMismatches": 0,
+    "totalSlugMismatches": 0,
+    "totalHiddenPlaceRecords": 206,
+    "totalHiddenTourismRecords": 206,
+    "placeDuplicateIdGroups": 0,
+    "tourismDuplicateIdGroups": 1,
+    "placeDuplicateTitleGroups": 0,
+    "tourismDuplicateTitleGroups": 0,
+    "hiddenDefinition": "Record counted hidden when popularity score <= 2 (or popularity text contains low/very low when score missing)."
+  },
+  "globalDuplicates": {
+    "placeId": [],
+    "tourismId": [
+      {
+        "key": "varanasi-ghats",
+        "count": 2
+      }
+    ],
+    "placeTitleSlug": [],
+    "tourismTitleSlug": []
+  },
+  "states": [
+    {
+      "state": "Andhra Pradesh",
+      "placeCount": 30,
+      "tourismCount": 30,
+      "commonIdCount": 30,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 30,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 30,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 30,
+        "tourism": 30
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "APNA001",
+          "APNA002",
+          "APNA003",
+          "APNA004",
+          "APNA005",
+          "APNA006",
+          "APNA007",
+          "APNA008"
+        ],
+        "tourism": [
+          "APNA001",
+          "APNA002",
+          "APNA003",
+          "APNA004",
+          "APNA005",
+          "APNA006",
+          "APNA007",
+          "APNA008"
+        ]
+      }
+    },
+    {
+      "state": "Arunachal Pradesh",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 2,
+        "tourism": 2
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "ARN003",
+          "ARS005"
+        ],
+        "tourism": [
+          "ARN003",
+          "ARS005"
+        ]
+      }
+    },
+    {
+      "state": "Assam",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 4,
+        "tourism": 4
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "ASN002",
+          "ASN003",
+          "ASS004",
+          "ASS005"
+        ],
+        "tourism": [
+          "ASN002",
+          "ASN003",
+          "ASS004",
+          "ASS005"
+        ]
+      }
+    },
+    {
+      "state": "Bihar",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 4,
+        "tourism": 4
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "BHN001",
+          "BHN002",
+          "BHN003",
+          "BHS005"
+        ],
+        "tourism": [
+          "BHN001",
+          "BHN002",
+          "BHN003",
+          "BHS005"
+        ]
+      }
+    },
+    {
+      "state": "Chhattisgarh",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 4,
+        "tourism": 4
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "CHN002",
+          "CHN003",
+          "CHS004",
+          "CHS005"
+        ],
+        "tourism": [
+          "CHN002",
+          "CHN003",
+          "CHS004",
+          "CHS005"
+        ]
+      }
+    },
+    {
+      "state": "Delhi",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 4,
+        "tourism": 4
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "DLN001",
+          "DLN002",
+          "DLS003",
+          "DLS005"
+        ],
+        "tourism": [
+          "DLN001",
+          "DLN002",
+          "DLS003",
+          "DLS005"
+        ]
+      }
+    },
+    {
+      "state": "Goa",
+      "placeCount": 12,
+      "tourismCount": 12,
+      "commonIdCount": 12,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 12,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 12,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 7,
+        "tourism": 7
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "GOA001",
+          "GOA002",
+          "GOA005",
+          "GOA008",
+          "GOA009",
+          "GOA010",
+          "GOA012"
+        ],
+        "tourism": [
+          "GOA001",
+          "GOA002",
+          "GOA005",
+          "GOA008",
+          "GOA009",
+          "GOA010",
+          "GOA012"
+        ]
+      }
+    },
+    {
+      "state": "Gujarat",
+      "placeCount": 6,
+      "tourismCount": 6,
+      "commonIdCount": 6,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 6,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 6,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 3,
+        "tourism": 3
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "GJN003",
+          "GJS005",
+          "GJS006"
+        ],
+        "tourism": [
+          "GJN003",
+          "GJS005",
+          "GJS006"
+        ]
+      }
+    },
+    {
+      "state": "Haryana",
+      "placeCount": 6,
+      "tourismCount": 6,
+      "commonIdCount": 6,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 6,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 6,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 3,
+        "tourism": 3
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "HRN001",
+          "HRN003",
+          "HRS005"
+        ],
+        "tourism": [
+          "HRN001",
+          "HRN003",
+          "HRS005"
+        ]
+      }
+    },
+    {
+      "state": "Himachal Pradesh",
+      "placeCount": 7,
+      "tourismCount": 7,
+      "commonIdCount": 7,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 7,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 7,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 6,
+        "tourism": 6
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "HPN001",
+          "HPN002",
+          "HPN004",
+          "HPS005",
+          "HPS006",
+          "HPS007"
+        ],
+        "tourism": [
+          "HPN001",
+          "HPN002",
+          "HPN004",
+          "HPS005",
+          "HPS006",
+          "HPS007"
+        ]
+      }
+    },
+    {
+      "state": "Jammu & Kashmir",
+      "placeCount": 6,
+      "tourismCount": 6,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 1,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [
+        "jai-valley"
+      ],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 6,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 6,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 3,
+        "tourism": 3
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "JAM002",
+          "JAM003",
+          "JAM004"
+        ],
+        "tourism": [
+          "JAM002",
+          "JAM003",
+          "JAM004"
+        ]
+      }
+    },
+    {
+      "state": "Jharkhand",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 4,
+        "tourism": 4
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "JHN001",
+          "JHN002",
+          "JHN003",
+          "JHS005"
+        ],
+        "tourism": [
+          "JHN001",
+          "JHN002",
+          "JHN003",
+          "JHS005"
+        ]
+      }
+    },
+    {
+      "state": "Karnataka",
+      "placeCount": 40,
+      "tourismCount": 40,
+      "commonIdCount": 40,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 40,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 40,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 40,
+        "tourism": 40
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "KARN001",
+          "KARN002",
+          "KARN003",
+          "KARN004",
+          "KARN005",
+          "KARN006",
+          "KARN007",
+          "KARN008"
+        ],
+        "tourism": [
+          "KARN001",
+          "KARN002",
+          "KARN003",
+          "KARN004",
+          "KARN005",
+          "KARN006",
+          "KARN007",
+          "KARN008"
+        ]
+      }
+    },
+    {
+      "state": "Kerala",
+      "placeCount": 30,
+      "tourismCount": 30,
+      "commonIdCount": 30,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 30,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 30,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 30,
+        "tourism": 30
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "KLN001",
+          "KLN002",
+          "KLN003",
+          "KLN004",
+          "KLN005",
+          "KLN006",
+          "KLN007",
+          "KLN008"
+        ],
+        "tourism": [
+          "KLN001",
+          "KLN002",
+          "KLN003",
+          "KLN004",
+          "KLN005",
+          "KLN006",
+          "KLN007",
+          "KLN008"
+        ]
+      }
+    },
+    {
+      "state": "Madhya Pradesh",
+      "placeCount": 6,
+      "tourismCount": 6,
+      "commonIdCount": 6,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 6,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 6,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 2,
+        "tourism": 2
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "MPN002",
+          "MPS004"
+        ],
+        "tourism": [
+          "MPN002",
+          "MPS004"
+        ]
+      }
+    },
+    {
+      "state": "Maharashtra",
+      "placeCount": 12,
+      "tourismCount": 12,
+      "commonIdCount": 12,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 12,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 12,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 9,
+        "tourism": 9
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "MHN001",
+          "MHN003",
+          "MHS004",
+          "MHS005",
+          "MHS006",
+          "MHN008",
+          "MHN009",
+          "MHS011"
+        ],
+        "tourism": [
+          "MHN001",
+          "MHN003",
+          "MHS004",
+          "MHS005",
+          "MHS006",
+          "MHN008",
+          "MHN009",
+          "MHS011"
+        ]
+      }
+    },
+    {
+      "state": "Manipur",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 3,
+        "tourism": 3
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "MNN002",
+          "MNS004",
+          "MNS005"
+        ],
+        "tourism": [
+          "MNN002",
+          "MNS004",
+          "MNS005"
+        ]
+      }
+    },
+    {
+      "state": "Meghalaya",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 0,
+        "tourism": 0
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [],
+        "tourism": []
+      }
+    },
+    {
+      "state": "Mizoram",
+      "placeCount": 6,
+      "tourismCount": 6,
+      "commonIdCount": 6,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 6,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 6,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 6,
+        "tourism": 6
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "MZN001",
+          "MZN002",
+          "MZN003",
+          "MZS004",
+          "MZS005",
+          "MZS006"
+        ],
+        "tourism": [
+          "MZN001",
+          "MZN002",
+          "MZN003",
+          "MZS004",
+          "MZS005",
+          "MZS006"
+        ]
+      }
+    },
+    {
+      "state": "Nagaland",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 4,
+        "tourism": 4
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "NGN002",
+          "NGN003",
+          "NGS004",
+          "NGS005"
+        ],
+        "tourism": [
+          "NGN002",
+          "NGN003",
+          "NGS004",
+          "NGS005"
+        ]
+      }
+    },
+    {
+      "state": "Odisha",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 0,
+        "tourism": 0
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [],
+        "tourism": []
+      }
+    },
+    {
+      "state": "Punjab",
+      "placeCount": 6,
+      "tourismCount": 6,
+      "commonIdCount": 6,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 6,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 6,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 5,
+        "tourism": 5
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "PBN001",
+          "PBN002",
+          "PBN003",
+          "PBS005",
+          "PBS006"
+        ],
+        "tourism": [
+          "PBS005",
+          "PBS006",
+          "PBN001",
+          "PBN002",
+          "PBN003"
+        ]
+      }
+    },
+    {
+      "state": "Rajasthan",
+      "placeCount": 6,
+      "tourismCount": 6,
+      "commonIdCount": 6,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 6,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 6,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 4,
+        "tourism": 4
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "RJN001",
+          "RJN002",
+          "RJS004",
+          "RJS005"
+        ],
+        "tourism": [
+          "RJN001",
+          "RJN002",
+          "RJS004",
+          "RJS005"
+        ]
+      }
+    },
+    {
+      "state": "Sikkim",
+      "placeCount": 4,
+      "tourismCount": 4,
+      "commonIdCount": 4,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 4,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 4,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 0,
+        "tourism": 0
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [],
+        "tourism": []
+      }
+    },
+    {
+      "state": "Telangana",
+      "placeCount": 20,
+      "tourismCount": 20,
+      "commonIdCount": 20,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 20,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 20,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 20,
+        "tourism": 20
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "TLS001",
+          "TLS002",
+          "TLS003",
+          "TLS004",
+          "TLS005",
+          "TLS006",
+          "TLS007",
+          "TLS008"
+        ],
+        "tourism": [
+          "TLS001",
+          "TLS002",
+          "TLS003",
+          "TLS004",
+          "TLS005",
+          "TLS006",
+          "TLS007",
+          "TLS008"
+        ]
+      }
+    },
+    {
+      "state": "Tripura",
+      "placeCount": 6,
+      "tourismCount": 6,
+      "commonIdCount": 6,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 6,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 6,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 4,
+        "tourism": 4
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "TRN002",
+          "TRN003",
+          "TRS005",
+          "TRS006"
+        ],
+        "tourism": [
+          "TRN002",
+          "TRN003",
+          "TRS005",
+          "TRS006"
+        ]
+      }
+    },
+    {
+      "state": "Unknown",
+      "placeCount": 6,
+      "tourismCount": 46,
+      "commonIdCount": 0,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 45,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [
+        "taj-mahal",
+        "kerala-backwaters-kumarakom",
+        "munnar-tea-estates",
+        "kovalam-beach",
+        "varkala-cliffs",
+        "periyar-wildlife-sanctuary",
+        "dal-lake-houseboats",
+        "gulmarg-meadows",
+        "pahalgam-valley",
+        "sonamarg-trails",
+        "varanasi-ghats",
+        "sarnath-heritage-site",
+        "ayodhya-temple-circuit",
+        "mathura-vrindavan-darshan",
+        "agra-fort-heritage-stop",
+        "shalimar-bagh-gardens",
+        "vaishno-devi-pilgrimage",
+        "alleppey-backwaters",
+        "varkala-cliff-walk",
+        "kashi-vishwanath-corridor",
+        "srinagar-shikara-experience",
+        "gulmarg-ski-meadows",
+        "pahalgam-riverside-escape",
+        "sonamarg-alpine-trails",
+        "agra-heritage-circuit",
+        "sarnath-heritage-walk",
+        "ayodhya-pilgrimage-trail",
+        "mathura-vrindavan-heritage",
+        "goa-beaches",
+        "jaipur-pink",
+        "meghalaya-falls",
+        "houseboats-alleppey",
+        "gokarna-beaches",
+        "bhaderwah-valley",
+        "seoj-meadow",
+        "doda-valley",
+        "bani-valley",
+        "kishtwar-high-altitude-meadows",
+        "warwan-valley",
+        "nowshera-hills",
+        "rajouri-forest-belt",
+        "honnavar-backwaters",
+        "murudeshwar-coastline",
+        "cherrapunji-living-root-bridges",
+        "ooty-hills"
+      ],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 6,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 46,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 0,
+        "tourism": 0
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": [
+          {
+            "key": "varanasi-ghats",
+            "count": 2
+          }
+        ]
+      },
+      "sampleHiddenIds": {
+        "place": [],
+        "tourism": []
+      }
+    },
+    {
+      "state": "Uttar Pradesh",
+      "placeCount": 5,
+      "tourismCount": 5,
+      "commonIdCount": 5,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 5,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 5,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 3,
+        "tourism": 3
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "UPN002",
+          "UPN003",
+          "UPS004"
+        ],
+        "tourism": [
+          "UPN002",
+          "UPN003",
+          "UPS004"
+        ]
+      }
+    },
+    {
+      "state": "Uttarakhand",
+      "placeCount": 3,
+      "tourismCount": 3,
+      "commonIdCount": 3,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 3,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 3,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 2,
+        "tourism": 2
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [
+          "UKN002",
+          "UKN003"
+        ],
+        "tourism": [
+          "UKN002",
+          "UKN003"
+        ]
+      }
+    },
+    {
+      "state": "West Bengal",
+      "placeCount": 4,
+      "tourismCount": 4,
+      "commonIdCount": 4,
+      "idsOnlyInPlaceCount": 0,
+      "idsOnlyInTourismCount": 0,
+      "idsOnlyInPlace": [],
+      "idsOnlyInTourism": [],
+      "titleMismatchCount": 0,
+      "slugMismatchCount": 0,
+      "districtMismatchCount": 0,
+      "imageCoverage": {
+        "placeWithImages": 4,
+        "placeWithImagesPct": 100,
+        "tourismWithImages": 4,
+        "tourismWithImagesPct": 100
+      },
+      "hiddenCounts": {
+        "place": 0,
+        "tourism": 0
+      },
+      "duplicateIdGroups": {
+        "place": [],
+        "tourism": []
+      },
+      "sampleHiddenIds": {
+        "place": [],
+        "tourism": []
+      }
+    }
+  ]
+}

@@ -11,6 +11,7 @@ const uploadController = require('../controllers/uploadController');
 const chatbotController = require('../controllers/chatbotController');
 const recommendationController = require('../controllers/recommendationController');
 const tourismController = require('../controllers/tourismController');
+const datasetController = require('../controllers/datasetController');
 const { isLoggedIn } = require('../middlewares/user');
 
 // Configure multer for file uploads
@@ -62,9 +63,16 @@ router.get('/tourism/destination/:name', tourismController.getDestinationInfo);
 router.get('/tourism/category/:category', tourismController.getDestinationsByCategory);
 router.get('/tourism/region/:region', tourismController.getDestinationsByRegion);
 router.get('/tourism/search', tourismController.searchDestinations);
+router.get('/tourism/suggest', tourismController.getPrefixSuggestions);
 router.post('/tourism/personalized', tourismController.getPersonalizedDestinations);
 router.get('/tourism/categories', tourismController.getCategories);
 router.get('/tourism/regions', tourismController.getRegions);
 router.get('/tourism/random', tourismController.getRandomDestinations);
+router.get('/tourism/all', tourismController.getAllDestinations);
+
+// Dataset/Raw Data routes
+router.get('/dataset/manifest', datasetController.getManifest);
+router.get('/dataset/categories', datasetController.getCategories);
+router.get('/dataset/category/:category', datasetController.getCategoryImages);
 
 module.exports = router;

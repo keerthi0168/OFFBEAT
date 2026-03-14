@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axiosInstance from '@/utils/axios';
 import { getPersonalizationSignals } from '@/utils/analytics';
 
@@ -14,10 +15,8 @@ const TourismDestinations = ({ category, region, personalized = false, limit = 6
 
   const loadRawDataset = async () => {
     try {
-      const response = await fetch('/assets/raw-dataset/manifest.json');
-      if (!response.ok) return;
-      const data = await response.json();
-      setRawDataset(data);
+      const response = await axiosInstance.get('/dataset/manifest');
+      setRawDataset(response.data?.manifest || response.data);
     } catch (error) {
       console.warn('Failed to load raw dataset manifest', error);
     }
@@ -121,18 +120,14 @@ const TourismDestinations = ({ category, region, personalized = false, limit = 6
       {destinations.slice(0, limit).map((dest, idx) => {
         const imageUrl = getCategoryImage(
           dest.category || dest.Category || 'Nature',
-          dest.name || dest.Destination_Name || String(idx),
+          dest.title || dest.name || dest.Destination_Name || String(idx),
         );
-        const destName = dest.name || dest.Destination_Name;
-        const destState = dest.state || dest.State;
-        const searchQuery = `${destName} ${destState} India tourist destination`;
-
+        const destName = dest.title || dest.name || dest.Destination_Name || `Destination ${idx + 1}`;
+        const destState = dest.state || dest.State || (dest.address ? dest.address.split(',')[1]?.trim() : '');
         return (
-          <a
+          <Link
             key={idx}
-            href={`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`}
-            target="_blank"
-            rel="noopener noreferrer"
+            to={`/destination/${encodeURIComponent(destName)}`}
             className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-[#C9A96E]/10 block"
           >
             {imageUrl && (
@@ -196,7 +191,7 @@ const TourismDestinations = ({ category, region, personalized = false, limit = 6
                 </svg>
               </div>
             </div>
-          </a>
+          </Link>
         );
       })}
     </div>

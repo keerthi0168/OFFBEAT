@@ -1,0 +1,138 @@
+[
+  {
+    "id": "PDY001",
+    "name": "Serenity Beach",
+    "state": "Puducherry",
+    "district": "Puducherry",
+    "direction": "North",
+    "region_type": "Beach",
+    "tourism_type": "Coastal Tourism",
+    "popularity": "Low",
+    "popularity_score": 2,
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January",
+      "February"
+    ],
+    "budget_range": "1500-3500",
+    "activities": [
+      "Beach Walk",
+      "Photography",
+      "Sunset Views"
+    ],
+    "activity_types": [
+      "Nature",
+      "Relaxation"
+    ],
+    "crowd_level": "Low",
+    "transport_access": "Moderate",
+    "eco_score": 4,
+    "family_friendly": true,
+    "coordinates": {
+      "lat": 11.937,
+      "lng": 79.841
+    },
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/8/82/Serenity_Beach_Pondicherry.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/65/Serenity_Beach_Pondy_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/36/Serenity_Beach_Sunset.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/54/Serenity_Beach_Walk.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/1e/Serenity_Beach_Coast.jpg"
+    ],
+    "description": "Quiet beach with soft sand and scenic sunset views, far less crowded than the main Pondicherry beaches."
+  },
+  {
+    "id": "PDY002",
+    "name": "Auroville Matrimandir Area",
+    "state": "Puducherry",
+    "district": "Viluppuram",
+    "direction": "South",
+    "region_type": "Spiritual & Cultural",
+    "tourism_type": "Wellness & Culture",
+    "popularity": "Low-Medium",
+    "popularity_score": 3,
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January",
+      "February",
+      "March"
+    ],
+    "budget_range": "2000-4000",
+    "activities": [
+      "Meditation",
+      "Architecture Walk",
+      "Photography"
+    ],
+    "activity_types": [
+      "Culture",
+      "Spiritual"
+    ],
+    "crowd_level": "Low",
+    "transport_access": "Moderate",
+    "eco_score": 5,
+    "family_friendly": true,
+    "coordinates": {
+      "lat": 12.005,
+      "lng": 79.81
+    },
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/4/4b/Matrimandir_Auroville.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/9b/Auroville_Garden.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/63/Auroville_Sanctum.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/27/Auroville_Walk.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/51/Auroville_View.jpg"
+    ],
+    "description": "Peaceful meditation and spiritual center with unique architecture and vast gardens. Offbeat compared to city tourism."
+  },
+  {
+    "id": "PDY003",
+    "name": "Paradise Beach",
+    "state": "Puducherry",
+    "district": "Puducherry",
+    "direction": "East",
+    "region_type": "Beach",
+    "tourism_type": "Coastal Tourism",
+    "popularity": "Low",
+    "popularity_score": 2,
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January",
+      "February"
+    ],
+    "budget_range": "1500-3500",
+    "activities": [
+      "Boating",
+      "Beach Walk",
+      "Photography"
+    ],
+    "activity_types": [
+      "Nature",
+      "Adventure"
+    ],
+    "crowd_level": "Low",
+    "transport_access": "Boat Access",
+    "eco_score": 4,
+    "family_friendly": true,
+    "coordinates": {
+      "lat": 11.96,
+      "lng": 79.85
+    },
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/2/26/Paradise_Beach_Pondicherry.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/66/Paradise_Beach_Sunset.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/1d/Paradise_Beach_Shore.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5a/Paradise_Beach_Walk.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Paradise_Beach_Coast.jpg"
+    ],
+    "description": "Secluded beach reachable by boat with golden sand, peaceful waves, and very few tourists."
+  }
+]

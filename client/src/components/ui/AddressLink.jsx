@@ -5,13 +5,9 @@ const AddressLink = ({ placeAddress, className = null }) => {
     className = 'my-3 block';
   }
 
-  className += ' flex gap-1 font-semibold underline';
+  className += ' flex gap-1 font-semibold';
   return (
-    <a
-      className={className}
-      href={`https://maps.google.com/?q=${placeAddress}`}
-      target="blank"
-    >
+    <div className={className}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -33,7 +29,7 @@ const AddressLink = ({ placeAddress, className = null }) => {
       </svg>
 
       {placeAddress}
-    </a>
+    </div>
   );
 };
 

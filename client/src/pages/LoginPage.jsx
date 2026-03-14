@@ -32,7 +32,13 @@ const LoginPage = () => {
     } else {
       toast.error(response.message);
       if (response.message) {
-        setErrors({ password: response.message });
+        if (response.code === 'USER_NOT_IDENTIFIED') {
+          setErrors({
+            email: 'User not identified. Please create an account.',
+          });
+        } else {
+          setErrors({ password: response.message });
+        }
       }
     }
     setLoading(false);
@@ -94,6 +100,11 @@ const LoginPage = () => {
                 className="luxury-input"
                 required
               />
+              {errors.email && (
+                <p className="mt-2 text-sm text-red-300">
+                  {errors.email} <Link className="underline text-[#C9A96E] hover:text-[#D4B896]" to={'/signup'}>Create account</Link>
+                </p>
+              )}
             </div>
 
             {/* Password Field */}

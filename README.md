@@ -61,6 +61,70 @@ A modern travel platform for exploring India's hidden gems and offbeat destinati
 - **Tourism Dataset** - 300+ property listings, 20+ curated offbeat destinations across 4 states
 - **Chatbot Integration** - Natural language travel queries
 
+---
+
+## 🆕 Latest Updates
+
+### 1) Offbeat dataset split by State/UT
+
+This project now includes a utility script to split one master offbeat India dataset into separate files per state/UT.
+
+- Script: `split_offbeat_dataset.py`
+- Input supported: JSON array **or** NDJSON
+- Output folder: `dataset/`
+- Sort order in each output file:
+	1. `direction` (North → South → East → West)
+	2. `popularity_score` (descending)
+- Example state alias handling: `Puducherry` → `dataset/pondicherry.json`
+
+Example generated/tested files:
+- `offbeat_places.json`
+- `dataset/pondicherry.json`
+
+### 2) Backend now auto-loads `dataset/*.json`
+
+The tourism API merges places from the `dataset/` directory into the existing tourism feed automatically at startup.
+
+This means newly added state files become available in tourism endpoints without manual hardcoding.
+
+### 3) Easier hosted ML API startup
+
+`ml/tourism_knn_api.py` now supports runtime port fallback:
+
+- `PORT` (hosting platforms)
+- then `FLASK_PORT`
+- then default `5001`
+
+So it works more reliably on cloud providers.
+
+### 4) Shareable URL support (LAN/Hosted)
+
+To let others use your app via a shared URL, configure frontend and backend URLs correctly.
+
+#### Frontend env (`client/.env`)
+
+- `VITE_BASE_URL` → Node API URL
+- `VITE_ML_API_URL` → ML API URL
+
+Example:
+
+```env
+VITE_BASE_URL=https://your-node-api-domain.com
+VITE_ML_API_URL=https://your-ml-api-domain.com
+```
+
+#### Backend env (`api/.env`)
+
+- `CLIENT_URL` must include your deployed frontend origin (or LAN origin while testing)
+
+Example:
+
+```env
+CLIENT_URL=http://localhost:5173,http://192.168.44.1:5173,https://your-frontend-domain.com
+```
+
+After deployment, share your frontend URL directly (Netlify/Vercel/custom domain), and users can access the full site.
+
 ### 📊 Dataset Statistics
 - **States Covered** - 4 (Kerala, Uttar Pradesh, Jammu & Kashmir, Himachal Pradesh)
 - **Destinations** - 20+ handpicked offbeat tourist locations

@@ -4,6 +4,12 @@ import axiosInstance from '@/utils/axios';
 import TourismDestinations from '@/components/ui/TourismDestinations';
 import PlaceCard from '@/components/ui/PlaceCard';
 import Spinner from '@/components/ui/Spinner';
+import MLFeaturedListings from '@/components/ui/MLFeaturedListings';
+import HiddenGemsSection from '@/components/ui/HiddenGemsSection';
+import ClusterInsightsSection from '@/components/ui/ClusterInsightsSection';
+import SimilarDestinationsSection from '@/components/ui/SimilarDestinationsSection';
+import TravelPlannerSection from '@/components/ui/TravelPlannerSection';
+import mlApi from '@/utils/mlApi';
 import { trackEvent } from '@/utils/analytics';
 import { getPersonalizationSignals } from '@/utils/analytics';
 
@@ -58,27 +64,27 @@ const ExplorePage = () => {
       }
 
       const [tourismResponse, propertyResponse] = await Promise.all([
-        axiosInstance.post('/tourism/personalized', {
-          query: term,
-          signals: getPersonalizationSignals(),
-          limit: 24,
+        mlApi.get('/semantic-search', {
+          params: {
+            query: term,
+            region: regionFilter,
+            limit: 10,
+          },
         }),
         axiosInstance.get(`/search/${encodeURIComponent(term)}`),
       ]);
 
       const tourismRaw = tourismResponse.data?.results || [];
-      const filteredTourism =
-        regionFilter === 'Any'
-          ? tourismRaw
-          : tourismRaw.filter(
-              (dest) => {
-                const destRegion = String(dest.region || dest.Region || '').trim();
-                return destRegion.toLowerCase() === regionFilter.toLowerCase();
-              }
-            );
 
-      setTourismResults(filteredTourism);
+      setTourismResults(tourismRaw);
       setPropertyResults(propertyResponse.data || []);
+
+      trackEvent('semantic_search', {
+        term,
+        region: regionFilter,
+        results: tourismRaw.length,
+        signals: getPersonalizationSignals(),
+      });
     } catch (error) {
       console.error('Explore search failed:', error);
       setTourismResults([]);
@@ -99,10 +105,8 @@ const ExplorePage = () => {
   useEffect(() => {
     const loadDataset = async () => {
       try {
-        const response = await fetch('/assets/raw-dataset/manifest.json');
-        if (!response.ok) return;
-        const data = await response.json();
-        setRawDataset(data);
+        const response = await axiosInstance.get('/dataset/manifest');
+        setRawDataset(response.data?.manifest || response.data);
       } catch (error) {
         console.warn('Failed to load raw dataset manifest', error);
       }
@@ -150,11 +154,11 @@ const ExplorePage = () => {
                   }
                 }}
               >
-                <option value="Any">All Regions</option>
-                <option value="North">North India</option>
-                <option value="South">South India</option>
-                <option value="East">East India</option>
-                <option value="West">West India</option>
+                <option value="Any" className="bg-slate-800 text-white">All Regions</option>
+                <option value="North" className="bg-slate-800 text-white">North India</option>
+                <option value="South" className="bg-slate-800 text-white">South India</option>
+                <option value="East" className="bg-slate-800 text-white">East India</option>
+                <option value="West" className="bg-slate-800 text-white">West India</option>
               </select>
               {regionFilter !== 'Any' && (
                 <button
@@ -194,42 +198,54 @@ const ExplorePage = () => {
                   <h3 className="text-xl text-[#C9A96E] font-light mb-6">Tourism Destinations</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {tourismResults.map((dest, index) => {
+                      const destinationName =
+                        dest.place_name || dest.title || dest.name || dest.Destination_Name || `Destination-${index + 1}`;
                       const imageUrl = getCategoryImage(
-                        dest.type || dest.category || 'Nature',
-                        dest.name || String(index),
+                        dest.type || dest.category || dest.Category || 'Nature',
+                        destinationName,
                       );
                       return (
                         <div
                           key={index}
-                          onClick={() => navigate(`/destination/${encodeURIComponent(dest.name)}`)}
+                          onClick={() => navigate(`/destination/${encodeURIComponent(destinationName)}`)}
                           className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-[#C9A96E]/50"
                         >
                           {imageUrl && (
                             <div className="h-48 overflow-hidden">
                               <img
                                 src={imageUrl}
-                                alt={dest.name}
+                                alt={destinationName}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               />
                             </div>
                           )}
                           <div className="p-6">
                             <h4 className="text-lg font-semibold text-white mb-2">
-                              {dest.name}
+                              {destinationName}
                             </h4>
                             <p className="text-sm text-[#E5E7EB]/70 mb-3 line-clamp-2">
                               {dest.description || dest.info || 'Explore this beautiful destination'}
                             </p>
                             <div className="flex justify-between items-center">
                               <div className="text-xs text-[#C9A96E]">
-                                {dest.city || dest.location || dest.region || 'India'}
+                                {dest.state || dest.city || dest.location || dest.region || 'India'}
                               </div>
-                              <button
-                                className="text-sm text-[#C9A96E] hover:text-[#D4B896] transition-colors"
-                              >
-                                View info →
-                              </button>
+                              <div className="text-right">
+                                <div className="text-sm text-[#C9A96E] hover:text-[#D4B896] transition-colors">
+                                  View info →
+                                </div>
+                                {typeof dest.semantic_similarity === 'number' && (
+                                  <div className="text-[11px] text-[#E5E7EB]/50 mt-1">
+                                    Match {(dest.semantic_similarity * 100).toFixed(0)}%
+                                  </div>
+                                )}
+                              </div>
                             </div>
+                            {(dest.predicted_category || dest.category) && (
+                              <div className="mt-3 inline-flex items-center rounded-full border border-[#C9A96E]/25 bg-[#C9A96E]/10 px-2 py-1 text-[11px] text-[#C9A96E]">
+                                Predicted: {dest.predicted_category || dest.category}
+                              </div>
+                            )}
                           </div>
                         </div>
                       );
@@ -306,10 +322,50 @@ const ExplorePage = () => {
         <div className="space-y-3 mb-10">
           <h2 className="text-3xl font-light text-white tracking-tight">Featured Listings</h2>
           <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Personalized recommendations based on your interests.
+            Machine learning recommendations based on the destination you search for.
           </p>
         </div>
-        <TourismDestinations personalized limit={6} />
+        <MLFeaturedListings query={query} fallbackDestination="Goa" limit={5} />
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16">
+        <div className="space-y-3 mb-10">
+          <h2 className="text-3xl font-light text-white tracking-tight">Similar Destinations (Cosine AI)</h2>
+          <p className="text-lg text-[#E5E7EB]/60 font-light">
+            Recommends similar destinations using category, rating, budget, and region with cosine similarity.
+          </p>
+        </div>
+        <SimilarDestinationsSection initialRegion={regionFilter} />
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16">
+        <div className="space-y-3 mb-10">
+          <h2 className="text-3xl font-light text-white tracking-tight">AI Travel Planner</h2>
+          <p className="text-lg text-[#E5E7EB]/60 font-light">
+            Enter budget, trip days, category, and region to generate a complete itinerary from the tourism dataset.
+          </p>
+        </div>
+        <TravelPlannerSection initialRegion={regionFilter} />
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16">
+        <div className="space-y-3 mb-10">
+          <h2 className="text-3xl font-light text-white tracking-tight">Hidden Gems</h2>
+          <p className="text-lg text-[#E5E7EB]/60 font-light">
+            Model-picked underrated destinations with strong ratings, lower popularity, and moderate budgets.
+          </p>
+        </div>
+        <HiddenGemsSection region={regionFilter} limit={6} />
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16">
+        <div className="space-y-3 mb-10">
+          <h2 className="text-3xl font-light text-white tracking-tight">Travel Clusters</h2>
+          <p className="text-lg text-[#E5E7EB]/60 font-light">
+            Unsupervised KMeans clusters for Budget travel, Luxury travel, Hidden gems, and Adventure travel.
+          </p>
+        </div>
+        <ClusterInsightsSection region={regionFilter} limit={4} />
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16">

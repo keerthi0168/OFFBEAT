@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axiosInstance from '@/utils/axios';
+import { askTravelAssistant } from '@/utils/mlApi';
 import { getPersonalizationSignals } from '@/utils/analytics';
 
 const ChatbotWidget = () => {
@@ -7,8 +7,8 @@ const ChatbotWidget = () => {
   const [messages, setMessages] = useState([
     { 
       from: 'bot', 
-      text: 'Hi! I\'m Offbeat Travel India AI Assistant. Ask me about hidden gems, destinations, and travel tips! 🏡',
-      suggestions: ['Show properties in Mumbai', 'How do I book?', 'What amenities are available?']
+      text: 'Hi! I\'m Offbeat Travel India AI Assistant. Ask me tourism questions, hidden gems, recommendations, or itinerary planning! ✈️',
+      suggestions: ['Recommend beach destinations', 'Show hidden gems in South India', 'Plan a 5 day trip in 30000']
     },
   ]);
   const [input, setInput] = useState('');
@@ -34,8 +34,8 @@ const ChatbotWidget = () => {
     setIsTyping(true);
 
     try {
-      // Call AI chatbot backend
-      const { data } = await axiosInstance.post('/chatbot/chat', {
+      // Call Flask AI chatbot assistant
+      const data = await askTravelAssistant({
         message: trimmed,
         sessionId: sessionId.current,
         personalization: getPersonalizationSignals(),
@@ -57,8 +57,8 @@ const ChatbotWidget = () => {
         ...prev,
         {
           from: 'bot',
-          text: error.response?.data?.response || 'Sorry, I encountered an error. Please try again!',
-          suggestions: ['Show properties', 'How to book?', 'Contact support']
+          text: error.response?.data?.message || 'Sorry, I encountered an error. Please try again!',
+          suggestions: ['Recommend destinations in North India', 'Show hidden gems', 'Create itinerary for 4 days']
         },
       ]);
     } finally {
@@ -76,8 +76,8 @@ const ChatbotWidget = () => {
     setMessages([
       {
         from: 'bot',
-        text: 'Chat cleared! How can I help you today? 🏡',
-        suggestions: ['Browse properties', 'Booking help', 'Popular destinations']
+        text: 'Chat cleared! What would you like to explore in India today? 🌏',
+        suggestions: ['Top places for temples', 'Budget trip under 20000', 'Adventure destinations']
       },
     ]);
   };

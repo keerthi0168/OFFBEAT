@@ -130,14 +130,14 @@ const PlacesFormPage = () => {
     if (formDataIsValid) {
       if (id) {
         // update existing place
-        const { data } = await axiosInstance.put('/places/update-place', {
+        const { data } = await axiosInstance.put('/update-place', {
           id,
           ...placeData,
         });
       } else {
         // new place
         const { data } = await axiosInstance.post(
-          '/places/add-places',
+          '/add-place',
           placeData,
         );
       }

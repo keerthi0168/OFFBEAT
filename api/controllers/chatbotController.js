@@ -7,6 +7,14 @@ let cachedTourismData = null;
 const loadTourismData = () => {
   if (cachedTourismData) return cachedTourismData;
   try {
+    // Try loading from indiaTourismData.js first
+    const jsPath = path.join(__dirname, '../data/indiaTourismData.js');
+    if (fs.existsSync(jsPath)) {
+      const data = require(jsPath);
+      cachedTourismData = data.places || [];
+      return cachedTourismData;
+    }
+    // Fallback to JSON dataset
     const jsonPath = path.join(__dirname, '../data/indian_travel_dataset.json');
     const data = fs.readFileSync(jsonPath, 'utf-8');
     cachedTourismData = data.trim().split('\n').map(line => JSON.parse(line));
@@ -239,15 +247,21 @@ const handleTourismQuery = (message, personalization = {}) => {
   
   if (!hasTourismKeyword) {
     // Check if message mentions any destination
-    const mentionedDest = destinations.find(d => 
-      lowerMessage.includes(d.Destination_Name.toLowerCase()) ||
-      lowerMessage.includes(d.State.toLowerCase())
-    );
+    const mentionedDest = destinations.find(d => {
+      const name = d.title || d.Destination_Name || '';
+      const location = d.address || d.State || '';
+      return lowerMessage.includes(name.toLowerCase()) ||
+             lowerMessage.includes(location.toLowerCase());
+    });
     
     if (mentionedDest) {
+      const name = mentionedDest.title || mentionedDest.Destination_Name;
+      const location = mentionedDest.address || mentionedDest.State;
+      const desc = mentionedDest.description || mentionedDest.Popular_Attraction || 'a beautiful destination';
+      
       return {
-        response: `${mentionedDest.Destination_Name} in ${mentionedDest.State} is a beautiful ${mentionedDest.Category.toLowerCase()} destination! Famous for ${mentionedDest.Popular_Attraction}. Nearest airport: ${mentionedDest.Nearest_Airport}. Would you like to see properties available there?`,
-        suggestions: ['Show properties in ' + mentionedDest.State, 'More heritage sites', 'Popular destinations'],
+        response: `${name} is ${desc.substring(0, 150)}... Would you like to explore more?`,
+        suggestions: ['Show more like this', 'Popular destinations', 'What else is nearby?'],
         isTourism: true
       };
     }
@@ -257,33 +271,40 @@ const handleTourismQuery = (message, personalization = {}) => {
   // Handle category queries
   const mentionedCategory = categories.find(cat => lowerMessage.includes(cat));
   if (mentionedCategory) {
-    const categoryDests = destinations.filter(d => 
-      d.Category.toLowerCase() === mentionedCategory
-    );
-    const unique = Array.from(new Set(categoryDests.map(d => d.Destination_Name)));
+    const categoryDests = destinations.filter(d => {
+      const desc = (d.description || d.Category || '').toLowerCase();
+      const perks = (d.perks || []).join(' ').toLowerCase();
+      return desc.includes(mentionedCategory) || perks.includes(mentionedCategory);
+    });
+    const unique = Array.from(new Set(categoryDests.map(d => d.title || d.Destination_Name)));
     const top5 = unique.slice(0, 5);
     
-    return {
-      response: `India has amazing ${mentionedCategory} destinations! Top picks: ${top5.join(', ')}. Which one interests you?`,
-      suggestions: top5.slice(0, 3).map(dest => `Tell me about ${dest}`),
-      isTourism: true
-    };
+    if (top5.length > 0) {
+      return {
+        response: `India has amazing ${mentionedCategory} destinations! Top picks: ${top5.join(', ')}. Which one interests you?`,
+        suggestions: top5.slice(0, 3).map(dest => `Tell me about ${dest}`),
+        isTourism: true
+      };
+    }
   }
   
   // Handle region queries
   const mentionedRegion = regions.find(reg => lowerMessage.includes(reg));
   if (mentionedRegion) {
-    const regionDests = destinations.filter(d => 
-      d.Region.toLowerCase() === mentionedRegion
-    );
-    const unique = Array.from(new Set(regionDests.map(d => d.Destination_Name)));
+    const regionDests = destinations.filter(d => {
+      const address = (d.address || d.State || d.Region || '').toLowerCase();
+      return address.includes(mentionedRegion);
+    });
+    const unique = Array.from(new Set(regionDests.map(d => d.title || d.Destination_Name)));
     const top5 = unique.slice(0, 5);
     
-    return {
-      response: `${mentionedRegion.charAt(0).toUpperCase() + mentionedRegion.slice(1)} India has wonderful destinations: ${top5.join(', ')}. Where would you like to explore?`,
-      suggestions: top5.slice(0, 3).map(dest => `Properties in ${dest}`),
-      isTourism: true
-    };
+    if (top5.length > 0) {
+      return {
+        response: `${mentionedRegion.charAt(0).toUpperCase() + mentionedRegion.slice(1)} India has wonderful destinations: ${top5.join(', ')}. Where would you like to explore?`,
+        suggestions: top5.slice(0, 3),
+        isTourism: true
+      };
+    }
   }
   
   // General tourism query
@@ -308,12 +329,20 @@ const handleTourismQuery = (message, personalization = {}) => {
   }
 
   const popularDests = Array.from(
-    new Set((pool.length ? pool : destinations).slice(0, 20).map(d => d.Destination_Name))
+    new Set((pool.length ? pool : destinations).slice(0, 20).map(d => d.title || d.Destination_Name))
   ).slice(0, 6);
   
+  if (popularDests.length > 0) {
+    return {
+      response: `India has incredible tourist destinations! Popular picks include ${popularDests.slice(0, 4).join(', ')}, and many more! What type of experience are you looking for - Heritage, Beach, Nature, or Adventure?`,
+      suggestions: ['Heritage sites', 'Beach destinations', 'Nature spots', 'Adventure locations'],
+      isTourism: true
+    };
+  }
+  
   return {
-    response: `India has incredible tourist destinations! Popular picks include ${popularDests.slice(0, 4).join(', ')}, and many more! What type of experience are you looking for - Heritage, Beach, Nature, or Adventure?`,
-    suggestions: ['Heritage sites', 'Beach destinations', 'Nature spots', 'Adventure locations'],
+    response: "I can help you discover amazing destinations across India! Try asking about beaches, mountains, heritage sites, or specific states.",
+    suggestions: ['Show beach destinations', 'Mountain destinations', 'Heritage sites'],
     isTourism: true
   };
 };

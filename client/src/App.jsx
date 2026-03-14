@@ -13,6 +13,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import AdminDashboard from './pages/AdminDashboard';
 import ExplorePage from './pages/ExplorePage';
 import DestinationDetailPage from './pages/DestinationDetailPage';
+import AllDestinationsPage from './pages/AllDestinationsPage';
 import { UserProvider } from './providers/UserProvider';
 import { PlaceProvider } from './providers/PlaceProvider';
 import ErrorBoundary from './components/ui/ErrorBoundary';
@@ -38,6 +39,7 @@ function App() {
               <Route path="/account/bookings/:id" element={<SingleBookedPlace />} />
               <Route path="/account/admin" element={<AdminDashboard />} />
               <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/destinations" element={<AllDestinationsPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>

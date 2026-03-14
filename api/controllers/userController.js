@@ -1,164 +1,155 @@
 const User = require('../models/UserMySQL');
-const cookieToken = require('../utils/cookieToken');
-const bcrypt = require('bcryptjs')
 const cloudinary = require('cloudinary').v2;
+const cookieToken = require('../utils/cookieToken');
+const CustomError = require('../utils/customError');
 
-
-// Register/SignUp user
-exports.register = async (req, res) => {
+// Register user
+exports.register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({
-        message: 'Name, email and password are required',
-      });
+      return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
-    // check if user is already registered
-    let user = await User.findOne({ where: { email } });
-
-    if (user) {
-      return res.status(400).json({
-        message: 'This email ID is already used',
-      });
+    // Check if user already exists
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists with this email' });
     }
 
-    user = await User.create({ name, email, password });
+    const user = await User.create({
+      name,
+      email,
+      password,
+    });
 
-    // after creating new user in DB send the token
     cookieToken(user, res);
   } catch (err) {
-    res.status(500).json({
-      message: 'Internal server Error',
-      error: err,
-    });
+    console.log(err);
+    res.status(500).json({ message: 'Error during registration', error: err.message });
   }
 };
 
-// Login/SignIn user
-exports.login = async (req, res) => {
+// Login user
+exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // check for presence of email and password
     if (!email || !password) {
-      return res.status(400).json({
-        message: 'Email and password are required!',
-      });
+      return res.status(400).json({ message: 'Please provide email and password' });
     }
 
     const user = await User.findOne({ where: { email } });
-
     if (!user) {
-      return res.status(400).json({
-        message: 'User does not exist!',
-      });
+      return res.status(401).json({ message: 'User not found with this email' });
     }
 
-    // match the password
-    const isPasswordCorrect = await user.isValidatedPassword(password);
-
-    if (!isPasswordCorrect) {
-      return res.status(401).json({
-        message: 'Wrong password',
-      });
+    const isPasswordValid = await user.isValidatedPassword(password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Password is incorrect' });
     }
 
-    // if everything is fine we will send the token
     cookieToken(user, res);
   } catch (err) {
-    res.status(500).json({
-      message: 'Internal server Error',
-      error: err,
-    });
+    console.log(err);
+    res.status(500).json({ message: 'Error during login', error: err.message });
   }
 };
 
-// Google Login
-exports.googleLogin = async (req, res) => {
+// Google login
+exports.googleLogin = async (req, res, next) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, picture } = req.body;
 
-    if (!name || !email) {
-      return res.status(400), json({
-        message: 'Name and email are required'
-      })
+    if (!email) {
+      return res.status(400).json({ message: 'Email is required' });
     }
 
-    // check if user already registered
     let user = await User.findOne({ where: { email } });
 
-    // If the user does not exist, create a new user in the DB  
     if (!user) {
+      // Create new user if doesn't exist
       user = await User.create({
-        name,
+        name: name || 'Google User',
         email,
-        password: await bcrypt.hash(Math.random().toString(36).slice(-8), 10)
-      })
+        password: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+        picture: picture || 'https://res.cloudinary.com/rahul4019/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1695133265/pngwing.com_zi4cre.png',
+      });
     }
 
-    // send the token
-    cookieToken(user, res)
+    cookieToken(user, res);
   } catch (err) {
-    res.status(500).json({
-      message: 'Internal server Error',
-      error: err,
-    });
+    console.log(err);
+    res.status(500).json({ message: 'Error during google login', error: err.message });
   }
-}
+};
 
-// Upload picture
-exports.uploadPicture = async (req, res) => {
-  const { path } = req.file
+// Upload user picture
+exports.uploadPicture = async (req, res, next) => {
   try {
-    let result = await cloudinary.uploader.upload(path, {
-      folder: 'Airbnb/Users',
-    });
-    res.status(200).json(result.secure_url)
-  } catch (error) {
-    res.status(500).json({
-      error,
-      message: 'Internal server error',
-    });
-  }
-}
+    const { url } = req.body;
 
-// update user
-exports.updateUserDetails = async (req, res) => {
-  try {
-    const { name, password, email, picture } = req.body
-
-    const user = await User.findOne({ where: { email } })
-
-    if (!user) {
-      return res.status(404), json({
-        message: 'User not found'
-      })
+    if (!url) {
+      return res.status(400).json({ message: 'Image URL is required' });
     }
 
-    // user can update only name, only password,only profile pic or all three
-
-    if (name) user.name = name
-    if (picture) user.picture = picture
-    if (password) user.password = password
-    const updatedUser = await user.save()
-    cookieToken(updatedUser, res)
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error" }, error)
+    res.status(200).json({
+      url,
+      message: 'Picture uploaded successfully',
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Error uploading picture', error: err.message });
   }
-}
+};
 
-// Logout
-exports.logout = async (req, res) => {
-  res.cookie('token', null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
-    secure: true,   // Only send over HTTPS
-    sameSite: 'none' // Allow cross-origin requests
-  });
-  res.status(200).json({
-    success: true,
-    message: 'Logged out',
-  });
+// Update user details
+exports.updateUserDetails = async (req, res, next) => {
+  try {
+    const userData = req.user;
+    const { name, picture } = req.body;
+
+    if (!userData) {
+      return res.status(401).json({ message: 'You are not authorized to access this page!' });
+    }
+
+    const user = await User.findByPk(userData.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (name) {
+      user.name = name;
+    }
+
+    if (picture) {
+      user.picture = picture;
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      user,
+      message: 'User details updated successfully',
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Error updating user details', error: err.message });
+  }
+};
+
+// Logout user
+exports.logout = async (req, res, next) => {
+  try {
+    res.clearCookie('token');
+    res.status(200).json({
+      success: true,
+      message: 'Logout successful',
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Error during logout', error: err.message });
+  }
 };

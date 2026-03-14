@@ -1,10 +1,14 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/UserMySQL');
 
 // Checks user is logged in based on passed token and set the user in request
 exports.isLoggedIn = async (req, res, next) => {
-    // token could be found in request cookies or in reqest headers
-    const token = req.cookies.token || req.header('Authorization').replace('Bearer ', '');
+    // token could be found in request cookies or in request headers
+    const authHeader = req.header('Authorization');
+    const headerToken = authHeader?.startsWith('Bearer ')
+        ? authHeader.replace('Bearer ', '')
+        : null;
+    const token = req.cookies?.token || headerToken;
 
     if (!token) {
         return res.status(401).json({
@@ -15,7 +19,15 @@ exports.isLoggedIn = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await User.findById(decoded.id);
+        req.user = await User.findByPk(decoded.id);
+
+        if (!req.user) {
+            return res.status(401).json({
+                success: false,
+                message: 'User no longer exists',
+            });
+        }
+
         next();
     } catch (error) {
         // Handle JWT verification error

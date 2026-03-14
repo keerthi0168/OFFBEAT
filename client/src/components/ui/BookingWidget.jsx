@@ -62,10 +62,10 @@ const BookingWidget = ({ place }) => {
     }
 
     try {
-      const response = await axiosInstance.post('/bookings', {
+      const response = await axiosInstance.post('/create-booking', {
         checkIn: dateRange.from,
         checkOut: dateRange.to,
-        noOfGuests,
+        numOfGuests: noOfGuests,
         name,
         phone,
         place: id,
