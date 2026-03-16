@@ -15,7 +15,9 @@ This folder now includes committed placeholder screenshot assets as SVGs, refere
 
 ## Replacing placeholders with real screenshots
 
-- Keep the **same filenames** (recommended), and overwrite each SVG with your actual image file (you can also switch to `.png`/`.jpg` and update `README.md` paths accordingly).
-- Once replaced, the embedded screenshot section in root `README.md` updates automatically.
+- **Recommended:** keep the same base names and replace each placeholder with your final screenshot.
+- If using `.png` files (common), update image paths in root `README.md` from `.svg` to `.png`.
+- Validate each file path by opening it directly in GitHub before checking README rendering.
+- Once replaced and pushed, embedded screenshots in root `README.md` update automatically.
 
 _Docs metadata refresh: 2026-03-16 (screenshot placeholders + embed-ready paths)._
