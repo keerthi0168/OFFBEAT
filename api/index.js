@@ -126,6 +126,7 @@ app.use(cors(corsOptions));
 
 // use express router
 app.use("/", require("./routes"));
+app.use("/api", require("./routes"));
 
 const PORT = process.env.PORT || 8001; // Changed from 8000 to 8001
 

@@ -114,21 +114,27 @@ const ExplorePage = () => {
         return;
       }
 
-      const [semanticResponse, propertyResponse] = await Promise.all([
-        mlApi.get('/semantic-search', {
+      const propertyResponsePromise = axiosInstance.get(`/search/${encodeURIComponent(term)}`);
+
+      let tourismRaw = [];
+      let strategy = 'semantic';
+
+      try {
+        const semanticResponse = await mlApi.get('/semantic-search', {
           params: {
             query: term,
             region: regionFilter,
             limit: 10,
           },
-        }),
-        axiosInstance.get(`/search/${encodeURIComponent(term)}`),
-      ]);
+        });
 
-      let tourismRaw = semanticResponse.data?.results || [];
-      let strategy = 'semantic';
+        tourismRaw = semanticResponse.data?.results || [];
+      } catch (semanticError) {
+        console.warn('Semantic search unavailable, falling back to lexical search:', semanticError?.message || semanticError);
+        strategy = 'lexical_fallback_on_error';
+      }
 
-      // Fallback to lexical search when semantic model returns no/very weak results.
+      // Fallback to lexical search when semantic model fails or returns empty/weak results.
       if (!tourismRaw.length) {
         const fallbackResponse = await axiosInstance.get('/tourism/search', {
           params: {
@@ -137,8 +143,12 @@ const ExplorePage = () => {
         });
 
         tourismRaw = fallbackResponse.data?.results || [];
-        strategy = 'lexical_fallback';
+        if (strategy === 'semantic') {
+          strategy = 'lexical_fallback';
+        }
       }
+
+      const propertyResponse = await propertyResponsePromise;
 
       const filteredTourism = tourismRaw.filter((dest) =>
         matchesRegionFilter(dest, regionFilter),

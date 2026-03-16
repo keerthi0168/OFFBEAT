@@ -1,7 +1,37 @@
 const User = require('../models/UserMySQL');
+const Place = require('../models/Place');
+const Booking = require('../models/Booking');
 const cloudinary = require('cloudinary').v2;
 const cookieToken = require('../utils/cookieToken');
 const CustomError = require('../utils/customError');
+
+const isMongoConnected = () => {
+  try {
+    return Boolean(Place?.db?.readyState === 1);
+  } catch (error) {
+    return false;
+  }
+};
+
+const sanitizeUser = (user) => {
+  if (!user) return null;
+  const plain = typeof user.toJSON === 'function' ? user.toJSON() : { ...user };
+
+  delete plain.password;
+
+  return {
+    ...plain,
+    email_verified: Boolean(plain.email_verified),
+    phone_verified: Boolean(plain.phone_verified),
+    id_verified: Boolean(plain.id_verified),
+  };
+};
+
+const parseSavedPlaces = (user) => {
+  const saved = user?.preferences?.savedPlaces;
+  if (!Array.isArray(saved)) return [];
+  return saved;
+};
 
 // Register user
 exports.register = async (req, res, next) => {
@@ -151,5 +181,139 @@ exports.logout = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: 'Error during logout', error: err.message });
+  }
+};
+
+// Current user profile
+exports.getCurrentUser = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    const safeUser = sanitizeUser(req.user);
+    const metrics = {
+      messages_received:
+        Number.isFinite(Number(req.user?.messages_received))
+          ? Number(req.user.messages_received)
+          : null,
+      responses_sent:
+        Number.isFinite(Number(req.user?.responses_sent))
+          ? Number(req.user.responses_sent)
+          : null,
+      avg_response_time_minutes:
+        Number.isFinite(Number(req.user?.avg_response_time_minutes))
+          ? Number(req.user.avg_response_time_minutes)
+          : null,
+    };
+
+    return res.status(200).json({ success: true, user: safeUser, metrics });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to load profile', error: error.message });
+  }
+};
+
+// Current user listings
+exports.getCurrentUserListings = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    if (!isMongoConnected()) {
+      return res.status(200).json({ success: true, listings: [] });
+    }
+
+    const listings = await Place.find({ owner: req.user.id });
+    return res.status(200).json({ success: true, listings: Array.isArray(listings) ? listings : [] });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to load listings', error: error.message });
+  }
+};
+
+// Current user bookings (host + guest context)
+exports.getCurrentUserBookings = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    if (!isMongoConnected()) {
+      return res.status(200).json({ success: true, hostBookings: [], guestBookings: [], bookings: [] });
+    }
+
+    const listings = await Place.find({ owner: req.user.id }).select('_id');
+    const listingIds = listings.map((item) => item?._id).filter(Boolean);
+
+    const [hostBookings, guestBookings] = await Promise.all([
+      listingIds.length ? Booking.find({ place: { $in: listingIds } }).populate('place') : Promise.resolve([]),
+      Booking.find({ user: req.user.id }).populate('place'),
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      hostBookings: Array.isArray(hostBookings) ? hostBookings : [],
+      guestBookings: Array.isArray(guestBookings) ? guestBookings : [],
+      bookings: Array.isArray(hostBookings) ? hostBookings : [],
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to load bookings', error: error.message });
+  }
+};
+
+// Current user reviews (if present on booking docs)
+exports.getCurrentUserReviews = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    if (!isMongoConnected()) {
+      return res.status(200).json({ success: true, reviews: [] });
+    }
+
+    const listings = await Place.find({ owner: req.user.id }).select('_id');
+    const listingIds = listings.map((item) => item?._id).filter(Boolean);
+
+    if (!listingIds.length) {
+      return res.status(200).json({ success: true, reviews: [] });
+    }
+
+    const hostBookings = await Booking.find({ place: { $in: listingIds } }).populate('place');
+
+    const reviews = hostBookings
+      .map((booking) => {
+        const rating = booking?.rating ?? booking?.review?.rating;
+        const comment = booking?.review?.comment ?? booking?.comment;
+        if (rating === undefined && !comment) return null;
+
+        return {
+          id: booking?._id,
+          rating: Number.isFinite(Number(rating)) ? Number(rating) : null,
+          comment: comment || '',
+          reviewer: booking?.name || 'Guest',
+          date: booking?.createdAt || booking?.updatedAt || new Date().toISOString(),
+          place: booking?.place || null,
+        };
+      })
+      .filter(Boolean);
+
+    return res.status(200).json({ success: true, reviews });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to load reviews', error: error.message });
+  }
+};
+
+// Current user saved places / wishlist
+exports.getCurrentUserSaved = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    const saved = parseSavedPlaces(req.user);
+    return res.status(200).json({ success: true, saved });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to load saved places', error: error.message });
   }
 };

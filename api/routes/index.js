@@ -25,6 +25,11 @@ router.post('/google-login', userController.googleLogin);
 router.post('/upload-picture', userController.uploadPicture);
 router.put('/update-user', isLoggedIn, userController.updateUserDetails);
 router.get('/logout', userController.logout);
+router.get('/users/me', isLoggedIn, userController.getCurrentUser);
+router.get('/users/me/listings', isLoggedIn, userController.getCurrentUserListings);
+router.get('/users/me/bookings', isLoggedIn, userController.getCurrentUserBookings);
+router.get('/users/me/reviews', isLoggedIn, userController.getCurrentUserReviews);
+router.get('/users/me/saved', isLoggedIn, userController.getCurrentUserSaved);
 
 // Place routes
 router.post('/add-place', isLoggedIn, placeController.addPlace);

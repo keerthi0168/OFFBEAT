@@ -1,103 +1,93 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Navigate } from 'react-router-dom';
-
-import AccountNav from '@/components/ui/AccountNav';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import axiosInstance from '@/utils/axios';
-import MLFeaturedListings from '@/components/ui/MLFeaturedListings';
-
-import { useAuth } from '../../hooks';
 import {
   BadgeCheck,
-  Camera,
   Clock3,
-  Edit3,
   Heart,
   LogOut,
   Mail,
-  MapPin,
   MessageSquare,
-  Phone,
+  Plus,
   ShieldCheck,
   Star,
   TrendingUp,
 } from 'lucide-react';
+
+import AccountNav from '@/components/ui/AccountNav';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import EditProfileDialog from '@/components/ui/EditProfileDialog';
+import MLFeaturedListings from '@/components/ui/MLFeaturedListings';
+import axiosInstance from '@/utils/axios';
 
-const defaultInterests = ['Travel', 'Cafes', 'Photography', 'Workspaces'];
+import { useAuth } from '../../hooks';
 
-const profileTabs = [
-  'Listings',
-  'Bookings',
-  'Reviews',
-  'Saved Places',
-  'Settings',
-];
+const profileTabs = ['Listings', 'Bookings', 'Reviews', 'Saved'];
 
-const fallbackSavedPlaces = [
-  {
-    id: 'saved-1',
-    name: 'Rooftop Studio • Jaipur',
-    location: 'Jaipur, India',
-    price: '₹2,800/day',
-    rating: 4.8,
-    image:
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    id: 'saved-2',
-    name: 'Cozy Work Cafe • Goa',
-    location: 'Goa, India',
-    price: '₹1,900/day',
-    rating: 4.7,
-    image:
-      'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80',
-  },
-];
+const formatDisplay = (value) => {
+  if (value === null || value === undefined || value === '' || Number.isNaN(value)) return '—';
+  return value;
+};
+
+const parseCityFromPlace = (booking) => {
+  const place = booking?.place || {};
+  if (place.city) return String(place.city).trim();
+  if (place.district) return String(place.district).trim();
+
+  const location = place.address || place.location || '';
+  const firstSegment = String(location).split(',')[0]?.trim();
+  return firstSegment || null;
+};
 
 const ProfilePage = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
   const { user, logout } = auth;
+
   const [redirect, setRedirect] = useState(null);
   const [activeTab, setActiveTab] = useState('Listings');
-  const [listings, setListings] = useState([]);
-  const [bookings, setBookings] = useState([]);
-  const [loadingData, setLoadingData] = useState(false);
-  const [settingsDraft, setSettingsDraft] = useState({
-    name: user?.name || '',
-    phone: user?.phone || '',
-    bio: user?.bio || 'Host and traveler who loves creative spaces and local culture.',
-    notifications: true,
-  });
-  const [replyTextByReviewId, setReplyTextByReviewId] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setSettingsDraft((prev) => ({
-      ...prev,
-      name: user?.name || prev.name,
-      phone: user?.phone || prev.phone,
-    }));
-  }, [user]);
+  const [profile, setProfile] = useState(null);
+  const [metrics, setMetrics] = useState({
+    messages_received: null,
+    responses_sent: null,
+    avg_response_time_minutes: null,
+  });
+
+  const [listings, setListings] = useState([]);
+  const [hostBookings, setHostBookings] = useState([]);
+  const [guestBookings, setGuestBookings] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [saved, setSaved] = useState([]);
 
   useEffect(() => {
     const loadProfileData = async () => {
       if (!user) return;
 
-      setLoadingData(true);
+      setLoading(true);
       try {
-        const [placesRes, bookingsRes] = await Promise.all([
-          axiosInstance.get('/user-places'),
-          axiosInstance.get('/get-bookings'),
+        const [meRes, listingsRes, bookingsRes, reviewsRes, savedRes] = await Promise.all([
+          axiosInstance.get('/users/me'),
+          axiosInstance.get('/users/me/listings'),
+          axiosInstance.get('/users/me/bookings'),
+          axiosInstance.get('/users/me/reviews'),
+          axiosInstance.get('/users/me/saved'),
         ]);
 
-        setListings(Array.isArray(placesRes.data) ? placesRes.data : []);
-        setBookings(Array.isArray(bookingsRes.data) ? bookingsRes.data : []);
+        setProfile(meRes?.data?.user || null);
+        setMetrics(meRes?.data?.metrics || {});
+        setListings(Array.isArray(listingsRes?.data?.listings) ? listingsRes.data.listings : []);
+        setHostBookings(Array.isArray(bookingsRes?.data?.hostBookings) ? bookingsRes.data.hostBookings : []);
+        setGuestBookings(Array.isArray(bookingsRes?.data?.guestBookings) ? bookingsRes.data.guestBookings : []);
+        setReviews(Array.isArray(reviewsRes?.data?.reviews) ? reviewsRes.data.reviews : []);
+        setSaved(Array.isArray(savedRes?.data?.saved) ? savedRes.data.saved : []);
       } catch (error) {
-        console.warn('Could not load profile data:', error);
+        console.error('Profile data load failed:', error);
+        toast.error('Could not load profile data right now.');
       } finally {
-        setLoadingData(false);
+        setLoading(false);
       }
     };
 
@@ -109,163 +99,232 @@ const ProfilePage = () => {
     if (response.success) {
       toast.success(response.message);
       setRedirect('/');
-    } else {
-      toast.error(response.message);
+      return;
     }
+    toast.error(response.message);
   };
 
   const memberSince = useMemo(() => {
-    if (!user?.createdAt) return 'March 2026';
-    const date = new Date(user.createdAt);
-    if (Number.isNaN(date.getTime())) return 'March 2026';
+    const source = profile?.createdAt || user?.createdAt;
+    if (!source) return '—';
+
+    const date = new Date(source);
+    if (Number.isNaN(date.getTime())) return '—';
     return date.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
-  }, [user]);
+  }, [profile?.createdAt, user?.createdAt]);
 
-  const profileCompletion = useMemo(() => {
-    const checks = [
-      Boolean(user?.name),
-      Boolean(user?.email),
-      Boolean(user?.picture),
-      Boolean(settingsDraft?.bio),
-      Boolean(user?.phone || settingsDraft?.phone),
-    ];
-    const complete = checks.filter(Boolean).length;
-    return Math.round((complete / checks.length) * 100);
-  }, [settingsDraft?.bio, settingsDraft?.phone, user]);
+  const averageRating = useMemo(() => {
+    if (!reviews.length) return null;
 
-  const averageRating = 4.8;
+    const numericRatings = reviews
+      .map((review) => Number(review?.rating))
+      .filter((rating) => Number.isFinite(rating) && rating > 0);
 
-  const reviews = useMemo(() => {
-    if (!bookings?.length) {
-      return [
-        {
-          id: 'r1',
-          reviewer: 'Aarav Mehta',
-          rating: 5,
-          comment: 'Beautiful space, clean setup, and very responsive host. Highly recommended!',
-          date: '2026-03-04',
-        },
-        {
-          id: 'r2',
-          reviewer: 'Nisha Rao',
-          rating: 4,
-          comment: 'Great coworking vibe and location. Would love a few more charging spots.',
-          date: '2026-02-19',
-        },
-      ];
+    if (!numericRatings.length) return null;
+    return Number((numericRatings.reduce((sum, rating) => sum + rating, 0) / numericRatings.length).toFixed(2));
+  }, [reviews]);
+
+  const responseRate = useMemo(() => {
+    const received = Number(metrics?.messages_received);
+    const sent = Number(metrics?.responses_sent);
+
+    if (!Number.isFinite(received) || received <= 0 || !Number.isFinite(sent)) return null;
+    return `${Math.round((sent / received) * 100)}%`;
+  }, [metrics?.messages_received, metrics?.responses_sent]);
+
+  const responseTime = useMemo(() => {
+    const minutes = Number(metrics?.avg_response_time_minutes);
+    if (!Number.isFinite(minutes) || minutes < 0) return null;
+
+    if (minutes < 60) return `${Math.round(minutes)} min`;
+    const hours = minutes / 60;
+    if (hours < 24) return `${hours.toFixed(1)} hrs`;
+
+    return `${(hours / 24).toFixed(1)} days`;
+  }, [metrics?.avg_response_time_minutes]);
+
+  const explorerCityCount = useMemo(() => {
+    const citySet = new Set();
+    guestBookings.forEach((booking) => {
+      const city = parseCityFromPlace(booking);
+      if (city) citySet.add(city.toLowerCase());
+    });
+    return citySet.size;
+  }, [guestBookings]);
+
+  const achievements = useMemo(() => {
+    const earned = [];
+    const bookingCount = hostBookings.length;
+    const reviewCount = reviews.length;
+
+    if (averageRating !== null && averageRating >= 4.8 && bookingCount >= 10) {
+      earned.push('Super Host');
     }
 
-    return bookings.slice(0, 4).map((booking, idx) => ({
-      id: booking?._id || `review-${idx + 1}`,
-      reviewer: booking?.name || `Guest ${idx + 1}`,
-      rating: 4 + (idx % 2),
-      comment: 'Host was responsive and the place matched the listing details.',
-      date: booking?.createdAt || new Date().toISOString(),
-    }));
-  }, [bookings]);
+    if (explorerCityCount >= 3) {
+      earned.push('Explorer');
+    }
 
-  const listingCards = listings.map((place, idx) => ({
-    id: place?._id || `listing-${idx + 1}`,
-    name: place?.title || place?.name || 'Creative Space',
-    image: place?.photos?.[0] || place?.images?.[0] || 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80',
-    location: place?.address || 'India',
-    rating: Number(place?.rating || 4.6),
-    price: Number(place?.price || 1800),
-  }));
+    if (bookingCount >= 50) {
+      earned.push('50+ Bookings');
+    }
 
-  const bookingCards = bookings.map((booking, idx) => {
-    const bookingDate = booking?.checkIn || booking?.createdAt || new Date().toISOString();
-    const parsedDate = new Date(bookingDate);
-    const status = booking?.checkOut
-      ? new Date(booking.checkOut) > new Date()
-        ? 'Upcoming'
-        : 'Completed'
-      : idx % 2 === 0
-        ? 'Upcoming'
-        : 'Completed';
+    if (averageRating !== null && averageRating >= 4.9 && reviewCount >= 20) {
+      earned.push('Top Rated Host');
+    }
 
-    return {
-      id: booking?._id || `booking-${idx + 1}`,
-      image:
-        booking?.place?.photos?.[0] ||
-        booking?.place?.images?.[0] ||
-        'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=900&q=80',
-      name: booking?.place?.title || booking?.place?.name || 'Space Booking',
-      bookingDate: Number.isNaN(parsedDate.getTime())
-        ? 'N/A'
-        : parsedDate.toLocaleDateString('en-IN', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric',
-          }),
-      price: booking?.price || booking?.place?.price || 1800,
-      status,
-    };
-  });
+    return earned;
+  }, [averageRating, explorerCityCount, hostBookings.length, reviews.length]);
 
-  const stats = [
-    {
-      label: 'Listings posted',
-      value: listingCards.length,
-      icon: <TrendingUp className="h-4 w-4 text-[#C9A96E]" />,
-    },
-    {
-      label: 'Total bookings',
-      value: bookingCards.length,
-      icon: <BadgeCheck className="h-4 w-4 text-[#C9A96E]" />,
-    },
-    {
-      label: 'Reviews received',
-      value: reviews.length,
-      icon: <MessageSquare className="h-4 w-4 text-[#C9A96E]" />,
-    },
-    {
-      label: 'Response rate',
-      value: '96%',
-      icon: <Mail className="h-4 w-4 text-[#C9A96E]" />,
-    },
-    {
-      label: 'Response time',
-      value: '< 1 hr',
-      icon: <Clock3 className="h-4 w-4 text-[#C9A96E]" />,
-    },
-  ];
+  const trustBadges = useMemo(() => {
+    const source = profile || user || {};
+    const items = [];
 
-  const badges = [
-    'Email verified',
-    'Phone verified',
-    'Government ID verified',
-    'Super Host',
-  ];
+    if (source.email_verified) items.push('Email verified');
+    if (source.phone_verified) items.push('Phone verified');
+    if (source.id_verified) items.push('ID verified');
 
-  const achievements = ['Super Host', 'Explorer', '50+ Bookings', 'Top Rated Host'];
+    return items;
+  }, [profile, user]);
+
+  const stats = useMemo(() => {
+    const meId = profile?.id || user?.id;
+
+    const listingsCount = meId
+      ? listings.filter((listing) => String(listing?.owner || '') === String(meId)).length || listings.length
+      : listings.length;
+
+    return [
+      {
+        label: 'Listings posted',
+        value: listingsCount,
+        icon: <TrendingUp className="h-4 w-4 text-[#C9A96E]" />,
+      },
+      {
+        label: 'Total bookings',
+        value: hostBookings.length,
+        icon: <BadgeCheck className="h-4 w-4 text-[#C9A96E]" />,
+      },
+      {
+        label: 'Reviews received',
+        value: reviews.length,
+        icon: <MessageSquare className="h-4 w-4 text-[#C9A96E]" />,
+      },
+      {
+        label: 'Response rate',
+        value: formatDisplay(responseRate),
+        icon: <Mail className="h-4 w-4 text-[#C9A96E]" />,
+      },
+      {
+        label: 'Response time',
+        value: formatDisplay(responseTime),
+        icon: <Clock3 className="h-4 w-4 text-[#C9A96E]" />,
+      },
+    ];
+  }, [hostBookings.length, listings, profile?.id, responseRate, responseTime, reviews.length, user?.id]);
 
   const recommendationSeed = useMemo(() => {
-    if (listings.length) return listingCards[0]?.name?.split('•')?.[0] || 'Goa';
+    if (saved.length > 0) {
+      const firstSaved = saved[0];
+      return firstSaved?.title || firstSaved?.name || 'Goa';
+    }
+
+    if (listings.length > 0) {
+      return listings[0]?.title || listings[0]?.name || 'Goa';
+    }
+
     return 'Goa';
-  }, [listingCards, listings.length]);
+  }, [listings, saved]);
 
   if (!user && !redirect) {
-    return <Navigate to={'/login'} />;
+    return <Navigate to="/login" />;
   }
 
   if (redirect) {
     return <Navigate to={redirect} />;
   }
 
+  const profileName = profile?.name || user?.name || 'Traveler';
+  const profileEmail = profile?.email || user?.email || '—';
+  const profileImage = profile?.picture || user?.picture;
+
   return (
     <div className="min-h-screen pb-16">
       <AccountNav />
-      <div className="mx-auto mt-4 grid w-full max-w-7xl grid-cols-1 gap-6 px-4 md:grid-cols-[260px_1fr] md:px-6">
-        <aside className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl md:sticky md:top-24 md:h-fit">
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[#C9A96E]">Dashboard</p>
-          <div className="space-y-2">
+
+      <div className="mx-auto mt-4 max-w-7xl space-y-6 px-4 md:px-6">
+        <section className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-6 shadow-2xl backdrop-blur-xl md:p-8">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-start gap-5">
+              <Avatar className="h-24 w-24 border border-white/20 md:h-28 md:w-28">
+                {profileImage ? (
+                  <AvatarImage src={profileImage} />
+                ) : (
+                  <AvatarFallback>{profileName?.slice(0, 1) || 'U'}</AvatarFallback>
+                )}
+              </Avatar>
+
+              <div className="space-y-1">
+                <h1 className="text-2xl font-semibold text-white md:text-3xl">{profileName}</h1>
+                <p className="text-sm text-[#E5E7EB]/80">{profileEmail}</p>
+                <p className="text-sm text-[#E5E7EB]/70">Member since {memberSince}</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {trustBadges.length > 0 ? (
+                    trustBadges.map((badge) => (
+                      <span
+                        key={badge}
+                        className="inline-flex items-center gap-1 rounded-full border border-[#C9A96E]/30 bg-[#C9A96E]/10 px-2.5 py-1 text-xs text-[#EED7AF]"
+                      >
+                        <ShieldCheck className="h-3.5 w-3.5" /> {badge}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-xs text-[#E5E7EB]/60">No verifications yet.</span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-[#E5E7EB]">
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="text-[#E5E7EB]/80">Average rating</span>
+                  <span className="inline-flex items-center gap-1 text-[#C9A96E]">
+                    <Star className="h-4 w-4 fill-current" /> {formatDisplay(averageRating)}
+                  </span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <EditProfileDialog />
+                <Button variant="secondary" className="bg-white/10 text-white hover:bg-white/20" onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+          {stats.map((stat) => (
+            <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg">
+              <div className="mb-2 flex items-center justify-between text-xs text-[#E5E7EB]/70">
+                <span>{stat.label}</span>
+                {stat.icon}
+              </div>
+              <div className="text-xl font-semibold text-white">{formatDisplay(stat.value)}</div>
+            </div>
+          ))}
+        </section>
+
+        <section className="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div className="mb-3 flex flex-wrap gap-2">
             {profileTabs.map((tab) => (
               <button
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
-                className={`w-full rounded-xl px-3 py-2 text-left text-sm transition ${
+                className={`rounded-xl px-3 py-2 text-sm transition ${
                   activeTab === tab
                     ? 'bg-gradient-to-r from-[#C9A96E] to-[#D4B896] text-[#0B1220] font-semibold'
                     : 'bg-white/5 text-[#E5E7EB] hover:bg-white/10'
@@ -275,311 +334,179 @@ const ProfilePage = () => {
               </button>
             ))}
           </div>
-        </aside>
 
-        <section className="space-y-6">
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-6 shadow-2xl backdrop-blur-xl md:p-8">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex items-start gap-5">
-                <div className="relative">
-                  <Avatar className="h-28 w-28 border border-white/20 md:h-32 md:w-32">
-                    {user?.picture ? (
-                      <AvatarImage src={user.picture} />
-                    ) : (
-                      <AvatarImage src="https://res.cloudinary.com/rahul4019/image/upload/v1695133265/pngwing.com_zi4cre.png" className="object-cover" />
-                    )}
-                    <AvatarFallback>{user?.name?.slice(0, 1) || 'U'}</AvatarFallback>
-                  </Avatar>
-                  <button
-                    type="button"
-                    className="absolute bottom-0 right-0 rounded-full border border-white/20 bg-[#111827] p-2 text-[#C9A96E]"
-                    aria-label="Edit profile image"
-                  >
-                    <Camera className="h-4 w-4" />
-                  </button>
-                </div>
+          {loading && <p className="text-sm text-[#E5E7EB]/70">Loading profile data...</p>}
 
-                <div className="space-y-2">
-                  <h1 className="text-2xl font-semibold text-white md:text-3xl">{user?.name || 'Traveler'}</h1>
-                  <p className="flex items-center gap-2 text-sm text-[#E5E7EB]/80">
-                    <MapPin className="h-4 w-4 text-[#C9A96E]" />
-                    {user?.city || 'Mumbai'}, {user?.country || 'India'}
-                  </p>
-                  <p className="text-sm text-[#E5E7EB]/70">Member since {memberSince}</p>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {badges.map((badge) => (
-                      <span
-                        key={badge}
-                        className="inline-flex items-center gap-1 rounded-full border border-[#C9A96E]/30 bg-[#C9A96E]/10 px-2.5 py-1 text-xs text-[#EED7AF]"
-                      >
-                        <ShieldCheck className="h-3.5 w-3.5" /> {badge}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-[#E5E7EB]">
-                  <div className="mb-2 flex items-center justify-between">
-                    <span className="text-[#E5E7EB]/80">Average rating</span>
-                    <span className="inline-flex items-center gap-1 text-[#C9A96E]">
-                      <Star className="h-4 w-4 fill-current" /> {averageRating}
-                    </span>
-                  </div>
-                  <div className="mb-1 flex items-center justify-between text-xs">
-                    <span className="text-[#E5E7EB]/70">Profile completion</span>
-                    <span>{profileCompletion}%</span>
-                  </div>
-                  <div className="h-2 rounded-full bg-white/10">
-                    <div
-                      className="h-2 rounded-full bg-gradient-to-r from-[#C9A96E] to-[#D4B896]"
-                      style={{ width: `${profileCompletion}%` }}
-                    />
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <EditProfileDialog />
-                  <Button variant="secondary" className="bg-white/10 text-white hover:bg-white/20" onClick={handleLogout}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Logout
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
-              <div className="mb-2 flex items-center gap-2 text-sm text-[#E5E7EB]">
-                <Edit3 className="h-4 w-4 text-[#C9A96E]" />
-                Bio
-              </div>
-              <p className="text-sm text-[#E5E7EB]/80">
-                {String(settingsDraft.bio || '').slice(0, 200) || 'Tell guests about your hosting style and favorite experiences.'}
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {defaultInterests.map((interest) => (
-                  <span key={interest} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#E5E7EB]/80">
-                    {interest}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
-            {stats.map((stat) => (
-              <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg">
-                <div className="mb-2 flex items-center justify-between text-xs text-[#E5E7EB]/70">
-                  <span>{stat.label}</span>
-                  {stat.icon}
-                </div>
-                <div className="text-xl font-semibold text-white">{stat.value}</div>
-              </div>
-            ))}
-          </div>
-
-          {activeTab === 'Listings' && (
+          {!loading && activeTab === 'Listings' && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-white">Your Listings</h2>
-              {loadingData && <p className="text-sm text-[#E5E7EB]/70">Loading your listings...</p>}
-              {!loadingData && !listingCards.length && (
-                <p className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-[#E5E7EB]/70">No listings yet. Add your first unique space to start hosting.</p>
-              )}
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {listingCards.map((item) => (
-                  <article key={item.id} className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:shadow-2xl">
-                    <img src={item.image} alt={item.name} className="h-44 w-full object-cover transition duration-300 group-hover:scale-[1.03]" />
-                    <div className="space-y-2 p-4">
-                      <h3 className="text-base font-medium text-white">{item.name}</h3>
-                      <p className="text-xs text-[#E5E7EB]/70">{item.location}</p>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-[#C9A96E]">₹{item.price}/day</span>
-                        <span className="inline-flex items-center gap-1 text-[#E5E7EB]">
-                          <Star className="h-4 w-4 fill-[#C9A96E] text-[#C9A96E]" /> {item.rating.toFixed(1)}
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'Reviews' && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-white">Guest Reviews</h2>
-              <div className="space-y-3">
-                {reviews.map((review) => (
-                  <article key={review.id} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div className="mb-2 flex items-center justify-between">
-                      <p className="font-medium text-white">{review.reviewer}</p>
-                      <p className="text-xs text-[#E5E7EB]/60">
-                        {new Date(review.date).toLocaleDateString('en-IN')}
-                      </p>
-                    </div>
-                    <div className="mb-2 inline-flex items-center gap-1 text-[#C9A96E]">
-                      {Array.from({ length: review.rating }).map((_, i) => (
-                        <Star key={`${review.id}-star-${i}`} className="h-4 w-4 fill-current" />
-                      ))}
-                    </div>
-                    <p className="text-sm text-[#E5E7EB]/80">{review.comment}</p>
-                    <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-                      <input
-                        id={`reply-${review.id}`}
-                        name={`reply-${review.id}`}
-                        value={replyTextByReviewId[review.id] || ''}
-                        onChange={(e) =>
-                          setReplyTextByReviewId((prev) => ({ ...prev, [review.id]: e.target.value }))
-                        }
-                        placeholder="Write a host reply..."
-                        className="flex-1 rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none"
-                      />
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        className="bg-[#C9A96E] text-[#0B1220] hover:bg-[#D4B896]"
-                        onClick={() => toast.success('Reply saved (demo)!')}
-                      >
-                        Reply
-                      </Button>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'Bookings' && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-white">Your Bookings</h2>
-              {!bookingCards.length && (
-                <p className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-[#E5E7EB]/70">No bookings yet. Start exploring spaces and book your first one.</p>
-              )}
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {bookingCards.map((booking) => (
-                  <article key={booking.id} className="flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-3">
-                    <img src={booking.image} alt={booking.name} className="h-24 w-24 rounded-xl object-cover" />
-                    <div className="flex-1 space-y-1">
-                      <h3 className="text-sm font-medium text-white">{booking.name}</h3>
-                      <p className="text-xs text-[#E5E7EB]/70">Date: {booking.bookingDate}</p>
-                      <p className="text-xs text-[#E5E7EB]/70">Price: ₹{booking.price}</p>
-                      <span
-                        className={`inline-flex rounded-full px-2 py-1 text-[11px] font-semibold ${
-                          booking.status === 'Upcoming'
-                            ? 'bg-emerald-500/20 text-emerald-300'
-                            : booking.status === 'Completed'
-                              ? 'bg-sky-500/20 text-sky-300'
-                              : 'bg-red-500/20 text-red-300'
-                        }`}
-                      >
-                        {booking.status}
-                      </span>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'Saved Places' && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-white">Saved / Wishlist</h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {fallbackSavedPlaces.map((place) => (
-                  <article key={place.id} className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-                    <img src={place.image} alt={place.name} className="h-40 w-full object-cover" />
-                    <div className="space-y-1 p-4">
-                      <h3 className="text-sm font-medium text-white">{place.name}</h3>
-                      <p className="text-xs text-[#E5E7EB]/70">{place.location}</p>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-[#C9A96E]">{place.price}</span>
-                        <span className="inline-flex items-center gap-1 text-[#E5E7EB]">
-                          <Heart className="h-4 w-4 fill-[#C9A96E] text-[#C9A96E]" /> {place.rating}
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'Settings' && (
-            <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-              <h2 className="text-xl font-semibold text-white">Profile Settings</h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <label className="space-y-1 text-sm text-[#E5E7EB]">
-                  Name
-                  <input
-                    id="profile-name"
-                    name="profileName"
-                    value={settingsDraft.name}
-                    onChange={(e) => setSettingsDraft((prev) => ({ ...prev, name: e.target.value }))}
-                    className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-white outline-none"
-                  />
-                </label>
-                <label className="space-y-1 text-sm text-[#E5E7EB]">
-                  Phone number
-                  <input
-                    id="profile-phone"
-                    name="profilePhone"
-                    value={settingsDraft.phone}
-                    onChange={(e) => setSettingsDraft((prev) => ({ ...prev, phone: e.target.value }))}
-                    className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-white outline-none"
-                  />
-                </label>
-                <label className="space-y-1 text-sm text-[#E5E7EB] md:col-span-2">
-                  Bio (max 200 chars)
-                  <textarea
-                    id="profile-bio"
-                    name="profileBio"
-                    maxLength={200}
-                    rows={4}
-                    value={settingsDraft.bio}
-                    onChange={(e) => setSettingsDraft((prev) => ({ ...prev, bio: e.target.value }))}
-                    className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-white outline-none"
-                  />
-                </label>
-                <label className="inline-flex items-center gap-2 text-sm text-[#E5E7EB] md:col-span-2">
-                  <input
-                    id="profile-notifications"
-                    name="profileNotifications"
-                    type="checkbox"
-                    checked={settingsDraft.notifications}
-                    onChange={(e) => setSettingsDraft((prev) => ({ ...prev, notifications: e.target.checked }))}
-                  />
-                  Enable booking and review notifications
-                </label>
-              </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-white">Your Listings</h2>
                 <Button
                   type="button"
                   className="bg-gradient-to-r from-[#C9A96E] to-[#D4B896] text-[#0B1220]"
-                  onClick={() => toast.success('Settings saved (demo)!')}
+                  onClick={() => navigate('/account/places/new')}
                 >
-                  Save changes
-                </Button>
-                <Button type="button" variant="secondary" className="bg-white/10 text-white">
-                  Change password
+                  <Plus className="mr-2 h-4 w-4" /> + Add Listing
                 </Button>
               </div>
+
+              {listings.length === 0 ? (
+                <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-[#E5E7EB]/70">
+                  No listings yet.
+                  <br />
+                  Add your first unique space to start hosting.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {listings.map((listing, index) => {
+                    const image =
+                      listing?.photos?.[0] ||
+                      listing?.images?.[0] ||
+                      'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80';
+
+                    return (
+                      <article key={listing?._id || `listing-${index + 1}`} className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                        <img src={image} alt={listing?.title || 'Listing'} className="h-44 w-full object-cover" />
+                        <div className="space-y-2 p-4">
+                          <h3 className="text-base font-medium text-white">{listing?.title || listing?.name || 'Untitled Listing'}</h3>
+                          <p className="text-xs text-[#E5E7EB]/70">{listing?.address || 'Location unavailable'}</p>
+                          <p className="text-sm text-[#C9A96E]">₹{listing?.price || '—'}/day</p>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <h3 className="mb-3 text-lg font-semibold text-white">Trust & Verification</h3>
+          {!loading && activeTab === 'Bookings' && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold text-white">Bookings</h2>
+              {hostBookings.length === 0 ? (
+                <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-[#E5E7EB]/70">
+                  No bookings yet.
+                  <br />
+                  Once someone books your space it will appear here.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {hostBookings.map((booking, index) => {
+                    const place = booking?.place || {};
+                    const image =
+                      place?.photos?.[0] ||
+                      place?.images?.[0] ||
+                      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=900&q=80';
+
+                    const checkIn = booking?.checkIn ? new Date(booking.checkIn) : null;
+                    const bookingDate = checkIn && !Number.isNaN(checkIn.getTime())
+                      ? checkIn.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+                      : 'N/A';
+
+                    return (
+                      <article key={booking?._id || `booking-${index + 1}`} className="flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-3">
+                        <img src={image} alt={place?.title || 'Booked place'} className="h-24 w-24 rounded-xl object-cover" />
+                        <div className="flex-1 space-y-1">
+                          <h3 className="text-sm font-medium text-white">{place?.title || 'Booked Space'}</h3>
+                          <p className="text-xs text-[#E5E7EB]/70">Check-in: {bookingDate}</p>
+                          <p className="text-xs text-[#E5E7EB]/70">Guest: {booking?.name || '—'}</p>
+                          <p className="text-xs text-[#E5E7EB]/70">Price: ₹{booking?.price || place?.price || '—'}</p>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {!loading && activeTab === 'Reviews' && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold text-white">Reviews</h2>
+              {reviews.length === 0 ? (
+                <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-[#E5E7EB]/70">
+                  No reviews yet.
+                  <br />
+                  Reviews will appear after your first booking.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {reviews.map((review, index) => (
+                    <article key={review?.id || `review-${index + 1}`} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <div className="mb-2 flex items-center justify-between">
+                        <p className="font-medium text-white">{review?.reviewer || 'Guest'}</p>
+                        <p className="text-xs text-[#E5E7EB]/60">
+                          {review?.date ? new Date(review.date).toLocaleDateString('en-IN') : '—'}
+                        </p>
+                      </div>
+                      <p className="text-sm text-[#E5E7EB]/80">{review?.comment || 'No written comment.'}</p>
+                      <p className="mt-2 text-xs text-[#C9A96E]">Rating: {formatDisplay(review?.rating)}</p>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {!loading && activeTab === 'Saved' && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold text-white">Saved / Wishlist</h2>
+              {saved.length === 0 ? (
+                <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-[#E5E7EB]/70">
+                  No saved places yet ❤️
+                  <br />
+                  Start exploring and tap the heart icon to save spaces.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {saved.map((place, index) => {
+                    const image =
+                      place?.photos?.[0] ||
+                      place?.images?.[0] ||
+                      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80';
+
+                    return (
+                      <article key={place?._id || place?.id || `saved-${index + 1}`} className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                        <img src={image} alt={place?.title || place?.name || 'Saved Place'} className="h-40 w-full object-cover" />
+                        <div className="space-y-1 p-4">
+                          <h3 className="text-sm font-medium text-white">{place?.title || place?.name || 'Saved Place'}</h3>
+                          <p className="text-xs text-[#E5E7EB]/70">{place?.address || place?.location || 'India'}</p>
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-[#C9A96E]">₹{place?.price || '—'}/day</span>
+                            <span className="inline-flex items-center gap-1 text-[#E5E7EB]">
+                              <Heart className="h-4 w-4 fill-[#C9A96E] text-[#C9A96E]" />
+                              {formatDisplay(place?.rating)}
+                            </span>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+
+        <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <h3 className="mb-3 text-lg font-semibold text-white">Trust & Verification</h3>
+            {trustBadges.length > 0 ? (
               <div className="space-y-2 text-sm text-[#E5E7EB]/85">
-                {badges.map((badge) => (
+                {trustBadges.map((badge) => (
                   <div key={`trust-${badge}`} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-1">
                     <ShieldCheck className="h-4 w-4 text-emerald-300" /> {badge}
                   </div>
                 ))}
               </div>
-            </div>
+            ) : (
+              <p className="text-sm text-[#E5E7EB]/70">No verification badges yet.</p>
+            )}
+          </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <h3 className="mb-3 text-lg font-semibold text-white">Achievements</h3>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <h3 className="mb-3 text-lg font-semibold text-white">Achievements</h3>
+            {achievements.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {achievements.map((badge) => (
                   <span
@@ -590,16 +517,22 @@ const ProfilePage = () => {
                   </span>
                 ))}
               </div>
-            </div>
+            ) : (
+              <p className="text-sm text-[#E5E7EB]/70">
+                No achievements yet.
+                <br />
+                Complete bookings to unlock host badges.
+              </p>
+            )}
           </div>
+        </section>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <h3 className="mb-2 text-lg font-semibold text-white">Recommended for You (ML)</h3>
-            <p className="mb-4 text-sm text-[#E5E7EB]/70">
-              Personalized using your past searches, saved places, bookings, and preferred regions.
-            </p>
-            <MLFeaturedListings query={recommendationSeed} fallbackDestination="Goa" limit={4} />
-          </div>
+        <section className="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <h3 className="mb-2 text-lg font-semibold text-white">Recommended for You (ML)</h3>
+          <p className="mb-4 text-sm text-[#E5E7EB]/70">
+            Personalized using your real activity (saved places, bookings, and hosting data).
+          </p>
+          <MLFeaturedListings query={recommendationSeed} fallbackDestination="Goa" limit={4} />
         </section>
       </div>
     </div>
