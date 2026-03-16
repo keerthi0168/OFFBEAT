@@ -62,27 +62,85 @@ This is intentional and helps scalability:
 
 So if `Daman` exists in any split file, it should be searchable through tourism endpoints.
 
+## Project structure
+
+```text
+OTT website/
+├─ client/                 # React + Vite frontend
+│  ├─ src/
+│  │  ├─ pages/            # Explore, Profile, destination views, etc.
+│  │  ├─ components/       # UI components
+│  │  └─ hooks/
+│  └─ public/
+├─ api/                    # Express backend APIs
+│  ├─ controllers/         # route handlers
+│  ├─ routes/              # API route wiring
+│  ├─ models/              # Mongo/MySQL models
+│  ├─ middlewares/
+│  └─ data/                # tourism/chatbot datasets
+├─ ml/                     # Python ML API + recommendation logic
+│  └─ tourism_knn_api.py
+├─ dataset/                # split state/UT JSON datasets
+├─ data_hub/               # organized data mirrors + manifests
+├─ scripts/                # data utility scripts
+└─ README.md
+```
+
 ## Screenshots
 
-Add images in `docs/screenshots/` with these exact names:
+> Why images were not loading: currently this repo has no image files in `docs/screenshots/` (only `docs/screenshots/README.md`), so markdown image tags render as broken placeholders.
+
+Add screenshots in `docs/screenshots/` using either of these naming sets:
+
+### Preferred names (latest)
+
+1. `01-explore-hero-goa-search.png`
+2. `02-featured-listings-goa.png`
+3. `03-similar-destinations-form-goa.png`
+4. `04-ai-travel-planner-form.png`
+5. `05-hidden-gems-grid.png`
+6. `06-adventure-listings-grid.png`
+7. `07-chatbot-assistant.png` *(optional)*
+8. `08-explore-no-results-goa.png` *(optional debug screenshot)*
+
+### Legacy names (still accepted)
 
 1. `01-home-hero.png`
 2. `02-featured-listings.png`
 3. `03-similar-destinations-form.png`
 4. `04-ai-travel-planner.png`
 5. `05-hidden-gems-grid.png`
-6. `06-similar-daman-input.png` *(new UI screenshot shared in chat)*
-7. `07-explore-search-results.png` *(new UI screenshot shared in chat)*
+6. `06-similar-daman-input.png`
+7. `07-explore-search-results.png`
+8. `08-chatbot-assistant.png`
+9. `09-explore-no-results-goa.png`
 
-README renders automatically once files are added:
+Screenshot links (non-breaking) once files are added:
 
-![Home](docs/screenshots/01-home-hero.png)
-![Similar Destinations](docs/screenshots/03-similar-destinations-form.png)
-![Daman Search Input](docs/screenshots/06-similar-daman-input.png)
-![Explore Results](docs/screenshots/07-explore-search-results.png)
+- [Explore Hero (Goa Search)](docs/screenshots/01-explore-hero-goa-search.png)
+- [Featured Listings (Goa)](docs/screenshots/02-featured-listings-goa.png)
+- [Similar Destinations Form (Goa)](docs/screenshots/03-similar-destinations-form-goa.png)
+- [AI Travel Planner Form](docs/screenshots/04-ai-travel-planner-form.png)
+- [Hidden Gems Grid](docs/screenshots/05-hidden-gems-grid.png)
+- [Adventure Listings Grid](docs/screenshots/06-adventure-listings-grid.png)
+- [Chatbot Assistant](docs/screenshots/07-chatbot-assistant.png)
+- [Explore No Results Goa](docs/screenshots/08-explore-no-results-goa.png)
+
+Legacy links:
+
+- [Home](docs/screenshots/01-home-hero.png)
+- [Similar Destinations](docs/screenshots/03-similar-destinations-form.png)
+- [Daman Search Input](docs/screenshots/06-similar-daman-input.png)
+- [Explore Results](docs/screenshots/07-explore-search-results.png)
+- [Chatbot Assistant (legacy)](docs/screenshots/08-chatbot-assistant.png)
+- [Explore No Results Goa (legacy)](docs/screenshots/09-explore-no-results-goa.png)
 
 ## Useful docs
 
 - `DEPLOYMENT.md`
 - `DESIGN_SYSTEM.md`
 - `ALGORITHMS.md`
+
+---
+
+_Docs metadata refresh: 2026-03-16 (non-functional documentation-only update)._
