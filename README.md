@@ -122,22 +122,22 @@ OTT website/
 ### Embedded screenshots
 
 #### 1) Explore Hero (Goa Search)
-![Explore Hero (Goa Search)](docs/screenshots/01-explore-hero-goa-search.svg)
+![Explore Hero (Goa Search)](docs/screenshots/01-explore-hero-goa-search.png)
 
 #### 2) Featured Listings (Goa)
-![Featured Listings (Goa)](docs/screenshots/02-featured-listings-goa.svg)
+![Featured Listings (Goa)](docs/screenshots/02-featured-listings-goa.png)
 
 #### 3) Similar Destinations Form (Goa)
-![Similar Destinations Form (Goa)](docs/screenshots/03-similar-destinations-form-goa.svg)
+![Similar Destinations Form (Goa)](docs/screenshots/03-similar-destinations-form-goa.png)
 
 #### 4) AI Travel Planner Form
-![AI Travel Planner Form](docs/screenshots/04-ai-travel-planner-form.svg)
+![AI Travel Planner Form](docs/screenshots/04-ai-travel-planner-form.png)
 
 #### 5) Hidden Gems Grid
-![Hidden Gems Grid](docs/screenshots/05-hidden-gems-grid.svg)
+![Hidden Gems Grid](docs/screenshots/05-hidden-gems-grid.png)
 
 #### 6) Adventure Listings Grid
-![Adventure Listings Grid](docs/screenshots/06-adventure-listings-grid.svg)
+![Adventure Listings Grid](docs/screenshots/06-adventure-listings-grid.png)
 
 #### 7) Chatbot Assistant
 ![Chatbot Assistant](docs/screenshots/07-chatbot-assistant.svg)
@@ -147,14 +147,24 @@ OTT website/
 
 ### Direct asset links (fallback check)
 
-- [01 Explore Hero](docs/screenshots/01-explore-hero-goa-search.svg)
-- [02 Featured Listings](docs/screenshots/02-featured-listings-goa.svg)
-- [03 Similar Destinations](docs/screenshots/03-similar-destinations-form-goa.svg)
-- [04 AI Planner](docs/screenshots/04-ai-travel-planner-form.svg)
-- [05 Hidden Gems](docs/screenshots/05-hidden-gems-grid.svg)
-- [06 Adventure Listings](docs/screenshots/06-adventure-listings-grid.svg)
+- [01 Explore Hero](docs/screenshots/01-explore-hero-goa-search.png)
+- [02 Featured Listings](docs/screenshots/02-featured-listings-goa.png)
+- [03 Similar Destinations](docs/screenshots/03-similar-destinations-form-goa.png)
+- [04 AI Planner](docs/screenshots/04-ai-travel-planner-form.png)
+- [05 Hidden Gems](docs/screenshots/05-hidden-gems-grid.png)
+- [06 Adventure Listings](docs/screenshots/06-adventure-listings-grid.png)
 - [07 Chatbot Assistant](docs/screenshots/07-chatbot-assistant.svg)
 - [08 Explore No Results](docs/screenshots/08-explore-no-results-goa.svg)
+
+## Quick API checks (post setup)
+
+Once backend is running, these quick checks help confirm core features:
+
+- Search: `GET /tourism/search?q=goa`
+- Chatbot: `POST /chatbot/chat`
+- Auth profile (token required): `GET /users/me`
+
+If the frontend loads but API fails, verify `VITE_BASE_URL` points to backend port `8001`.
 
 ## Useful docs
 
