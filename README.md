@@ -88,52 +88,33 @@ OTT website/
 
 ## Screenshots
 
-> Why images were not loading: currently this repo has no image files in `docs/screenshots/` (only `docs/screenshots/README.md`), so markdown image tags render as broken placeholders.
+> Placeholder screenshot assets are now committed in `docs/screenshots/*.svg` so embeds render immediately. Replace each SVG with your real captured screenshot when ready.
 
-Add screenshots in `docs/screenshots/` using either of these naming sets:
+### Embedded screenshots
 
-### Preferred names (latest)
+#### 1) Explore Hero (Goa Search)
+![Explore Hero (Goa Search)](docs/screenshots/01-explore-hero-goa-search.svg)
 
-1. `01-explore-hero-goa-search.png`
-2. `02-featured-listings-goa.png`
-3. `03-similar-destinations-form-goa.png`
-4. `04-ai-travel-planner-form.png`
-5. `05-hidden-gems-grid.png`
-6. `06-adventure-listings-grid.png`
-7. `07-chatbot-assistant.png` *(optional)*
-8. `08-explore-no-results-goa.png` *(optional debug screenshot)*
+#### 2) Featured Listings (Goa)
+![Featured Listings (Goa)](docs/screenshots/02-featured-listings-goa.svg)
 
-### Legacy names (still accepted)
+#### 3) Similar Destinations Form (Goa)
+![Similar Destinations Form (Goa)](docs/screenshots/03-similar-destinations-form-goa.svg)
 
-1. `01-home-hero.png`
-2. `02-featured-listings.png`
-3. `03-similar-destinations-form.png`
-4. `04-ai-travel-planner.png`
-5. `05-hidden-gems-grid.png`
-6. `06-similar-daman-input.png`
-7. `07-explore-search-results.png`
-8. `08-chatbot-assistant.png`
-9. `09-explore-no-results-goa.png`
+#### 4) AI Travel Planner Form
+![AI Travel Planner Form](docs/screenshots/04-ai-travel-planner-form.svg)
 
-Screenshot links (non-breaking) once files are added:
+#### 5) Hidden Gems Grid
+![Hidden Gems Grid](docs/screenshots/05-hidden-gems-grid.svg)
 
-- [Explore Hero (Goa Search)](docs/screenshots/01-explore-hero-goa-search.png)
-- [Featured Listings (Goa)](docs/screenshots/02-featured-listings-goa.png)
-- [Similar Destinations Form (Goa)](docs/screenshots/03-similar-destinations-form-goa.png)
-- [AI Travel Planner Form](docs/screenshots/04-ai-travel-planner-form.png)
-- [Hidden Gems Grid](docs/screenshots/05-hidden-gems-grid.png)
-- [Adventure Listings Grid](docs/screenshots/06-adventure-listings-grid.png)
-- [Chatbot Assistant](docs/screenshots/07-chatbot-assistant.png)
-- [Explore No Results Goa](docs/screenshots/08-explore-no-results-goa.png)
+#### 6) Adventure Listings Grid
+![Adventure Listings Grid](docs/screenshots/06-adventure-listings-grid.svg)
 
-Legacy links:
+#### 7) Chatbot Assistant
+![Chatbot Assistant](docs/screenshots/07-chatbot-assistant.svg)
 
-- [Home](docs/screenshots/01-home-hero.png)
-- [Similar Destinations](docs/screenshots/03-similar-destinations-form.png)
-- [Daman Search Input](docs/screenshots/06-similar-daman-input.png)
-- [Explore Results](docs/screenshots/07-explore-search-results.png)
-- [Chatbot Assistant (legacy)](docs/screenshots/08-chatbot-assistant.png)
-- [Explore No Results Goa (legacy)](docs/screenshots/09-explore-no-results-goa.png)
+#### 8) Explore No Results (Goa)
+![Explore No Results Goa](docs/screenshots/08-explore-no-results-goa.svg)
 
 ## Useful docs
 

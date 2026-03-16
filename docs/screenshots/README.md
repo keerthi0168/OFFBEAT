@@ -1,30 +1,21 @@
-# Screenshot Upload Guide
+# Screenshot Asset Guide
 
-Place the UI screenshots shared in chat into this folder with the exact names below so they render in the project `README.md`.
+This folder now includes committed placeholder screenshot assets as SVGs, referenced directly by embedded images in root `README.md`.
 
-## Preferred names (latest)
+## Current embedded asset names
 
-1. `01-explore-hero-goa-search.png`
-2. `02-featured-listings-goa.png`
-3. `03-similar-destinations-form-goa.png`
-4. `04-ai-travel-planner-form.png`
-5. `05-hidden-gems-grid.png`
-6. `06-adventure-listings-grid.png`
-7. `07-chatbot-assistant.png` *(optional)*
-8. `08-explore-no-results-goa.png` *(optional debug screenshot)*
+1. `01-explore-hero-goa-search.svg`
+2. `02-featured-listings-goa.svg`
+3. `03-similar-destinations-form-goa.svg`
+4. `04-ai-travel-planner-form.svg`
+5. `05-hidden-gems-grid.svg`
+6. `06-adventure-listings-grid.svg`
+7. `07-chatbot-assistant.svg`
+8. `08-explore-no-results-goa.svg`
 
-## Legacy names (still referenced in README)
+## Replacing placeholders with real screenshots
 
-1. `01-home-hero.png`
-2. `02-featured-listings.png`
-3. `03-similar-destinations-form.png`
-4. `04-ai-travel-planner.png`
-5. `05-hidden-gems-grid.png`
-6. `06-similar-daman-input.png`
-7. `07-explore-search-results.png`
-8. `08-chatbot-assistant.png`
-9. `09-explore-no-results-goa.png`
+- Keep the **same filenames** (recommended), and overwrite each SVG with your actual image file (you can also switch to `.png`/`.jpg` and update `README.md` paths accordingly).
+- Once replaced, the embedded screenshot section in root `README.md` updates automatically.
 
-After adding files, GitHub markdown image links in root `README.md` will display automatically.
-
-_Docs metadata refresh: 2026-03-16 (non-functional documentation-only update)._
+_Docs metadata refresh: 2026-03-16 (screenshot placeholders + embed-ready paths)._
