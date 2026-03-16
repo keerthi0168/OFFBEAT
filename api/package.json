@@ -11,7 +11,8 @@
     "seed:converted": "node scripts/seedConverted.js",
     "train:tourism": "node scripts/trainTourismModel.js",
     "train:tourism:enhanced": "node scripts/trainEnhancedTourismModel.js",
-    "extract:raw": "node scripts/extractRawDataset.js"
+    "extract:raw": "node scripts/extractRawDataset.js",
+    "evaluate:chatbot": "node scripts/evaluateChatbotDataset.js"
   },
   "keywords": [
     "api",

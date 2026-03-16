@@ -4,6 +4,7 @@ import os
 import sys
 import json
 import re
+from collections import Counter
 from difflib import get_close_matches
 from datetime import datetime
 from pathlib import Path
@@ -79,6 +80,41 @@ TRENDING_WEIGHTS = {
     "popularity_score": 0.15,
 }
 
+QUERY_ALIAS_MAP = {
+    "god s own country": "Kerala",
+    "gods own country": "Kerala",
+    "paradise on earth": "Kashmir",
+    "heaven on earth": "Kashmir",
+}
+
+CATEGORY_QUERY_MAP = {
+    "beach": "Beach",
+    "beaches": "Beach",
+    "coastal": "Beach",
+    "coast": "Beach",
+    "mountain": "Hill Station",
+    "mountains": "Hill Station",
+    "hill": "Hill Station",
+    "hills": "Hill Station",
+    "wildlife": "Wildlife",
+    "temples": "Temple",
+    "heritage": "Temple",
+    "adventure": "Adventure",
+    "nature": "Garden",
+}
+
+CLUSTER_QUERY_MAP = {
+    "budget": "Budget travel",
+    "cheap": "Budget travel",
+    "affordable": "Budget travel",
+    "luxury": "Luxury travel",
+    "premium": "Luxury travel",
+    "hidden gem": "Hidden gems",
+    "hidden gems": "Hidden gems",
+    "offbeat": "Hidden gems",
+    "adventure": "Adventure travel",
+}
+
 
 def resolve_column(columns: list[str], aliases: list[str]) -> str | None:
     lowered = {column.lower(): column for column in columns}
@@ -133,6 +169,11 @@ def normalize_category_label(value: str, description_text: str = "") -> str:
         return "Adventure"
 
     return "Garden"
+
+
+def normalize_lookup_text(value: str) -> str:
+    cleaned = re.sub(r"[^a-z0-9\s]+", " ", str(value or "").lower())
+    return re.sub(r"\s+", " ", cleaned).strip()
 
 
 def min_max_normalize(series: pd.Series) -> pd.Series:
@@ -504,8 +545,10 @@ class DestinationRecommender:
         self.cf_user_index = {}
         self.cf_item_index = {}
         self.cf_matrix = None
+        self.association_graph = {}
         self._prepare_interaction_store()
         self._refresh_collaborative_filtering_model()
+        self._refresh_association_model()
 
         self.cnn_model = None
         self.cnn_transform = None
@@ -718,7 +761,11 @@ class DestinationRecommender:
         return None
 
     def _extract_category_from_text(self, text: str) -> str | None:
-        lowered = text.lower()
+        lowered = normalize_lookup_text(text)
+        explicit_category = CATEGORY_QUERY_MAP.get(lowered)
+        if explicit_category:
+            return explicit_category
+
         category_keywords = {
             "Beach": ["beach", "coast", "island"],
             "Hill Station": ["hill", "mountain", "trek"],
@@ -732,18 +779,131 @@ class DestinationRecommender:
                 return label
         return None
 
+    def _canonicalize_query(self, text: str) -> str:
+        query = str(text or "").strip()
+        normalized = normalize_lookup_text(query)
+        for alias, target in QUERY_ALIAS_MAP.items():
+            if normalized == alias or normalized.endswith(alias) or f" {alias} " in f" {normalized} ":
+                return target
+        return query
+
+    def _find_state_matches(self, query: str, limit: int = 5) -> pd.DataFrame:
+        normalized_query = normalize_lookup_text(query)
+        if not normalized_query:
+            return self.df.head(0).copy()
+
+        state_series = self.df["state"].astype(str).apply(normalize_lookup_text)
+        matches = self.df[state_series == normalized_query].copy()
+
+        if matches.empty:
+            partial_mask = state_series.str.contains(normalized_query, na=False)
+            matches = self.df[partial_mask].copy()
+
+        if matches.empty:
+            token_set = set(normalized_query.split())
+            overlap_mask = state_series.apply(
+                lambda value: bool(value) and (value in normalized_query or any(token in token_set for token in value.split()))
+            )
+            matches = self.df[overlap_mask].copy()
+
+        if matches.empty:
+            return matches
+
+        return matches.sort_values(
+            ["hidden_gem_probability", "rating", "popularity_score"],
+            ascending=[False, False, True],
+        ).drop_duplicates(subset=["place_name"]).head(limit)
+
+    def _get_cluster_neighbors(
+        self,
+        cluster_name: str,
+        exclude_places: set[str] | None = None,
+        region: str | None = None,
+        limit: int = 4,
+    ) -> list[dict]:
+        candidates = self.df[self.df[CLUSTER_NAME_LABEL] == cluster_name].copy()
+        if region and region != "Any":
+            candidates = candidates[candidates["region"].str.lower() == region.strip().lower()]
+
+        if exclude_places:
+            normalized_excludes = {place.strip().lower() for place in exclude_places}
+            candidates = candidates[
+                ~candidates["place_name"].str.lower().isin(normalized_excludes)
+            ]
+
+        candidates = candidates.sort_values(
+            ["hidden_gem_probability", "rating", "popularity_score"],
+            ascending=[False, False, True],
+        ).head(limit)
+
+        return [self._row_to_payload(row) for _, row in candidates.iterrows()]
+
+    def _record_chatbot_interaction(
+        self,
+        session_id: str,
+        query: str,
+        destination_name: str = "",
+        category: str = "",
+        event_type: str = "search",
+    ) -> None:
+        try:
+            self.track_interaction(
+                user_id=session_id or "default",
+                event_type=event_type,
+                query=query,
+                destination_name=destination_name,
+                category=category,
+            )
+        except Exception:
+            pass
+
     def chatbot_assistant(self, message: str, session_id: str = "default") -> dict:
         query = str(message or "").strip()
         if not query:
             raise ValueError("message is required")
 
-        lowered = query.lower()
-        region = self._extract_region_from_text(query) or "Any"
-        category = self._extract_category_from_text(query) or "Any"
+        canonical_query = self._canonicalize_query(query)
+        lowered = normalize_lookup_text(canonical_query)
+        region = self._extract_region_from_text(canonical_query) or "Any"
+        category = self._extract_category_from_text(canonical_query) or "Any"
+        state_matches = self._find_state_matches(canonical_query, limit=5)
+        destination_index = self.find_destination_index(canonical_query, require_strict=False)
+        best_time_requested = any(keyword in lowered for keyword in ["best time", "when to go", "ideal season", "weather"])
+
+        for keyword, cluster_name in CLUSTER_QUERY_MAP.items():
+            if keyword in lowered:
+                cluster_payload = self.get_clusters(region=region if region != "Any" else None, limit_per_cluster=4)
+                selected_cluster = next(
+                    (cluster for cluster in cluster_payload["clusters"] if cluster["cluster_name"] == cluster_name),
+                    None,
+                )
+                if selected_cluster:
+                    names = [row["place_name"] for row in selected_cluster["destinations"][:4]]
+                    self._record_chatbot_interaction(
+                        session_id=session_id,
+                        query=query,
+                        destination_name=names[0] if names else "",
+                        category=cluster_name,
+                        event_type="semantic_search",
+                    )
+                    return {
+                        "response": (
+                            f"Using unsupervised clustering, I grouped similar trips into a {cluster_name} cluster. "
+                            f"Top matches{f' in {region}' if region != 'Any' else ''}: {', '.join(names)}."
+                        ),
+                        "type": "cluster_explorer",
+                        "results": selected_cluster["destinations"],
+                        "cluster": selected_cluster,
+                        "suggestions": [
+                            f"Show hidden gems{f' in {region}' if region != 'Any' else ''}",
+                            f"Plan a {cluster_name.lower()} itinerary",
+                            "Recommend similar destinations",
+                        ],
+                    }
 
         if any(keyword in lowered for keyword in ["plan", "itinerary", "trip plan", "schedule"]):
-            budget = self._extract_number(query, r"(?:₹|rs\.?|inr)?\s*(\d{3,7})") or 20000.0
-            days = int(self._extract_number(query, r"(\d+)\s*(?:days?|nights?)") or 4)
+            budget = self._extract_number(canonical_query, r"(?:₹|rs\.?|inr)?\s*(\d{3,7})") or 20000.0
+            days = int(self._extract_number(canonical_query, r"(\d+)\s*(?:days?|nights?)") or 4)
             planner = self.create_itinerary(
                 budget=budget,
                 number_of_days=days,
@@ -751,6 +911,13 @@ class DestinationRecommender:
                 region=region,
             )
             top_names = [item["destination"]["place_name"] for item in planner["itinerary"][:3]]
+            self._record_chatbot_interaction(
+                session_id=session_id,
+                query=query,
+                destination_name=top_names[0] if top_names else "",
+                category=category,
+                event_type="semantic_search",
+            )
             return {
                 "response": (
                     f"Here's a {planner['inputs']['number_of_days']}-day travel plan within about ₹{int(planner['inputs']['budget'])}. "
@@ -768,6 +935,13 @@ class DestinationRecommender:
         if "hidden gem" in lowered or "offbeat" in lowered:
             gems = self.get_hidden_gems(top_k=5, region=region if region != "Any" else None)
             gem_names = [row["place_name"] for row in gems["results"][:5]]
+            self._record_chatbot_interaction(
+                session_id=session_id,
+                query=query,
+                destination_name=gem_names[0] if gem_names else "",
+                category="Hidden gems",
+                event_type="semantic_search",
+            )
             return {
                 "response": (
                     f"Great choice! Here are offbeat hidden gems{f' in {region}' if region != 'Any' else ''}: "
@@ -782,20 +956,90 @@ class DestinationRecommender:
                 ],
             }
 
-        place_match = None
-        for place_name in self.df["place_name"].head(500):
-            if str(place_name).lower() in lowered:
-                place_match = str(place_name)
-                break
+        if not state_matches.empty and (
+            len(lowered.split()) <= 4
+            or any(keyword in lowered for keyword in ["about", "visit", "places", "where", "best time"])
+        ):
+            primary_row = state_matches.iloc[0]
+            state_name = str(primary_row["state"])
+            top_rows = state_matches.head(5)
+            top_names = top_rows["place_name"].tolist()
+            cluster_mix = top_rows[CLUSTER_NAME_LABEL].value_counts().to_dict()
+            cluster_summary = ", ".join(f"{name}: {count}" for name, count in cluster_mix.items())
+            category_summary = ", ".join(top_rows["category"].dropna().astype(str).unique()[:3])
+            association_payload = self.get_associated_destinations(primary_row["place_name"], top_k=3)
+            association_names = [row["place_name"] for row in association_payload["results"][:3]]
 
-        if place_match or any(keyword in lowered for keyword in ["recommend", "similar", "where", "visit", "destination"]):
-            if place_match:
-                similar = self.similar_destinations(destination=place_match, top_k=5)
+            response_parts = [
+                f"{state_name} is excellent for {category_summary or 'diverse'} experiences.",
+                (
+                    f"Best time to start planning is {top_rows['best_season'].mode().iloc[0]}."
+                    if best_time_requested and not top_rows["best_season"].mode().empty
+                    else f"Top dataset matches are {', '.join(top_names)}."
+                ),
+                f"Unsupervised clustering groups this state into patterns like {cluster_summary}." if cluster_summary else "",
+                (
+                    f"Association learning shows travellers who search {primary_row['place_name']} also explore {', '.join(association_names)}."
+                    if association_names
+                    else ""
+                ),
+            ]
+
+            self._record_chatbot_interaction(
+                session_id=session_id,
+                query=query,
+                destination_name=primary_row["place_name"],
+                category=state_name,
+                event_type="search",
+            )
+
+            return {
+                "response": " ".join(part for part in response_parts if part),
+                "type": "state_explorer",
+                "results": [self._row_to_payload(row) for _, row in top_rows.iterrows()],
+                "associated_results": association_payload["results"],
+                "suggestions": [
+                    f"Best time for {state_name}",
+                    f"Hidden gems in {state_name}",
+                    f"Plan a trip to {state_name}",
+                ],
+            }
+
+        if destination_index is not None or any(keyword in lowered for keyword in ["recommend", "similar", "where", "visit", "destination"]):
+            if destination_index is not None:
+                place_match = str(self.df.iloc[destination_index]["place_name"])
+                similar = self.similar_destinations(destination=place_match, top_k=5, min_similarity=0.2)
                 names = [row["place_name"] for row in similar["results"][:5]]
+                place_row = self.df.iloc[destination_index]
+                association_payload = self.get_associated_destinations(place_match, top_k=3)
+                association_names = [row["place_name"] for row in association_payload["results"][:3]]
+                cluster_neighbors = self._get_cluster_neighbors(
+                    cluster_name=str(place_row.get(CLUSTER_NAME_LABEL, "Budget travel")),
+                    exclude_places={place_match},
+                    region=str(place_row.get("region", "Any")),
+                    limit=3,
+                )
+                cluster_names = [row["place_name"] for row in cluster_neighbors]
+                season_note = f" Best time to visit is {place_row['best_season']}." if best_time_requested else ""
+                self._record_chatbot_interaction(
+                    session_id=session_id,
+                    query=query,
+                    destination_name=place_match,
+                    category=str(place_row.get("category", "")),
+                    event_type="search",
+                )
                 return {
-                    "response": f"If you liked {place_match}, you may also enjoy: {', '.join(names)}.",
+                    "response": (
+                        f"{place_match} is a {place_row['category'].lower()} destination in {place_row['state']}, {place_row['region']} India.{season_note} "
+                        f"Unsupervised clustering places it in our {place_row.get(CLUSTER_NAME_LABEL, 'Budget travel')} cluster. "
+                        f"If you liked {place_match}, you may also enjoy: {', '.join(names)}."
+                        f"{' Travellers also commonly pair it with ' + ', '.join(association_names) + '.' if association_names else ''}"
+                        f"{' Nearby cluster matches include ' + ', '.join(cluster_names) + '.' if cluster_names else ''}"
+                    ),
                     "type": "recommendations",
                     "results": similar["results"],
+                    "associated_results": association_payload["results"],
+                    "cluster_results": cluster_neighbors,
                     "suggestions": [
                         f"Plan itinerary around {place_match}",
                         "Show hidden gems nearby",
@@ -803,12 +1047,22 @@ class DestinationRecommender:
                     ],
                 }
 
-            semantic = self.semantic_search(query=query, top_k=5, region=region if region != "Any" else None)
+            semantic = self.semantic_search(query=canonical_query, top_k=5, region=region if region != "Any" else None)
             names = [row["place_name"] for row in semantic["results"][:5]]
+            anchor_place = names[0] if names else ""
+            association_payload = self.get_associated_destinations(anchor_place or canonical_query, top_k=3)
+            self._record_chatbot_interaction(
+                session_id=session_id,
+                query=query,
+                destination_name=anchor_place,
+                category=category,
+                event_type="semantic_search",
+            )
             return {
                 "response": f"Based on your query, top destination matches are: {', '.join(names)}.",
                 "type": "dataset_qa",
                 "results": semantic["results"],
+                "associated_results": association_payload["results"],
                 "suggestions": [
                     "Show hidden gems",
                     "Create a travel plan for 5 days",
@@ -816,11 +1070,19 @@ class DestinationRecommender:
                 ],
             }
 
-        qa_results = self.semantic_search(query=query, top_k=3, region=region if region != "Any" else None)
+        qa_results = self.semantic_search(query=canonical_query, top_k=3, region=region if region != "Any" else None)
         snippets = [
             f"{item['place_name']} ({item['category']}, {item['region']})"
             for item in qa_results["results"]
         ]
+
+        self._record_chatbot_interaction(
+            session_id=session_id,
+            query=query,
+            destination_name=qa_results["results"][0]["place_name"] if qa_results["results"] else "",
+            category=category,
+            event_type="semantic_search",
+        )
 
         return {
             "response": (
@@ -853,15 +1115,19 @@ class DestinationRecommender:
         empty.to_csv(self.interaction_log_path, index=False)
 
     def _resolve_destination_from_text(self, text: str) -> str | None:
-        candidate = str(text or "").strip().lower()
+        candidate = normalize_lookup_text(self._canonicalize_query(text))
         if not candidate:
             return None
 
-        exact = self.df[self.df["place_name"].str.lower() == candidate]
+        exact = self.df[self.df["place_name"].apply(normalize_lookup_text) == candidate]
         if not exact.empty:
             return str(exact.iloc[0]["place_name"])
 
-        contains = self.df[self.df["place_name"].str.lower().str.contains(candidate, na=False)]
+        state_matches = self._find_state_matches(candidate, limit=1)
+        if not state_matches.empty:
+            return str(state_matches.iloc[0]["place_name"])
+
+        contains = self.df[self.df["place_name"].apply(normalize_lookup_text).str.contains(candidate, na=False)]
         if not contains.empty:
             return str(contains.iloc[0]["place_name"])
 
@@ -983,6 +1249,92 @@ class DestinationRecommender:
             "place_names": place_names,
         }
 
+    def _refresh_association_model(self) -> None:
+        interactions = self._load_interactions()
+        self.association_graph = {}
+
+        if interactions.empty:
+            return
+
+        resolved_rows = []
+        for _, interaction in interactions.iterrows():
+            user_id = str(interaction.get("user_id", "")).strip()
+            if not user_id:
+                continue
+
+            resolved_destination = (
+                self._resolve_destination_from_text(interaction.get("destination_name", ""))
+                or self._resolve_destination_from_text(interaction.get("query", ""))
+            )
+            if not resolved_destination:
+                continue
+
+            resolved_rows.append(
+                {
+                    "user_id": user_id,
+                    "timestamp": interaction.get("timestamp", ""),
+                    "resolved_destination": resolved_destination,
+                }
+            )
+
+        if not resolved_rows:
+            return
+
+        resolved_df = pd.DataFrame(resolved_rows)
+        resolved_df["timestamp"] = pd.to_datetime(resolved_df["timestamp"], errors="coerce")
+        resolved_df = resolved_df.sort_values(["user_id", "timestamp"], na_position="last")
+
+        sequences = []
+        for _, group in resolved_df.groupby("user_id"):
+            ordered = []
+            seen = set()
+            for destination_name in group["resolved_destination"].tolist():
+                key = str(destination_name).strip().lower()
+                if not key or key in seen:
+                    continue
+                seen.add(key)
+                ordered.append(str(destination_name))
+            if len(ordered) >= 2:
+                sequences.append(ordered)
+
+        if not sequences:
+            return
+
+        destination_support = Counter()
+        pair_counts = Counter()
+        total_sequences = len(sequences)
+
+        for sequence in sequences:
+            for seed in sequence:
+                destination_support[seed] += 1
+            for seed in sequence:
+                for related in sequence:
+                    if seed == related:
+                        continue
+                    pair_counts[(seed, related)] += 1
+
+        association_graph = {}
+        for (seed, related), pair_count in pair_counts.items():
+            support = pair_count / max(total_sequences, 1)
+            confidence = pair_count / max(destination_support[seed], 1)
+            association_graph.setdefault(seed, []).append(
+                {
+                    "place_name": related,
+                    "support": round(float(support), 4),
+                    "confidence": round(float(confidence), 4),
+                    "association_score": round(float((confidence * 0.7) + (support * 0.3)), 4),
+                }
+            )
+
+        for seed, related_rows in association_graph.items():
+            association_graph[seed] = sorted(
+                related_rows,
+                key=lambda row: (row["association_score"], row["confidence"], row["support"]),
+                reverse=True,
+            )
+
+        self.association_graph = association_graph
+
     def track_interaction(
         self,
         user_id: str,
@@ -1012,6 +1364,79 @@ class DestinationRecommender:
             header=not exists,
         )
         self._refresh_collaborative_filtering_model()
+        self._refresh_association_model()
+
+    def get_associated_destinations(self, query: str, top_k: int = 5) -> dict:
+        seeds = []
+        canonical_query = self._canonicalize_query(query)
+
+        destination_index = self.find_destination_index(canonical_query, require_strict=False)
+        if destination_index is not None:
+            seeds.append(str(self.df.iloc[destination_index]["place_name"]))
+
+        state_matches = self._find_state_matches(canonical_query, limit=3)
+        for place_name in state_matches["place_name"].tolist():
+            if place_name not in seeds:
+                seeds.append(place_name)
+
+        candidate_rows = {}
+        for seed in seeds[:3]:
+            for related in self.association_graph.get(seed, []):
+                place_name = str(related["place_name"])
+                if place_name in seeds:
+                    continue
+                existing = candidate_rows.get(place_name)
+                if existing is None or related["association_score"] > existing["association_score"]:
+                    candidate_rows[place_name] = related
+
+        if candidate_rows:
+            ranked_rows = sorted(
+                candidate_rows.values(),
+                key=lambda row: (row["association_score"], row["confidence"], row["support"]),
+                reverse=True,
+            )[:top_k]
+
+            results = []
+            for item in ranked_rows:
+                place_row = self.df[self.df["place_name"] == item["place_name"]]
+                if place_row.empty:
+                    continue
+                payload = self._row_to_payload(place_row.iloc[0])
+                payload.update(
+                    {
+                        "support": item["support"],
+                        "confidence": item["confidence"],
+                        "association_score": item["association_score"],
+                    }
+                )
+                results.append(payload)
+
+            return {
+                "query": query,
+                "type": "association_rules",
+                "seed_destinations": seeds,
+                "count": len(results),
+                "results": results,
+            }
+
+        fallback_results = []
+        if seeds:
+            seed_row = self.df[self.df["place_name"] == seeds[0]]
+            if not seed_row.empty:
+                fallback_results = self._get_cluster_neighbors(
+                    cluster_name=str(seed_row.iloc[0].get(CLUSTER_NAME_LABEL, "Budget travel")),
+                    exclude_places=set(seeds),
+                    region=str(seed_row.iloc[0].get("region", "Any")),
+                    limit=top_k,
+                )
+
+        return {
+            "query": query,
+            "type": "cluster_fallback",
+            "seed_destinations": seeds,
+            "count": len(fallback_results),
+            "results": fallback_results,
+        }
 
     def get_user_recommendations(self, user_id: str, top_k: int = 10) -> dict:
         user_key = str(user_id or "").strip()

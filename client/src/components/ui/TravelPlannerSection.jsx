@@ -41,6 +41,8 @@ const TravelPlannerSection = ({ initialRegion = 'Any' }) => {
     <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
       <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
         <input
+          id="planner-budget-input"
+          name="budget"
           type="number"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
@@ -49,6 +51,8 @@ const TravelPlannerSection = ({ initialRegion = 'Any' }) => {
           placeholder="Budget"
         />
         <input
+          id="planner-days-input"
+          name="numberOfDays"
           type="number"
           value={numberOfDays}
           onChange={(e) => setNumberOfDays(e.target.value)}
@@ -57,6 +61,8 @@ const TravelPlannerSection = ({ initialRegion = 'Any' }) => {
           placeholder="Number of days"
         />
         <select
+          id="planner-category-select"
+          name="preferredCategory"
           value={preferredCategory}
           onChange={(e) => setPreferredCategory(e.target.value)}
           className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none"
@@ -70,6 +76,8 @@ const TravelPlannerSection = ({ initialRegion = 'Any' }) => {
           <option value="Garden" className="bg-slate-900">Nature/Garden</option>
         </select>
         <select
+          id="planner-region-select"
+          name="region"
           value={region}
           onChange={(e) => setRegion(e.target.value)}
           className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none"

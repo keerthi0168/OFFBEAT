@@ -158,6 +158,8 @@ const IndexPage = () => {
         </div>
         <div className="grid grid-cols-1 gap-4 rounded-2xl bg-white/5 backdrop-blur-md p-4 shadow-lg border border-white/10 md:grid-cols-4">
           <select
+            id="filter-budget"
+            name="budgetFilter"
             className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md px-3 py-2 text-sm text-[#E5E7EB] focus:border-[#C9A96E] focus:ring-2 focus:ring-[#C9A96E]/20 transition-all duration-300"
             value={filters.budget}
             onChange={(e) => setFilters((prev) => ({ ...prev, budget: e.target.value }))}
@@ -168,6 +170,8 @@ const IndexPage = () => {
             <option className="bg-[#0B1220] text-[#E5E7EB]">Premium</option>
           </select>
           <select
+            id="filter-interest"
+            name="interestFilter"
             className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md px-3 py-2 text-sm text-[#E5E7EB] focus:border-[#C9A96E] focus:ring-2 focus:ring-[#C9A96E]/20 transition-all duration-300"
             value={filters.interest}
             onChange={(e) => setFilters((prev) => ({ ...prev, interest: e.target.value }))}
@@ -179,6 +183,8 @@ const IndexPage = () => {
             <option className="bg-[#0B1220] text-[#E5E7EB]">Wellness</option>
           </select>
           <select
+            id="filter-season"
+            name="seasonFilter"
             className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md px-3 py-2 text-sm text-[#E5E7EB] focus:border-[#C9A96E] focus:ring-2 focus:ring-[#C9A96E]/20 transition-all duration-300"
             value={filters.season}
             onChange={(e) => setFilters((prev) => ({ ...prev, season: e.target.value }))}
@@ -190,6 +196,8 @@ const IndexPage = () => {
             <option className="bg-[#0B1220] text-[#E5E7EB]">Winter</option>
           </select>
           <select
+            id="filter-region"
+            name="regionFilter"
             className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md px-3 py-2 text-sm text-[#E5E7EB] focus:border-[#C9A96E] focus:ring-2 focus:ring-[#C9A96E]/20 transition-all duration-300"
             value={filters.region}
             onChange={(e) => setFilters((prev) => ({ ...prev, region: e.target.value }))}

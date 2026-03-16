@@ -113,6 +113,7 @@ const BookingWidget = ({ place }) => {
           <input
             type="text"
             name="name"
+            autoComplete="name"
             value={name}
             onChange={handleBookingData}
             className="luxury-input"
@@ -121,6 +122,7 @@ const BookingWidget = ({ place }) => {
           <input
             type="tel"
             name="phone"
+            autoComplete="tel"
             value={phone}
             onChange={handleBookingData}
             className="luxury-input"

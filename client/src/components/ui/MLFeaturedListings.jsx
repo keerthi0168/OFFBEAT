@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import mlApi, { getMlApiBaseUrl, getFriendlyMlError } from '@/utils/mlApi';
+import axiosInstance from '@/utils/axios';
+import { getFriendlyMlError } from '@/utils/mlApi';
 
 const categoryEmoji = {
   Heritage: '🏛️',
@@ -8,6 +9,45 @@ const categoryEmoji = {
   Nature: '🌿',
   Adventure: '⛰️',
   Religious: '🕉️',
+};
+
+const toNumber = (value, fallback = 0) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const normalizeDestination = (place) => {
+  const rating = toNumber(place?.rating, 4.2);
+  const popularity = toNumber(place?.popularity_score, 55);
+  const budget = toNumber(place?.price ?? place?.budgetMin ?? place?.budgetMax, 2500);
+
+  return {
+    place_name: place?.title || place?.name || 'Destination',
+    state: place?.state || place?.State || place?.address?.split(',')?.[1]?.trim() || 'India',
+    region: place?.region || place?.direction || 'Any',
+    category: place?.category || place?.type || 'Nature',
+    rating,
+    popularity_score: popularity,
+    budget,
+    best_season: Array.isArray(place?.best_season)
+      ? place.best_season.slice(0, 2).join(', ')
+      : place?.best_season || 'Any',
+    similarity: 0,
+  };
+};
+
+const calculateSimilarity = (destination, query) => {
+  const q = String(query || '').trim().toLowerCase();
+  if (!q) return 0.5;
+
+  const name = String(destination.place_name || '').toLowerCase();
+  const category = String(destination.category || '').toLowerCase();
+  const region = String(destination.region || '').toLowerCase();
+
+  if (name.startsWith(q)) return 0.97;
+  if (name.includes(q)) return 0.9;
+  if (category.includes(q) || region.includes(q)) return 0.75;
+  return 0.55;
 };
 
 const MLFeaturedListings = ({ query, fallbackDestination = 'Goa', limit = 5 }) => {
@@ -29,17 +69,35 @@ const MLFeaturedListings = ({ query, fallbackDestination = 'Goa', limit = 5 }) =
       setError('');
 
       try {
-        const response = await mlApi.get('/recommendations', {
+        const response = await axiosInstance.get('/tourism/search', {
           params: {
-            destination: destinationQuery,
-            limit,
+            q: destinationQuery,
           },
         });
 
         if (ignore) return;
 
-        setRecommendations(response.data?.recommendations || []);
-        setMatchedDestination(response.data?.matched_destination || null);
+        const results = Array.isArray(response.data?.results) ? response.data.results : [];
+        const normalized = results
+          .map(normalizeDestination)
+          .map((destination) => ({
+            ...destination,
+            similarity: calculateSimilarity(destination, destinationQuery),
+          }))
+          .sort((a, b) => b.similarity - a.similarity)
+          .slice(0, limit);
+
+        setRecommendations(normalized);
+        setMatchedDestination(
+          normalized[0]
+            ? {
+                place_name: normalized[0].place_name,
+                state: normalized[0].state,
+                category: normalized[0].category,
+                best_season: normalized[0].best_season,
+              }
+            : null
+        );
       } catch (requestError) {
         if (ignore) return;
 
@@ -77,9 +135,6 @@ const MLFeaturedListings = ({ query, fallbackDestination = 'Goa', limit = 5 }) =
         <p className="mt-2 text-amber-100/80">{error}</p>
         <p className="mt-2 text-amber-100/60">
           You can still browse destinations below.
-        </p>
-        <p className="mt-2 text-amber-100/60">
-          AI service URL: <span className="font-mono">{getMlApiBaseUrl()}</span>
         </p>
       </div>
     );

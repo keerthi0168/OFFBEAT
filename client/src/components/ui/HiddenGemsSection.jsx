@@ -1,6 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import mlApi, { getMlApiBaseUrl, getFriendlyMlError } from '@/utils/mlApi';
+import axiosInstance from '@/utils/axios';
+import { getFriendlyMlError } from '@/utils/mlApi';
+
+const toNumber = (value, fallback = 0) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const normalizeGem = (place) => {
+  const rating = toNumber(place?.rating, 4.2);
+  const popularity = toNumber(place?.popularity_score, 60);
+  const budget = toNumber(place?.price ?? place?.budgetMin ?? place?.budgetMax, 2200);
+
+  const hiddenGemProbability = Math.min(
+    1,
+    Math.max(0, 0.55 * (rating / 5) + 0.35 * (1 - Math.min(popularity / 100, 1)) + 0.1 * (1 - Math.min(budget / 8000, 1)))
+  );
+
+  return {
+    place_name: place?.title || place?.name || 'Destination',
+    state: place?.state || place?.State || place?.address?.split(',')?.[1]?.trim() || 'India',
+    region: place?.region || place?.direction || 'Any',
+    category: place?.category || place?.type || 'Nature',
+    rating,
+    popularity_score: popularity,
+    hidden_gem_probability: hiddenGemProbability,
+    best_season: Array.isArray(place?.best_season)
+      ? place.best_season.slice(0, 2).join(', ')
+      : place?.best_season || 'Any',
+    description: place?.description || place?.extraInfo || 'A peaceful destination worth exploring.',
+  };
+};
 
 const HiddenGemsSection = ({ region = 'Any', limit = 6 }) => {
   const [gems, setGems] = useState([]);
@@ -15,15 +46,23 @@ const HiddenGemsSection = ({ region = 'Any', limit = 6 }) => {
       setError('');
 
       try {
-        const response = await mlApi.get('/hidden-gems', {
-          params: {
-            region,
-            limit,
-          },
+        const response = await axiosInstance.get('/tourism/all');
+
+        const places = Array.isArray(response.data?.destinations) ? response.data.destinations : [];
+        const regionLower = String(region || 'Any').toLowerCase();
+        const filtered = places.filter((place) => {
+          if (!regionLower || regionLower === 'any') return true;
+          const placeRegion = String(place?.region || place?.direction || '').toLowerCase();
+          return placeRegion.includes(regionLower);
         });
 
+        const scored = filtered
+          .map(normalizeGem)
+          .sort((a, b) => b.hidden_gem_probability - a.hidden_gem_probability)
+          .slice(0, limit);
+
         if (ignore) return;
-        setGems(response.data?.results || []);
+        setGems(scored);
       } catch (requestError) {
         if (ignore) return;
         setGems([]);
@@ -59,9 +98,6 @@ const HiddenGemsSection = ({ region = 'Any', limit = 6 }) => {
         <p className="mt-2 text-amber-100/80">{error}</p>
         <p className="mt-2 text-amber-100/60">
           You can still explore destinations normally.
-        </p>
-        <p className="mt-2 text-amber-100/60">
-          AI service URL: <span className="font-mono">{getMlApiBaseUrl()}</span>
         </p>
       </div>
     );

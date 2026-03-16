@@ -2,7 +2,7 @@
   "intents": [
     {
       "tag": "greeting",
-      "patterns": ["Hi", "Hello", "Hey", "Good morning", "Good evening", "Namaste"],
+      "patterns": ["Hi", "Hello", "Hey", "Good morning", "Good evening", "Good afternoon", "Namaste"],
       "responses": [
         "Hello! Welcome to Offbeat Travel India. How can I help you discover hidden gems today?",
         "Hi there! I'm here to help you explore offbeat destinations across India. What are you looking for?",
@@ -32,23 +32,23 @@
     },
     {
       "tag": "beaches",
-      "patterns": ["Beach destinations", "Best beaches", "Coastal places", "Seaside locations"],
+      "patterns": ["Beach destinations", "Best beaches", "Coastal places", "Seaside locations", "Beaches", "Beach places", "Beach destinations in India"],
       "responses": [
         "For stunning beaches, check out Goa (Calangute, Baga), Kerala (Kovalam, Varkala), and Andaman Islands (Radhanagar Beach)!",
         "Beach lovers will enjoy Goa's vibrant shores, Kerala's serene cliffs at Varkala, and pristine Andaman beaches.",
         "Top beach picks: Goa for nightlife, Kerala backwaters for serenity, Andaman for crystal-clear waters!"
       ],
-      "keywords": ["beach", "coastal", "sea", "ocean", "sand"]
+      "keywords": ["beach", "beaches", "coastal", "sea", "ocean", "sand"]
     },
     {
       "tag": "mountains",
-      "patterns": ["Hill stations", "Mountain destinations", "Himalayan places", "Best hills to visit"],
+      "patterns": ["Hill stations", "Mountain destinations", "Himalayan places", "Best hills to visit", "Mountains", "Hills", "Mountain places"],
       "responses": [
         "For mountains, explore Manali, Shimla, Darjeeling, Munnar, and Kashmir's Gulmarg & Pahalgam!",
         "Hill station favorites: Manali for adventure, Shimla for scenic views, Munnar for tea gardens, Kashmir for breathtaking beauty.",
         "Mountain options: Himachal Pradesh (Manali, Shimla), Uttarakhand (Rishikesh), Kashmir (Dal Lake, Gulmarg), and West Bengal (Darjeeling)!"
       ],
-      "keywords": ["mountain", "hill", "himalaya", "trek", "snow"]
+      "keywords": ["mountain", "mountains", "hill", "hills", "himalaya", "trek", "snow"]
     },
     {
       "tag": "heritage",
@@ -72,33 +72,33 @@
     },
     {
       "tag": "kerala",
-      "patterns": ["Tell me about Kerala", "Kerala backwaters", "Places in Kerala", "God's own country"],
+      "patterns": ["Tell me about Kerala", "Kerala backwaters", "Places in Kerala", "Kerala", "God's own country", "Gods own country"],
       "responses": [
         "Kerala offers stunning backwaters (Alleppey, Kumarakom), hill stations (Munnar), beaches (Kovalam, Varkala), and wildlife (Periyar)!",
         "God's Own Country has it all - houseboat cruises, tea gardens, beaches, and Ayurvedic wellness retreats!",
         "Must-visit in Kerala: Backwater houseboats, Munnar tea estates, Kovalam beaches, and Thekkady wildlife!"
       ],
-      "keywords": ["kerala", "backwater", "houseboat", "munnar", "kovalam"]
+      "keywords": ["kerala", "backwater", "backwaters", "houseboat", "munnar", "kovalam", "alleppey"]
     },
     {
       "tag": "kashmir",
-      "patterns": ["Kashmir destinations", "Dal Lake", "Gulmarg", "Srinagar", "Paradise on Earth"],
+      "patterns": ["Kashmir destinations", "Kashmir", "Dal Lake", "Gulmarg", "Srinagar", "Paradise on Earth", "Heaven on Earth"],
       "responses": [
         "Kashmir's beauty: Dal Lake houseboats (Srinagar), Gulmarg meadows, Pahalgam valleys, and Sonamarg trails!",
         "Experience Paradise on Earth - shikara rides on Dal Lake, skiing in Gulmarg, and scenic Pahalgam!",
         "Kashmir highlights: Dal Lake, Mughal gardens (Shalimar Bagh), Gulmarg for snow, and Pahalgam for nature!"
       ],
-      "keywords": ["kashmir", "dal lake", "srinagar", "gulmarg", "pahalgam"]
+      "keywords": ["kashmir", "dal lake", "srinagar", "gulmarg", "pahalgam", "sonamarg"]
     },
     {
       "tag": "goa",
-      "patterns": ["Goa beaches", "Things to do in Goa", "Goa nightlife", "Best time for Goa"],
+      "patterns": ["Goa", "Goa beaches", "Things to do in Goa", "Goa nightlife", "Best time for Goa", "Goa trip"],
       "responses": [
         "Goa offers beaches (Calangute, Baga), water sports, vibrant nightlife, Portuguese heritage, and coastal cuisine!",
         "Enjoy Goa's famous beaches, beach shacks, water activities, and historic churches!",
         "Goa is perfect for relaxation, parties, seafood, and beautiful sunsets along the Arabian Sea coast!"
       ],
-      "keywords": ["goa", "beach", "party", "nightlife", "calangute"]
+      "keywords": ["goa", "beach", "party", "nightlife", "calangute", "baga"]
     },
     {
       "tag": "booking_help",
@@ -122,7 +122,7 @@
     },
     {
       "tag": "best_time",
-      "patterns": ["Best time to visit", "When to go", "Ideal season", "Weather info"],
+      "patterns": ["Best time to visit", "When to go", "Ideal season", "Weather info", "Best time for Goa", "Best time for Kerala", "When to visit Kashmir"],
       "responses": [
         "Best time varies: Kashmir/Himachal (May-Sept), Kerala/South (Oct-March), Goa (Nov-Feb), Northeast (Oct-April)!",
         "Visit hill stations in summer (Apr-Jun), beaches in winter (Nov-Feb), and most of India during pleasant Oct-March!",

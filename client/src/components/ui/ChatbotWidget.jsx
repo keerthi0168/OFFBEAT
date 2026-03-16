@@ -2,12 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { askTravelAssistant } from '@/utils/mlApi';
 import { getPersonalizationSignals } from '@/utils/analytics';
 
+const CHATBOT_NAME = 'YatriSathi AI';
+
 const ChatbotWidget = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
     { 
       from: 'bot', 
-      text: 'Hi! I\'m Offbeat Travel India AI Assistant. Ask me tourism questions, hidden gems, recommendations, or itinerary planning! ✈️',
+      text: `Hi! I\'m ${CHATBOT_NAME}, your Offbeat Travel India guide. Ask me tourism questions, hidden gems, recommendations, or itinerary planning! ✈️`,
       suggestions: ['Recommend beach destinations', 'Show hidden gems in South India', 'Plan a 5 day trip in 30000']
     },
   ]);
@@ -32,32 +34,42 @@ const ChatbotWidget = () => {
     setMessages((prev) => [...prev, { from: 'user', text: trimmed }]);
     setInput('');
     setIsTyping(true);
+    setMessages((prev) => [
+      ...prev,
+      {
+        from: 'bot',
+        text: `${CHATBOT_NAME} is thinking...`,
+        meta: 'pending',
+      },
+    ]);
 
     try {
-      // Call Flask AI chatbot assistant
+      // Call AI chatbot assistant (ML primary, Node fallback in API utility)
       const data = await askTravelAssistant({
         message: trimmed,
         sessionId: sessionId.current,
         personalization: getPersonalizationSignals(),
       });
 
-      // Add bot response
       setMessages((prev) => [
-        ...prev,
+        ...prev.filter((msg) => msg.meta !== 'pending'),
         {
           from: 'bot',
           text: data.response || "I'm not sure how to help with that. Could you rephrase?",
           category: data.category,
-          suggestions: data.suggestions || []
-        },
+          suggestions: Array.from(new Set(data.suggestions || [])).slice(0, 4)
+        }
       ]);
     } catch (error) {
       console.error('Chatbot error:', error);
       setMessages((prev) => [
-        ...prev,
+        ...prev.filter((msg) => msg.meta !== 'pending'),
         {
           from: 'bot',
-          text: error.response?.data?.message || 'Sorry, I encountered an error. Please try again!',
+          text:
+            error.response?.data?.response ||
+            error.response?.data?.message ||
+            `I\'m having trouble reaching my travel brain right now, but I\'m still here to help. Try asking for hidden gems, beaches, or a budget itinerary.`,
           suggestions: ['Recommend destinations in North India', 'Show hidden gems', 'Create itinerary for 4 days']
         },
       ]);
@@ -76,7 +88,7 @@ const ChatbotWidget = () => {
     setMessages([
       {
         from: 'bot',
-        text: 'Chat cleared! What would you like to explore in India today? 🌏',
+        text: `${CHATBOT_NAME} is ready again! What would you like to explore in India today? 🌏`,
         suggestions: ['Top places for temples', 'Budget trip under 20000', 'Adventure destinations']
       },
     ]);
@@ -90,7 +102,7 @@ const ChatbotWidget = () => {
           <div className="flex items-center justify-between rounded-t-2xl bg-gradient-to-r from-[#0B1220] to-[#1a2332] px-4 py-3 text-white border-b border-white/10">
             <div className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-[#1F8A8A] animate-pulse"></div>
-              <span className="font-light">Offbeat Travel India AI Assistant</span>
+              <span className="font-light">{CHATBOT_NAME}</span>
             </div>
             <div className="flex gap-2">
               <button
@@ -157,6 +169,8 @@ const ChatbotWidget = () => {
           {/* Input */}
           <div className="flex items-center gap-2 border-t border-white/10 p-3 bg-[#0B1220]/20">
             <input
+              id="chatbot-input"
+              name="chatbotInput"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
@@ -175,7 +189,7 @@ const ChatbotWidget = () => {
 
           {/* Powered by badge */}
           <div className="px-4 py-2 text-center text-xs text-[#E5E7EB]/40 border-t border-white/5">
-            Powered by Offbeat Travel India AI 🤖
+            Powered by Offbeat Travel India · {CHATBOT_NAME} 🤖
           </div>
         </div>
       )}
@@ -186,7 +200,7 @@ const ChatbotWidget = () => {
         className={`flex h-14 w-14 items-center justify-center rounded-full border border-[#C9A96E]/30 bg-gradient-to-r from-[#C9A96E] to-[#D4B896] text-[#0B1220] shadow-lg hover:shadow-[#C9A96E]/30 transition-all duration-300 ${
           open ? 'scale-95' : 'scale-100 hover:scale-105'
         }`}
-        aria-label="Toggle chatbot"
+        aria-label={`Toggle ${CHATBOT_NAME}`}
       >
         {open ? (
           <span className="text-lg">✕</span>

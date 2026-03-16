@@ -60,20 +60,29 @@ const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
 
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <p className="mb-4 text-sm text-[#E5E7EB]/75">
+        Start with a place name (like <span className="text-[#C9A96E]">Goa</span>, <span className="text-[#C9A96E]">Daman</span>, or <span className="text-[#C9A96E]">Udaipur</span>). Optional filters can refine results.
+      </p>
       <div className="mb-5 grid grid-cols-1 gap-3 md:grid-cols-5">
         <input
+          id="similar-destination-input"
+          name="destination"
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
-          placeholder="Destination (e.g., Goa)"
+          placeholder="Place name (e.g., Goa / Daman)"
           className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-[#E5E7EB]/40 outline-none"
         />
         <input
+          id="similar-category-input"
+          name="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          placeholder="Category (Beach, Temple...)"
+          placeholder="Trip type (Beach, Heritage...)"
           className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-[#E5E7EB]/40 outline-none"
         />
         <select
+          id="similar-region-select"
+          name="region"
           value={region}
           onChange={(e) => setRegion(e.target.value)}
           className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none"
@@ -86,21 +95,25 @@ const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
           <option value="North East" className="bg-slate-900">North East</option>
         </select>
         <input
+          id="similar-rating-input"
+          name="rating"
           value={rating}
           onChange={(e) => setRating(e.target.value)}
           type="number"
           min="1"
           max="5"
           step="0.1"
-          placeholder="Rating"
+          placeholder="Min rating (1-5)"
           className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-[#E5E7EB]/40 outline-none"
         />
         <input
+          id="similar-budget-input"
+          name="budget"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
           type="number"
           min="500"
-          placeholder="Budget"
+          placeholder="Budget in ₹"
           className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-[#E5E7EB]/40 outline-none"
         />
       </div>
@@ -116,7 +129,7 @@ const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
       {error && <p className="mt-4 text-sm text-red-300">{error}</p>}
 
       {!loading && !results.length && !error && (
-        <p className="mt-4 text-sm text-[#E5E7EB]/70">Enter a destination and tap “Find Similar Destinations”.</p>
+        <p className="mt-4 text-sm text-[#E5E7EB]/70">Enter a place and click “Find Similar Destinations”.</p>
       )}
 
       {results.length > 0 && (

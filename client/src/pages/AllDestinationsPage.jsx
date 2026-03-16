@@ -92,6 +92,8 @@ const AllDestinationsPage = () => {
         {/* Search Bar */}
         <div className="mb-6">
           <input
+            id="destinations-search"
+            name="destinationsSearch"
             type="text"
             placeholder="Search destinations..."
             value={searchQuery}

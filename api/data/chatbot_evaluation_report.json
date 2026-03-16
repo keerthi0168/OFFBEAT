@@ -1,0 +1,820 @@
+{
+  "generatedAt": "2026-03-16T14:44:52.264Z",
+  "datasetPath": "C:\\Users\\hp\\OneDrive\\Desktop\\keerti\\OTT website\\api\\data\\chatbot_dataset.json",
+  "intentsCount": 17,
+  "trainSamples": 73,
+  "testSamples": 17,
+  "accuracy": 0.8235,
+  "previousAccuracy": 0.7059,
+  "accuracyDelta": 0.1176,
+  "classBalance": {
+    "sampleCountByIntent": {
+      "greeting": 6,
+      "property_search": 4,
+      "tourism_general": 3,
+      "beaches": 6,
+      "mountains": 6,
+      "heritage": 4,
+      "wildlife": 3,
+      "kerala": 5,
+      "kashmir": 6,
+      "goa": 5,
+      "booking_help": 3,
+      "pricing": 3,
+      "best_time": 6,
+      "regions": 2,
+      "offbeat": 3,
+      "support": 4,
+      "farewell": 4
+    },
+    "classWeightByIntent": {
+      "greeting": 1,
+      "property_search": 1.5,
+      "tourism_general": 2,
+      "beaches": 1,
+      "mountains": 1,
+      "heritage": 1.5,
+      "wildlife": 2,
+      "kerala": 1.2,
+      "kashmir": 1,
+      "goa": 1.2,
+      "booking_help": 2,
+      "pricing": 2,
+      "best_time": 1,
+      "regions": 3,
+      "offbeat": 2,
+      "support": 1.5,
+      "farewell": 1.5
+    }
+  },
+  "confusionMatrix": {
+    "beaches": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 1,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "best_time": {
+      "beaches": 0,
+      "best_time": 1,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "booking_help": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 1,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "farewell": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 1,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "goa": {
+      "beaches": 0,
+      "best_time": 1,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "greeting": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 1,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "heritage": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 1,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "kashmir": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 1,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "kerala": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 1,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "mountains": {
+      "beaches": 0,
+      "best_time": 1,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "offbeat": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 1,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "pricing": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 1,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "property_search": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 1,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "regions": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 1,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "support": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 1,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "tourism_general": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 1,
+      "wildlife": 0,
+      "unknown": 0
+    },
+    "wildlife": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 1,
+      "unknown": 0
+    },
+    "unknown": {
+      "beaches": 0,
+      "best_time": 0,
+      "booking_help": 0,
+      "farewell": 0,
+      "goa": 0,
+      "greeting": 0,
+      "heritage": 0,
+      "kashmir": 0,
+      "kerala": 0,
+      "mountains": 0,
+      "offbeat": 0,
+      "pricing": 0,
+      "property_search": 0,
+      "regions": 0,
+      "support": 0,
+      "tourism_general": 0,
+      "wildlife": 0,
+      "unknown": 0
+    }
+  },
+  "classificationMetrics": {
+    "byLabel": [
+      {
+        "label": "beaches",
+        "support": 1,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      },
+      {
+        "label": "best_time",
+        "support": 1,
+        "precision": 0.3333,
+        "recall": 1,
+        "f1": 0.5
+      },
+      {
+        "label": "booking_help",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "farewell",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "goa",
+        "support": 1,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      },
+      {
+        "label": "greeting",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "heritage",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "kashmir",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "kerala",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "mountains",
+        "support": 1,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      },
+      {
+        "label": "offbeat",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "pricing",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "property_search",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "regions",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "support",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "tourism_general",
+        "support": 1,
+        "precision": 0.5,
+        "recall": 1,
+        "f1": 0.6667
+      },
+      {
+        "label": "wildlife",
+        "support": 1,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      {
+        "label": "unknown",
+        "support": 0,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      }
+    ],
+    "macroF1": 0.7745,
+    "weightedF1": 0.7745
+  },
+  "topConfusions": [
+    {
+      "expected": "beaches",
+      "predicted": "tourism_general",
+      "count": 1
+    },
+    {
+      "expected": "goa",
+      "predicted": "best_time",
+      "count": 1
+    },
+    {
+      "expected": "mountains",
+      "predicted": "best_time",
+      "count": 1
+    }
+  ],
+  "perIntent": [
+    {
+      "tag": "greeting",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "property_search",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "tourism_general",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "beaches",
+      "total": 1,
+      "correct": 0,
+      "accuracy": 0
+    },
+    {
+      "tag": "mountains",
+      "total": 1,
+      "correct": 0,
+      "accuracy": 0
+    },
+    {
+      "tag": "heritage",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "wildlife",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "kerala",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "kashmir",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "goa",
+      "total": 1,
+      "correct": 0,
+      "accuracy": 0
+    },
+    {
+      "tag": "booking_help",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "pricing",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "best_time",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "regions",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "offbeat",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "support",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    },
+    {
+      "tag": "farewell",
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1
+    }
+  ],
+  "predictions": [
+    {
+      "text": "Good afternoon",
+      "expectedTag": "greeting",
+      "predictedTag": "greeting",
+      "score": 0.0792,
+      "confidenceMargin": 0.0792,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "Accommodation in Manali",
+      "expectedTag": "property_search",
+      "predictedTag": "property_search",
+      "score": 0.5859,
+      "confidenceMargin": 0.5859,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "Best places to visit in India",
+      "expectedTag": "tourism_general",
+      "predictedTag": "tourism_general",
+      "score": 0.5678,
+      "confidenceMargin": 0.1485,
+      "secondBestTag": "best_time",
+      "correct": true
+    },
+    {
+      "text": "Beach destinations",
+      "expectedTag": "beaches",
+      "predictedTag": "tourism_general",
+      "score": 0.374,
+      "confidenceMargin": 0.0553,
+      "secondBestTag": "beaches",
+      "correct": false
+    },
+    {
+      "text": "Best hills to visit",
+      "expectedTag": "mountains",
+      "predictedTag": "best_time",
+      "score": 0.48,
+      "confidenceMargin": 0.1754,
+      "secondBestTag": "mountains",
+      "correct": false
+    },
+    {
+      "text": "Ancient temples",
+      "expectedTag": "heritage",
+      "predictedTag": "heritage",
+      "score": 0.274,
+      "confidenceMargin": 0.274,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "National parks",
+      "expectedTag": "wildlife",
+      "predictedTag": "wildlife",
+      "score": 0.6835,
+      "confidenceMargin": 0.6835,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "God's own country",
+      "expectedTag": "kerala",
+      "predictedTag": "kerala",
+      "score": 0.12,
+      "confidenceMargin": 0.12,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "Dal Lake",
+      "expectedTag": "kashmir",
+      "predictedTag": "kashmir",
+      "score": 0.5084,
+      "confidenceMargin": 0.5084,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "Best time for Goa",
+      "expectedTag": "goa",
+      "predictedTag": "best_time",
+      "score": 0.4679,
+      "confidenceMargin": 0.2091,
+      "secondBestTag": "goa",
+      "correct": false
+    },
+    {
+      "text": "Booking process",
+      "expectedTag": "booking_help",
+      "predictedTag": "booking_help",
+      "score": 0.6475,
+      "confidenceMargin": 0.6475,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "Budget options",
+      "expectedTag": "pricing",
+      "predictedTag": "pricing",
+      "score": 0.3188,
+      "confidenceMargin": 0.3188,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "Best time for Goa",
+      "expectedTag": "best_time",
+      "predictedTag": "best_time",
+      "score": 0.4679,
+      "confidenceMargin": 0.2091,
+      "secondBestTag": "goa",
+      "correct": true
+    },
+    {
+      "text": "East or West India",
+      "expectedTag": "regions",
+      "predictedTag": "regions",
+      "score": 0.8366,
+      "confidenceMargin": 0.8024,
+      "secondBestTag": "beaches",
+      "correct": true
+    },
+    {
+      "text": "Hidden gems",
+      "expectedTag": "offbeat",
+      "predictedTag": "offbeat",
+      "score": 0.3004,
+      "confidenceMargin": 0.3004,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "Contact",
+      "expectedTag": "support",
+      "predictedTag": "support",
+      "score": 0.3722,
+      "confidenceMargin": 0.3722,
+      "secondBestTag": "unknown",
+      "correct": true
+    },
+    {
+      "text": "Bye",
+      "expectedTag": "farewell",
+      "predictedTag": "farewell",
+      "score": 0.3802,
+      "confidenceMargin": 0.3802,
+      "secondBestTag": "unknown",
+      "correct": true
+    }
+  ]
+}

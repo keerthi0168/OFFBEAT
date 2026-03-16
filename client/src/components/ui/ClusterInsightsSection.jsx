@@ -1,12 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import mlApi, { getMlApiBaseUrl, getFriendlyMlError } from '@/utils/mlApi';
+import axiosInstance from '@/utils/axios';
+import { getFriendlyMlError } from '@/utils/mlApi';
 
 const clusterStyles = {
   'Budget travel': 'from-emerald-500/20 to-emerald-700/10 border-emerald-400/30',
   'Luxury travel': 'from-amber-500/20 to-orange-700/10 border-amber-400/30',
   'Hidden gems': 'from-fuchsia-500/20 to-violet-700/10 border-fuchsia-400/30',
   'Adventure travel': 'from-sky-500/20 to-cyan-700/10 border-sky-400/30',
+};
+
+const toNumber = (value, fallback = 0) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const normalizeDestination = (place) => ({
+  place_name: place?.title || place?.name || 'Destination',
+  state: place?.state || place?.State || place?.address?.split(',')?.[1]?.trim() || 'India',
+  category: place?.category || place?.type || 'Nature',
+  predicted_category: place?.category || place?.type || 'Nature',
+  rating: toNumber(place?.rating, 4.2),
+  budget: toNumber(place?.price ?? place?.budgetMin ?? place?.budgetMax, 2500),
+  popularity_score: toNumber(place?.popularity_score, 55),
+  region: place?.region || place?.direction || 'Any',
+});
+
+const pickClusterName = (destination) => {
+  const category = String(destination.category || '').toLowerCase();
+  const budget = toNumber(destination.budget, 2500);
+
+  if (category.includes('adventure')) return 'Adventure travel';
+  if (budget <= 1800) return 'Budget travel';
+  if (budget >= 4500) return 'Luxury travel';
+  if (toNumber(destination.popularity_score, 60) <= 40 || toNumber(destination.rating, 0) >= 4.7) {
+    return 'Hidden gems';
+  }
+  return 'Budget travel';
 };
 
 const ClusterInsightsSection = ({ region = 'Any', limit = 4 }) => {
@@ -22,15 +52,53 @@ const ClusterInsightsSection = ({ region = 'Any', limit = 4 }) => {
       setError('');
 
       try {
-        const response = await mlApi.get('/clusters', {
-          params: {
-            region,
-            limit,
-          },
-        });
+        const response = await axiosInstance.get('/tourism/all');
+        const places = Array.isArray(response.data?.destinations) ? response.data.destinations : [];
+        const regionLower = String(region || 'Any').toLowerCase();
+
+        const normalized = places
+          .map(normalizeDestination)
+          .filter((destination) => {
+            if (!regionLower || regionLower === 'any') return true;
+            return String(destination.region || '').toLowerCase().includes(regionLower);
+          })
+          .map((destination) => ({
+            ...destination,
+            cluster_name: pickClusterName(destination),
+          }));
+
+        const grouped = new Map();
+        for (const destination of normalized) {
+          if (!grouped.has(destination.cluster_name)) {
+            grouped.set(destination.cluster_name, []);
+          }
+          grouped.get(destination.cluster_name).push(destination);
+        }
+
+        const orderedClusters = ['Budget travel', 'Luxury travel', 'Hidden gems', 'Adventure travel']
+          .map((clusterName) => {
+            const items = grouped.get(clusterName) || [];
+            if (!items.length) return null;
+
+            const avgBudget = items.reduce((sum, item) => sum + toNumber(item.budget, 0), 0) / items.length;
+            const avgRating = items.reduce((sum, item) => sum + toNumber(item.rating, 0), 0) / items.length;
+            const avgPopularity = items.reduce((sum, item) => sum + toNumber(item.popularity_score, 0), 0) / items.length;
+
+            return {
+              cluster_name: clusterName,
+              count: items.length,
+              avg_budget: Number(avgBudget.toFixed(2)),
+              avg_rating: Number(avgRating.toFixed(2)),
+              avg_popularity: Number(avgPopularity.toFixed(2)),
+              destinations: items
+                .sort((a, b) => toNumber(b.rating, 0) - toNumber(a.rating, 0))
+                .slice(0, limit),
+            };
+          })
+          .filter(Boolean);
 
         if (ignore) return;
-        setClusters(response.data?.clusters || []);
+        setClusters(orderedClusters);
       } catch (requestError) {
         if (ignore) return;
         setClusters([]);
@@ -66,9 +134,6 @@ const ClusterInsightsSection = ({ region = 'Any', limit = 4 }) => {
         <p className="mt-2 text-amber-100/80">{error}</p>
         <p className="mt-2 text-amber-100/60">
           You can still continue browsing places.
-        </p>
-        <p className="mt-2 text-amber-100/60">
-          AI service URL: <span className="font-mono">{getMlApiBaseUrl()}</span>
         </p>
       </div>
     );

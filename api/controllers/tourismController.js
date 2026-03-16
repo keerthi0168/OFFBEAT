@@ -7059,17 +7059,45 @@ exports.searchDestinations = async (req, res) => {
 
     const places = loadTourismData();
 
-    const results = places.filter(
-      (place) =>
-        place.title.toLowerCase().includes(q.toLowerCase()) ||
-        place.address.toLowerCase().includes(q.toLowerCase()) ||
-        place.description?.toLowerCase().includes(q.toLowerCase())
-    );
+    const query = String(q).toLowerCase().trim();
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const wholeWord = new RegExp(`\\b${escaped}\\b`, 'i');
+
+    const scoredResults = places
+      .map((place) => {
+        const title = String(place.title || place.Destination_Name || '').toLowerCase();
+        const address = String(place.address || '').toLowerCase();
+        const state = String(place.state || place.State || '').toLowerCase();
+        const district = String(place.district || '').toLowerCase();
+        const description = String(place.description || '').toLowerCase();
+        const category = String(place.category || place.Category || '').toLowerCase();
+
+        let score = 0;
+
+        if (title === query) score += 120;
+        if (title.startsWith(query)) score += 95;
+        if (wholeWord.test(title)) score += 85;
+        if (wholeWord.test(state) || wholeWord.test(district) || wholeWord.test(address)) score += 75;
+
+        if (title.includes(query)) score += 45;
+        if (state.includes(query) || district.includes(query) || address.includes(query)) score += 35;
+        if (description.includes(query)) score += 20;
+        if (category.includes(query)) score += 10;
+
+        return score > 0 ? { ...place, relevance_score: score } : null;
+      })
+      .filter(Boolean)
+      .sort((a, b) => {
+        if (b.relevance_score !== a.relevance_score) {
+          return b.relevance_score - a.relevance_score;
+        }
+        return String(a.title || '').localeCompare(String(b.title || ''));
+      });
 
     res.status(200).json({
       success: true,
-      count: results.length,
-      results,
+      count: scoredResults.length,
+      results: scoredResults,
     });
   } catch (err) {
     console.log(err);

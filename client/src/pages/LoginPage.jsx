@@ -94,6 +94,7 @@ const LoginPage = () => {
               <input
                 name="email"
                 type="email"
+                autoComplete="email"
                 placeholder="your@example.com"
                 value={formData.email}
                 onChange={handleFormData}
@@ -113,6 +114,7 @@ const LoginPage = () => {
               <input
                 name="password"
                 type="password"
+                autoComplete="current-password"
                 placeholder="••••••••••••••••"
                 value={formData.password}
                 onChange={handleFormData}
@@ -126,8 +128,14 @@ const LoginPage = () => {
 
             {/* Remember & Forgot */}
             <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="w-4 h-4 rounded border-[#C9A96E]/50 bg-white/10" />
+              <label htmlFor="remember-me" className="flex items-center gap-2">
+                <input
+                  id="remember-me"
+                  name="rememberMe"
+                  type="checkbox"
+                  autoComplete="on"
+                  className="w-4 h-4 rounded border-[#C9A96E]/50 bg-white/10"
+                />
                 <span className="text-white/60 font-light">Remember me</span>
               </label>
               <a href="#" className="text-[#C9A96E] hover:text-[#D4B896] transition font-light">Forgot password?</a>

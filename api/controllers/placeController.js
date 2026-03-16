@@ -7557,18 +7557,24 @@ exports.singlePlace = async (req, res) => {
 // Search Places in the DB
 exports.searchPlaces = async (req, res) => {
   try {
-    const searchword = req.params.key;
+    const searchword = String(req.params.key || '').trim();
 
     if (!isMongoConnected()) {
       const matches = fallbackPlaces.filter((place) =>
-        place.address.toLowerCase().includes(searchword.toLowerCase()),
+        String(place.address || '').toLowerCase().includes(searchword.toLowerCase()) ||
+        String(place.title || '').toLowerCase().includes(searchword.toLowerCase()),
       );
       return res.status(200).json(matches);
     }
 
     if (searchword === '') return res.status(200).json(await Place.find())
 
-    const searchMatches = await Place.find({ address: { $regex: searchword, $options: "i" } })
+    const searchMatches = await Place.find({
+      $or: [
+        { address: { $regex: searchword, $options: "i" } },
+        { title: { $regex: searchword, $options: "i" } },
+      ],
+    })
 
     res.status(200).json(searchMatches);
   } catch (err) {

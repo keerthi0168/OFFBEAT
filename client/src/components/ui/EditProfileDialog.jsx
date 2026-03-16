@@ -97,6 +97,8 @@ const EditProfileDialog = () => {
               onClick={handleImageClick}
             >
               <input
+                id="profile-picture-upload"
+                name="profilePictureUpload"
                 type="file"
                 className="hidden"
                 ref={uploadRef}

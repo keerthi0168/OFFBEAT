@@ -24,6 +24,29 @@ const ExplorePage = () => {
   const [rawDataset, setRawDataset] = useState(null);
   const [regionFilter, setRegionFilter] = useState('Any');
 
+  const isAnyRegion = (value) => {
+    const normalized = String(value || '').toLowerCase().trim();
+    return normalized === 'any' || normalized === 'all' || normalized === 'all regions';
+  };
+
+  const matchesRegionFilter = (destination, selectedRegion) => {
+    if (!selectedRegion || isAnyRegion(selectedRegion)) return true;
+    const needle = String(selectedRegion).toLowerCase();
+    const searchable = [
+      destination.region,
+      destination.direction,
+      destination.state,
+      destination.city,
+      destination.address,
+      destination.location,
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+
+    return searchable.includes(needle);
+  };
+
   const getCategoryImage = (category, seed = '') => {
     if (!rawDataset?.categories?.length) return null;
     const categoryMap = {
@@ -48,13 +71,13 @@ const ExplorePage = () => {
 
   const handleSearch = async (value = query) => {
     const term = value.trim();
-    if (!term && regionFilter === 'Any') return;
+    if (!term && isAnyRegion(regionFilter)) return;
 
     setLoading(true);
     setHasSearched(true);
 
     try {
-      if (!term && regionFilter !== 'Any') {
+      if (!term && !isAnyRegion(regionFilter)) {
         const tourismResponse = await axiosInstance.get(
           `/tourism/region/${encodeURIComponent(regionFilter)}`,
         );
@@ -63,7 +86,35 @@ const ExplorePage = () => {
         return;
       }
 
-      const [tourismResponse, propertyResponse] = await Promise.all([
+      if (term.length <= 2) {
+        const [tourismResponse, propertyResponse] = await Promise.all([
+          axiosInstance.get('/tourism/search', {
+            params: {
+              q: term,
+            },
+          }),
+          axiosInstance.get(`/search/${encodeURIComponent(term)}`),
+        ]);
+
+        const tourismRaw = tourismResponse.data?.results || [];
+        const filteredTourism = tourismRaw.filter((dest) =>
+          matchesRegionFilter(dest, regionFilter),
+        );
+
+        setTourismResults(filteredTourism);
+        setPropertyResults(propertyResponse.data || []);
+
+        trackEvent('keyword_search', {
+          term,
+          region: regionFilter,
+          results: filteredTourism.length,
+          signals: getPersonalizationSignals(),
+        });
+
+        return;
+      }
+
+      const [semanticResponse, propertyResponse] = await Promise.all([
         mlApi.get('/semantic-search', {
           params: {
             query: term,
@@ -74,15 +125,33 @@ const ExplorePage = () => {
         axiosInstance.get(`/search/${encodeURIComponent(term)}`),
       ]);
 
-      const tourismRaw = tourismResponse.data?.results || [];
+      let tourismRaw = semanticResponse.data?.results || [];
+      let strategy = 'semantic';
 
-      setTourismResults(tourismRaw);
+      // Fallback to lexical search when semantic model returns no/very weak results.
+      if (!tourismRaw.length) {
+        const fallbackResponse = await axiosInstance.get('/tourism/search', {
+          params: {
+            q: term,
+          },
+        });
+
+        tourismRaw = fallbackResponse.data?.results || [];
+        strategy = 'lexical_fallback';
+      }
+
+      const filteredTourism = tourismRaw.filter((dest) =>
+        matchesRegionFilter(dest, regionFilter),
+      );
+
+      setTourismResults(filteredTourism);
       setPropertyResults(propertyResponse.data || []);
 
       trackEvent('semantic_search', {
         term,
         region: regionFilter,
-        results: tourismRaw.length,
+        results: filteredTourism.length,
+        strategy,
         signals: getPersonalizationSignals(),
       });
     } catch (error) {
@@ -129,8 +198,10 @@ const ExplorePage = () => {
           <div className="mt-8 w-full max-w-3xl space-y-4">
             <div className="inline-flex w-full items-center rounded-full border border-white/10 bg-white/5 p-3 backdrop-blur-md shadow-lg">
               <input
+                id="destination-search"
+                name="destinationSearch"
                 className="flex-1 rounded-full bg-transparent px-4 py-3 text-sm text-[#E5E7EB] placeholder-[#E5E7EB]/40 outline-none md:text-base"
-                placeholder="Search hidden gems across India..."
+                placeholder="Try place, city, state or UT (e.g., Daman, Goa, Kerala...)"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => (e.key === 'Enter' ? handleSearch() : null)}
@@ -144,6 +215,8 @@ const ExplorePage = () => {
             </div>
             <div className="flex justify-center gap-3">
               <select
+                id="region-filter"
+                name="regionFilter"
                 className="rounded-full bg-white/5 border border-white/10 px-4 py-2 text-sm text-[#E5E7EB] outline-none cursor-pointer hover:bg-white/10 transition-colors backdrop-blur-md"
                 value={regionFilter}
                 onChange={(e) => {
@@ -159,8 +232,9 @@ const ExplorePage = () => {
                 <option value="South" className="bg-slate-800 text-white">South India</option>
                 <option value="East" className="bg-slate-800 text-white">East India</option>
                 <option value="West" className="bg-slate-800 text-white">West India</option>
+                <option value="North East" className="bg-slate-800 text-white">North East India</option>
               </select>
-              {regionFilter !== 'Any' && (
+              {!isAnyRegion(regionFilter) && (
                 <button
                   onClick={() => {
                     setRegionFilter('Any');
@@ -172,6 +246,9 @@ const ExplorePage = () => {
                 </button>
               )}
             </div>
+            <p className="text-xs text-[#E5E7EB]/60">
+              Tip: You can search by destination, district, state, or union territory name.
+            </p>
           </div>
         </div>
       </section>
@@ -183,7 +260,7 @@ const ExplorePage = () => {
             <p className="text-lg text-[#E5E7EB]/60 font-light">
               {tourismResults.length + propertyResults.length > 0
                 ? `Found ${tourismResults.length + propertyResults.length} results`
-                : 'No results found. Try a different search term.'}
+                : 'No results found yet. Try a nearby spelling or search by state/UT (example: Daman, Diu, Dadra).'}
             </p>
           </div>
 

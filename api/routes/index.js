@@ -12,6 +12,7 @@ const chatbotController = require('../controllers/chatbotController');
 const recommendationController = require('../controllers/recommendationController');
 const tourismController = require('../controllers/tourismController');
 const datasetController = require('../controllers/datasetController');
+const mlHealthController = require('../controllers/mlHealthController');
 const { isLoggedIn } = require('../middlewares/user');
 
 // Configure multer for file uploads
@@ -57,6 +58,7 @@ router.get('/recommendations/similar/:id', recommendationController.getSimilarPr
 router.get('/recommendations/personalized', recommendationController.getPersonalizedRecommendations);
 router.get('/recommendations/trending', recommendationController.getTrending);
 router.post('/recommendations/track', recommendationController.trackInteraction);
+router.get('/ml/health', mlHealthController.getMlHealth);
 
 // Tourism Information routes
 router.get('/tourism/destination/:name', tourismController.getDestinationInfo);

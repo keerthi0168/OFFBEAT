@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosInstance from '@/utils/axios';
 
 export const getMlApiBaseUrl = () => {
   const configured = import.meta.env.VITE_ML_API_URL;
@@ -77,8 +78,33 @@ export const generateTravelPlan = async (payload) => {
 };
 
 export const askTravelAssistant = async (payload) => {
-  const { data } = await mlApi.post('/chatbot/assistant', payload);
-  return data;
+  try {
+    const { data } = await mlApi.post('/chatbot/assistant', payload, { timeout: 9000 });
+
+    const responseText = String(data?.response || '').toLowerCase();
+    const isLowConfidence =
+      !data?.response ||
+      data?.category === 'unknown' ||
+      data?.type === 'unknown' ||
+      responseText.includes("i'm not sure") ||
+      responseText.includes('could you rephrase') ||
+      responseText.includes('not sure i understand');
+
+    if (!isLowConfidence) {
+      return data;
+    }
+
+    try {
+      const { data: fallbackData } = await axiosInstance.post('/chatbot/chat', payload, { timeout: 7000 });
+      return fallbackData;
+    } catch (fallbackError) {
+      return data;
+    }
+  } catch (mlError) {
+    // Fallback to Node chatbot for better resilience when ML service is slow/unavailable.
+    const { data } = await axiosInstance.post('/chatbot/chat', payload, { timeout: 7000 });
+    return data;
+  }
 };
 
 export const autoAssignImageCategories = async ({ datasetRoot, limit = 200 } = {}) => {

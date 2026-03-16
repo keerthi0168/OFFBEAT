@@ -204,12 +204,12 @@ const findBestIntent = (userMessage, sessionId = 'default') => {
   let highestScore = 0;
 
   chatbotData.intents.forEach(intent => {
-    const score = calculateSimilarity(userTokens, intent.tokens);
+    let score = calculateSimilarity(userTokens, intent.tokens);
     
     // Boost score if category matches recent context
     const context = chatbotData.contextMemory.get(sessionId);
     if (context && context.lastCategory === intent.category) {
-      score * 1.2;
+      score *= 1.2;
     }
 
     if (score > highestScore) {
@@ -218,8 +218,9 @@ const findBestIntent = (userMessage, sessionId = 'default') => {
     }
   });
 
-  // Only return if similarity is above threshold
-  return highestScore > 0.15 ? bestMatch : null;
+  // Use a lower threshold for short queries like "goa" or "kerala"
+  const threshold = userTokens.length <= 2 ? 0.08 : 0.15;
+  return highestScore > threshold ? bestMatch : null;
 };
 
 // Get random response from intent
@@ -230,9 +231,102 @@ const getResponse = (intent) => {
   return intent.responses[Math.floor(Math.random() * intent.responses.length)];
 };
 
+const findDestinationByContext = (contextName = '') => {
+  if (!contextName) return null;
+  const places = loadTourismData();
+  const needle = String(contextName).toLowerCase().trim();
+  return (
+    places.find((d) => String(d.title || d.Destination_Name || '').toLowerCase() === needle) ||
+    places.find((d) => String(d.title || d.Destination_Name || '').toLowerCase().includes(needle)) ||
+    places.find((d) => String(d.address || d.State || '').toLowerCase().includes(needle)) ||
+    null
+  );
+};
+
+const parseTripDays = (message = '') => {
+  const match = String(message).toLowerCase().match(/(\d{1,2})\s*(day|days)/);
+  if (!match) return null;
+  const parsed = Number(match[1]);
+  return Number.isFinite(parsed) ? parsed : null;
+};
+
+const handleContextualFollowup = (message, sessionContext = {}) => {
+  if (!sessionContext?.lastDestination) return null;
+
+  const lowerMessage = String(message || '').toLowerCase();
+  const destinationName = sessionContext.lastDestination;
+  const destination = findDestinationByContext(destinationName);
+  const bestSeason = Array.isArray(destination?.best_season) ? destination.best_season : [];
+  const budgetRange = destination?.budget_range || destination?.budgetRange || '';
+
+  const asksBudget = /(budget|cost|price|cheap|expensive|money|how much)/.test(lowerMessage);
+  const asksBestTime = /(best time|when to visit|season|weather|which month)/.test(lowerMessage);
+  const tripDays = parseTripDays(lowerMessage);
+
+  if (!asksBudget && !asksBestTime && !tripDays) {
+    return null;
+  }
+
+  if (asksBudget) {
+    const budgetText = budgetRange || '₹1,500 - ₹4,500 (avg, depends on stay type)';
+    return {
+      response: `Great choice! For ${destinationName}, a practical budget is around ${budgetText}. If you want, I can break this into stay, food, and local transport.`,
+      suggestions: [`Best time for ${destinationName}`, `${destinationName} itinerary`, `Affordable stays in ${destinationName}`],
+    };
+  }
+
+  if (asksBestTime) {
+    const seasonText = bestSeason.length ? bestSeason.join(', ') : 'October to March';
+    return {
+      response: `Best time to visit ${destinationName} is usually ${seasonText}. I can also suggest what to do month-wise.`,
+      suggestions: [`${destinationName} in 3 days`, `Top places in ${destinationName}`, `Budget for ${destinationName}`],
+    };
+  }
+
+  if (tripDays) {
+    return {
+      response: `Awesome. For ${tripDays} days in ${destinationName}, I can suggest a balanced plan: Day 1 highlights, Day 2 local experiences, Day 3 hidden gems + food trail.`,
+      suggestions: [`Detailed ${tripDays}-day plan for ${destinationName}`, `Top cafes in ${destinationName}`, `Must-visit spots in ${destinationName}`],
+    };
+  }
+
+  return null;
+};
+
+const detectDestinationFromMessage = (message = '', intent = null) => {
+  const rawMessage = String(message).trim();
+  if (!rawMessage) return null;
+
+  const byMessage = findDestinationByContext(rawMessage);
+  if (byMessage) {
+    return byMessage.title || byMessage.Destination_Name || rawMessage;
+  }
+
+  // For short prompts like "goa" we still keep context even if exact dataset match is missing.
+  const words = rawMessage.split(/\s+/).filter(Boolean);
+  const genericWords = new Set(['hi', 'hello', 'hey', 'help', 'book', 'booking', 'price', 'budget']);
+  if (words.length <= 3 && !genericWords.has(rawMessage.toLowerCase())) {
+    return rawMessage.charAt(0).toUpperCase() + rawMessage.slice(1);
+  }
+
+  const intentCategory = String(intent?.category || '').trim();
+  if (!intentCategory) return null;
+
+  const byCategory = findDestinationByContext(intentCategory);
+  if (byCategory) {
+    return byCategory.title || byCategory.Destination_Name || intentCategory;
+  }
+
+  return null;
+};
+
 // Check if message is about tourism and provide intelligent response
 const handleTourismQuery = (message, personalization = {}) => {
   const lowerMessage = message.toLowerCase();
+  const normalizedMessage = lowerMessage.replace(/\s+/g, ' ').trim();
+  const userTokens = tokenize(normalizedMessage);
+  const genericTokens = new Set(['india', 'indian', 'place', 'places', 'destination', 'destinations', 'travel', 'trip']);
+  const meaningfulTokens = userTokens.filter((token) => !genericTokens.has(token));
   const destinations = loadTourismData();
   
   // Keywords for tourism queries
@@ -241,17 +335,45 @@ const handleTourismQuery = (message, personalization = {}) => {
   
   const categories = ['heritage', 'beach', 'nature', 'adventure', 'religious'];
   const regions = ['north', 'south', 'east', 'west'];
+
+  const destinationHintTokens = new Set();
+  destinations.forEach((dest) => {
+    const textBlob = [
+      dest.title,
+      dest.Destination_Name,
+      dest.address,
+      dest.State,
+      dest.Region,
+      dest.Category,
+    ].filter(Boolean).join(' ');
+
+    tokenize(textBlob).forEach((token) => destinationHintTokens.add(token));
+  });
   
   // Check if message contains tourism keywords
-  const hasTourismKeyword = tourismKeywords.some(keyword => lowerMessage.includes(keyword));
+  const hasTourismKeyword =
+    tourismKeywords.some(keyword => normalizedMessage.includes(keyword)) ||
+    meaningfulTokens.some((token) => destinationHintTokens.has(token));
   
   if (!hasTourismKeyword) {
     // Check if message mentions any destination
     const mentionedDest = destinations.find(d => {
       const name = d.title || d.Destination_Name || '';
-      const location = d.address || d.State || '';
-      return lowerMessage.includes(name.toLowerCase()) ||
-             lowerMessage.includes(location.toLowerCase());
+      const location = d.address || d.State || d.Region || '';
+      const nameLower = name.toLowerCase();
+      const locationLower = location.toLowerCase();
+
+      const exactOrPartialMatch =
+        normalizedMessage.includes(nameLower) ||
+        nameLower.includes(normalizedMessage) ||
+        normalizedMessage.includes(locationLower) ||
+        locationLower.includes(normalizedMessage);
+
+      const tokenOverlap = meaningfulTokens.some((token) =>
+        nameLower.includes(token) || locationLower.includes(token)
+      );
+
+      return exactOrPartialMatch || tokenOverlap;
     });
     
     if (mentionedDest) {
@@ -261,8 +383,13 @@ const handleTourismQuery = (message, personalization = {}) => {
       
       return {
         response: `${name} is ${desc.substring(0, 150)}... Would you like to explore more?`,
-        suggestions: ['Show more like this', 'Popular destinations', 'What else is nearby?'],
-        isTourism: true
+        suggestions: [
+          `Tell me more about ${name}`,
+          `Best time to visit ${name}`,
+          'Show similar destinations'
+        ],
+        isTourism: true,
+        detectedDestination: name,
       };
     }
     return null;
@@ -364,9 +491,32 @@ exports.chat = (req, res) => {
       loadChatbotData();
     }
 
+    // Destination-context follow up (e.g., "budget?", "best time?", "3 days")
+    const contextFollowup = handleContextualFollowup(
+      message,
+      chatbotData.contextMemory.get(sessionId)
+    );
+
+    if (contextFollowup) {
+      return res.json({
+        response: contextFollowup.response,
+        category: 'tourism_context',
+        confidence: 'high',
+        suggestions: contextFollowup.suggestions || [],
+      });
+    }
+
     // Check for tourism-related queries first
     const tourismResponse = handleTourismQuery(message, personalization);
     if (tourismResponse && tourismResponse.isTourism) {
+      chatbotData.contextMemory.set(sessionId, {
+        ...(chatbotData.contextMemory.get(sessionId) || {}),
+        lastCategory: 'tourism',
+        lastMessage: message,
+        lastDestination: tourismResponse.detectedDestination || chatbotData.contextMemory.get(sessionId)?.lastDestination || null,
+        timestamp: Date.now(),
+      });
+
       return res.json({
         response: tourismResponse.response,
         category: 'tourism',
@@ -383,11 +533,14 @@ exports.chat = (req, res) => {
 
     if (intent) {
       response = getResponse(intent);
+      const inferredDestination = detectDestinationFromMessage(message, intent);
       
       // Update context
       chatbotData.contextMemory.set(sessionId, {
+        ...(chatbotData.contextMemory.get(sessionId) || {}),
         lastCategory: intent.category,
         lastMessage: message,
+        lastDestination: inferredDestination || chatbotData.contextMemory.get(sessionId)?.lastDestination || null,
         timestamp: Date.now()
       });
 
@@ -437,7 +590,7 @@ exports.chat = (req, res) => {
       response,
       category: intent?.category || 'unknown',
       confidence: intent ? 'high' : 'low',
-      suggestions
+      suggestions: [...new Set(suggestions)].slice(0, 6)
     });
 
   } catch (error) {

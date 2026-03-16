@@ -1,222 +1,21 @@
-# 🏔️ Offbeat Travel India - Discover Hidden Destinations
+# Offbeat Travel India
 
-A modern travel platform for exploring India's hidden gems and offbeat destinations, built with **React** and powered by AI-driven recommendations.
+Modern React + Node platform to discover offbeat Indian destinations, with ML-assisted search/recommendations and chatbot support.
 
----
+## What’s included
 
-## 🚀 Tech Stack
+- Explore page with semantic + lexical fallback search (handles short and UT/state queries better)
+- Similar destinations (cosine-based) with user-friendly inputs
+- Premium profile dashboard (host/guest style UX)
+- Tourism + dataset APIs with merged `dataset/*.json` loading
+- Chatbot with conversation memory follow-ups (budget / best time / trip days)
 
-### Frontend (React)
-- **React 18** - Modern UI library with hooks and functional components
-- **React Router DOM** - Client-side routing and navigation
-- **Vite** - Lightning-fast build tool and dev server
-- **Tailwind CSS** - Utility-first CSS framework with custom design system
-- **Radix UI** - Accessible component primitives
-- **Axios** - Promise-based HTTP client
-- **React Toastify** - Beautiful toast notifications
-- **React Day Picker** - Date selection for bookings
-- **Lucide React** - Beautiful icon library
+## Quick start
 
-### Backend (Node.js)
-- **Express.js** - Fast, minimalist web framework
-- **MongoDB** with Mongoose - NoSQL database for main data
-- **MySQL** - Relational database for user management
-- **JWT** - Secure authentication
-- **Bcrypt** - Password hashing
-- **Cloudinary** - Image upload and management
-- **Cookie Parser** - Cookie handling
-
-### AI/ML Features
-- **TF-IDF** - Search and content recommendation
-- **Cosine Similarity** - Personalized destination matching
-- **NLP Tokenization** - Intelligent text processing
-- **Collaborative Filtering** - Similar property recommendations
-
----
-
-## ✨ Key Features
-
-### 🔐 User Features
-- **Google OAuth & Email Authentication** - Secure login options
-- **Profile Management** - Edit profile, upload photos, view bookings
-- **Smart Search** - AI-powered destination discovery
-- **Personalized Recommendations** - Based on user preferences
-- **Interactive Chatbot** - 24/7 travel assistance
-
-### 🏨 Place Management
-- **Add/Edit Listings** - Property owners can manage their places
-- **Photo Gallery** - Upload multiple images via link or Cloudinary
-- **Amenities & Perks** - Wifi, parking, pets, entrance, etc.
-- **Price & Guest Management** - Set pricing and max guests
-
-### 📅 Booking System
-- **Date Range Selection** - React-based date picker
-- **Guest Information** - Name, phone, email validation
-- **Real-time Pricing** - Dynamic calculation based on dates
-- **Booking History** - View past and upcoming trips
-
-### 🤖 AI-Powered Features
-- **Smart Recommendations** - TF-IDF based similarity scoring
-- **Category Search** - Beach, Hill Station, Temple, Garden, National Park
-- **Tourism Dataset** - 300+ property listings, 20+ curated offbeat destinations across 4 states
-- **Chatbot Integration** - Natural language travel queries
-
----
-
-## 🆕 Latest Updates
-
-### 1) Offbeat dataset split by State/UT
-
-This project now includes a utility script to split one master offbeat India dataset into separate files per state/UT.
-
-- Script: `split_offbeat_dataset.py`
-- Input supported: JSON array **or** NDJSON
-- Output folder: `dataset/`
-- Sort order in each output file:
-	1. `direction` (North → South → East → West)
-	2. `popularity_score` (descending)
-- Example state alias handling: `Puducherry` → `dataset/pondicherry.json`
-
-Example generated/tested files:
-- `offbeat_places.json`
-- `dataset/pondicherry.json`
-
-### 2) Backend now auto-loads `dataset/*.json`
-
-The tourism API merges places from the `dataset/` directory into the existing tourism feed automatically at startup.
-
-This means newly added state files become available in tourism endpoints without manual hardcoding.
-
-### 3) Easier hosted ML API startup
-
-`ml/tourism_knn_api.py` now supports runtime port fallback:
-
-- `PORT` (hosting platforms)
-- then `FLASK_PORT`
-- then default `5001`
-
-So it works more reliably on cloud providers.
-
-### 4) Shareable URL support (LAN/Hosted)
-
-To let others use your app via a shared URL, configure frontend and backend URLs correctly.
-
-#### Frontend env (`client/.env`)
-
-- `VITE_BASE_URL` → Node API URL
-- `VITE_ML_API_URL` → ML API URL
-
-Example:
-
-```env
-VITE_BASE_URL=https://your-node-api-domain.com
-VITE_ML_API_URL=https://your-ml-api-domain.com
-```
-
-#### Backend env (`api/.env`)
-
-- `CLIENT_URL` must include your deployed frontend origin (or LAN origin while testing)
-
-Example:
-
-```env
-CLIENT_URL=http://localhost:5173,http://192.168.44.1:5173,https://your-frontend-domain.com
-```
-
-After deployment, share your frontend URL directly (Netlify/Vercel/custom domain), and users can access the full site.
-
-### 📊 Dataset Statistics
-- **States Covered** - 4 (Kerala, Uttar Pradesh, Jammu & Kashmir, Himachal Pradesh)
-- **Destinations** - 20+ handpicked offbeat tourist locations
-- **Properties** - 300+ listings including hotels, cottages, villas, and homestays
-- **Training/Testing Model** - TF-IDF vector model trained on destination metadata (names, categories, regions, attractions)
-
-### � Admin Dashboard
-- **User Management** - View and manage all users
-- **Booking Analytics** - Track all bookings and revenue
-- **Place Monitoring** - Manage listed properties
-- **Database Stats** - Real-time metrics
-
----
-
-## 📂 Project Structure
-
-```
-OTT website/
-├── client/                           # React Frontend
-│   ├── src/
-│   │   ├── App.jsx                  # Main app component
-│   │   ├── main.jsx                 # React entry point
-│   │   ├── components/ui/           # Reusable React components
-│   │   │   ├── Header.jsx
-│   │   │   ├── Footer.jsx
-│   │   │   ├── BookingWidget.jsx
-│   │   │   ├── ChatbotWidget.jsx
-│   │   │   └── ...
-│   │   ├── pages/                   # React page components
-│   │   │   ├── IndexPage.jsx        # Home page
-│   │   │   ├── LoginPage.jsx
-│   │   │   ├── RegisterPage.jsx
-│   │   │   ├── ExplorePage.jsx
-│   │   │   ├── PlacesPage.jsx
-│   │   │   ├── BookingsPage.jsx
-│   │   │   └── AdminDashboard.jsx
-│   │   ├── providers/               # React Context providers
-│   │   │   ├── UserProvider.jsx
-│   │   │   └── PlaceProvider.jsx
-│   │   └── utils/                   # Utility functions
-│   ├── vite.config.js               # Vite configuration
-│   ├── tailwind.config.cjs          # Tailwind CSS config
-│   └── package.json
-│
-├── api/                             # Node.js Backend
-│   ├── index.js                     # Express server entry
-│   ├── controllers/                 # Route handlers
-│   │   ├── userController.js
-│   │   ├── placeController.js
-│   │   ├── bookingController.js
-│   │   ├── chatbotController.js
-│   │   ├── recommendationController.js
-│   │   ├── tourismController.js
-│   │   └── analyticsController.js
-│   ├── models/                      # Database schemas
-│   │   ├── User.js                  # MongoDB
-│   │   ├── UserMySQL.js             # MySQL
-│   │   ├── Place.js
-│   │   └── Booking.js
-│   ├── routes/                      # API routes
-│   ├── middlewares/                 # Custom middleware
-│   ├── data/                        # Tourism datasets
-│   └── scripts/                     # ML model training scripts
-│
-├── ALGORITHMS.md                    # AI/ML documentation
-├── DEPLOYMENT.md                    # Deployment guide
-└── DESIGN_SYSTEM.md                 # UI/UX design system
-```
-
----
-
-## 🛠️ Installation & Setup
-
-### Prerequisites
-- Node.js 16+ 
-- MongoDB
-- MySQL
-- Cloudinary Account (for image uploads)
-
-### 1. Clone Repository
-```bash
-git clone <your-repo-url>
-cd "OTT website"
-```
-
-### 2. Backend Setup
-```bash
-cd api
-npm install
-```
+### 1) Backend
 
 Create `api/.env`:
+
 ```env
 PORT=8001
 MONGODB_URI=mongodb://localhost:27017/travel-db
@@ -225,104 +24,65 @@ MYSQL_USER=root
 MYSQL_PASSWORD=your_password
 MYSQL_DATABASE=travel_db
 JWT_SECRET=your_secret_key
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
+CLIENT_URL=http://localhost:5173
 ```
 
-Start backend:
+Run backend:
+
 ```bash
-npm run dev
+cd api
+npm install
+npm start
 ```
 
-### 3. Frontend Setup (React)
+### 2) Frontend
+
+Create `client/.env`:
+
+```env
+VITE_BASE_URL=http://localhost:8001
+VITE_ML_API_URL=http://localhost:5001
+```
+
+Run frontend:
+
 ```bash
 cd client
 npm install
-```
-
-Create `client/.env`:
-```env
-VITE_BASE_URL=http://localhost:8001
-```
-
-Start React development server:
-```bash
 npm run dev
 ```
 
-### 4. Database Setup
+## Why data is in different files
 
-#### MongoDB Collections (Auto-created):
-- `users` - User profiles and authentication
-- `places` - Travel destination listings
-- `bookings` - Reservation records
+This is intentional and helps scalability:
 
-#### MySQL Tables:
-Run the SQL schema in your MySQL database for user management.
+- `offbeat_places.json` = master source
+- `dataset/*.json` = per state/UT split files (faster maintenance and updates)
+- backend merges all `dataset/*.json` + curated sources into one tourism feed at runtime
 
----
+So if `Daman` exists in any split file, it should be searchable through tourism endpoints.
 
-## 🎨 Design System
+## Screenshots
 
-- **Color Scheme**: Navy Blue (#0B1220) + Muted Gold (#C9A96E)
-- **Typography**: Inter font with light weights
-- **Components**: Glassmorphic cards with backdrop blur
-- **Interactions**: Smooth 300ms transitions
+Add images in `docs/screenshots/` with these exact names:
 
-See [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) for complete guidelines.
+1. `01-home-hero.png`
+2. `02-featured-listings.png`
+3. `03-similar-destinations-form.png`
+4. `04-ai-travel-planner.png`
+5. `05-hidden-gems-grid.png`
+6. `06-similar-daman-input.png` *(new UI screenshot shared in chat)*
+7. `07-explore-search-results.png` *(new UI screenshot shared in chat)*
 
----
+README renders automatically once files are added:
 
-## 🤖 AI/ML Algorithms
+![Home](docs/screenshots/01-home-hero.png)
+![Similar Destinations](docs/screenshots/03-similar-destinations-form.png)
+![Daman Search Input](docs/screenshots/06-similar-daman-input.png)
+![Explore Results](docs/screenshots/07-explore-search-results.png)
 
-- **TF-IDF Vectorization** - Document similarity and ranking
-- **Cosine Similarity** - Personalized recommendations
-- **Text Tokenization** - NLP preprocessing
-- **Property Similarity Scoring** - Multi-factor matching
+## Useful docs
 
-See [ALGORITHMS.md](ALGORITHMS.md) for detailed explanations.
-
----
-
-## 🚀 Deployment
-
-Deploy to production using:
-- **Frontend**: Netlify or Vercel (React optimized)
-- **Backend**: Render or Railway
-- **Database**: MongoDB Atlas + PlanetScale (MySQL)
-
-See [DEPLOYMENT.md](DEPLOYMENT.md) for step-by-step guides.
-
----
-
-## 📱 React Components
-
-### Main Pages
-- `IndexPage` - Hero section with search
-- `ExplorePage` - Browse destinations by category
-- `PlacesPage` - Manage your listings
-- `PlacePage` - Detailed place view
-- `BookingsPage` - View your bookings
-- `AdminDashboard` - Admin analytics
-
-### Reusable Components
-- `Header` - Navigation with auth
-- `Footer` - Site footer
-- `BookingWidget` - Date/guest selection
-- `ChatbotWidget` - AI assistant
-- `PlaceCard` - Destination card
-- `Categories` - Filter categories
-- `PerksWidget` - Amenities selector
-
----
-
-## 📄 License
-
-This project is for educational purposes.
-
----
-
-## 👨‍💻 Author
-
-Built with ❤️ using **React** and modern web technologies.
+- `DEPLOYMENT.md`
+- `DESIGN_SYSTEM.md`
+- `ALGORITHMS.md`

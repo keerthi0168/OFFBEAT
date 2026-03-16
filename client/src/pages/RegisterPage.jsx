@@ -93,6 +93,7 @@ const RegisterPage = () => {
               <input
                 name="name"
                 type="text"
+                autoComplete="name"
                 placeholder="Your Full Name"
                 value={formData.name}
                 onChange={handleFormData}
@@ -107,6 +108,7 @@ const RegisterPage = () => {
               <input
                 name="email"
                 type="email"
+                autoComplete="email"
                 placeholder="your@example.com"
                 value={formData.email}
                 onChange={handleFormData}
@@ -129,6 +131,7 @@ const RegisterPage = () => {
               <input
                 name="password"
                 type="password"
+                autoComplete="new-password"
                 placeholder="••••••••••••••••"
                 value={formData.password}
                 onChange={handleFormData}
