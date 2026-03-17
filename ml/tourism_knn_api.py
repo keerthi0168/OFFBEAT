@@ -373,7 +373,15 @@ def build_knn_pipeline() -> Pipeline:
     return Pipeline(
         steps=[
             ("preprocessor", preprocessor),
-            ("knn", NearestNeighbors(metric="cosine", algorithm="brute", n_neighbors=6)),
+            (
+                "knn",
+                NearestNeighbors(
+                    metric="cosine",
+                    algorithm="auto",
+                    n_neighbors=6,
+                    n_jobs=-1,
+                ),
+            ),
         ]
     )
 

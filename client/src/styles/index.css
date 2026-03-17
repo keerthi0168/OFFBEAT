@@ -77,6 +77,24 @@ input:-webkit-autofill {
   -webkit-text-fill-color: black !important;
 }
 
+#destination-search {
+  background: transparent !important;
+  color: #e5e7eb !important;
+}
+
+#destination-search::placeholder {
+  color: rgba(229, 231, 235, 0.4) !important;
+}
+
+#destination-search:-webkit-autofill,
+#destination-search:-webkit-autofill:hover,
+#destination-search:-webkit-autofill:focus,
+#destination-search:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #e5e7eb !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 textarea {
   height: 140px;
 }

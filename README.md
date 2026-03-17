@@ -124,37 +124,29 @@ OTT website/
 #### 1) Explore Hero (Goa Search)
 ![Explore Hero (Goa Search)](docs/screenshots/01-explore-hero-goa-search.png)
 
-#### 2) Featured Listings (Goa)
-![Featured Listings (Goa)](docs/screenshots/02-featured-listings-goa.png)
-
-#### 3) Similar Destinations Form (Goa)
+#### 2) Similar Destinations Form (Goa)
 ![Similar Destinations Form (Goa)](docs/screenshots/03-similar-destinations-form-goa.png)
 
-#### 4) AI Travel Planner Form
+#### 3) AI Travel Planner Form
 ![AI Travel Planner Form](docs/screenshots/04-ai-travel-planner-form.png)
 
-#### 5) Hidden Gems Grid
+#### 4) Hidden Gems Grid
 ![Hidden Gems Grid](docs/screenshots/05-hidden-gems-grid.png)
 
-#### 6) Adventure Listings Grid
+#### 5) Adventure Listings Grid
 ![Adventure Listings Grid](docs/screenshots/06-adventure-listings-grid.png)
 
-#### 7) Chatbot Assistant
+#### 6) Chatbot Assistant
 ![Chatbot Assistant](docs/screenshots/07-chatbot-assistant.svg)
-
-#### 8) Explore No Results (Goa)
-![Explore No Results Goa](docs/screenshots/08-explore-no-results-goa.svg)
 
 ### Direct asset links (fallback check)
 
 - [01 Explore Hero](docs/screenshots/01-explore-hero-goa-search.png)
-- [02 Featured Listings](docs/screenshots/02-featured-listings-goa.png)
-- [03 Similar Destinations](docs/screenshots/03-similar-destinations-form-goa.png)
-- [04 AI Planner](docs/screenshots/04-ai-travel-planner-form.png)
-- [05 Hidden Gems](docs/screenshots/05-hidden-gems-grid.png)
-- [06 Adventure Listings](docs/screenshots/06-adventure-listings-grid.png)
-- [07 Chatbot Assistant](docs/screenshots/07-chatbot-assistant.svg)
-- [08 Explore No Results](docs/screenshots/08-explore-no-results-goa.svg)
+- [02 Similar Destinations](docs/screenshots/03-similar-destinations-form-goa.png)
+- [03 AI Planner](docs/screenshots/04-ai-travel-planner-form.png)
+- [04 Hidden Gems](docs/screenshots/05-hidden-gems-grid.png)
+- [05 Adventure Listings](docs/screenshots/06-adventure-listings-grid.png)
+- [06 Chatbot Assistant](docs/screenshots/07-chatbot-assistant.svg)
 
 ## Quick API checks (post setup)
 
