@@ -3,6 +3,35 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '@/utils/axios';
 import { trackEvent } from '@/utils/analytics';
 
+const createFallbackImage = (label) =>
+  `data:image/svg+xml,${encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#0B1220"/>
+          <stop offset="100%" stop-color="#1F2937"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="800" fill="url(#bg)"/>
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#E5E7EB" font-size="44" font-family="Arial, sans-serif">${label}</text>
+    </svg>
+  `)}`;
+
+const FALLBACK_HERO_IMAGE = createFallbackImage('Beautiful Destination');
+const FALLBACK_CARD_IMAGE = createFallbackImage('Destination');
+const FALLBACK_THUMB_IMAGE = createFallbackImage('Photo');
+
+const pickPrimaryImage = (place) => {
+  const candidates = [
+    place?.photos?.[0],
+    place?.images?.[0],
+    place?.photo,
+    place?.image,
+  ];
+
+  return candidates.find((value) => typeof value === 'string' && value.trim().length > 0) || FALLBACK_CARD_IMAGE;
+};
+
 export default function DestinationDetailPage() {
   const { name } = useParams();
   const navigate = useNavigate();
@@ -130,7 +159,8 @@ export default function DestinationDetailPage() {
               alt={destination.title}
               className="w-full h-full object-cover"
               onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/1200x800?text=Beautiful+Destination';
+                e.target.onerror = null;
+                e.target.src = FALLBACK_HERO_IMAGE;
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -194,7 +224,8 @@ export default function DestinationDetailPage() {
                         alt={`${destination.title} - ${index + 1}`}
                         className="w-24 h-16 object-cover"
                         onError={(e) => {
-                          e.target.src = 'https://via.placeholder.com/100x80?text=Photo';
+                          e.target.onerror = null;
+                          e.target.src = FALLBACK_THUMB_IMAGE;
                         }}
                       />
                     </button>
@@ -309,7 +340,7 @@ export default function DestinationDetailPage() {
               {similarPlaces.map((place, index) => {
                 const placeName = place.title || place.Destination_Name || 'Destination';
                 const placeAddress = place.address || place.State || '';
-                const placePhoto = place.photos?.[0] || place.photos?.[0] || 'https://via.placeholder.com/400x300?text=Destination';
+                const placePhoto = pickPrimaryImage(place);
                 
                 return (
                   <div
@@ -323,7 +354,8 @@ export default function DestinationDetailPage() {
                         alt={placeName}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         onError={(e) => {
-                          e.target.src = 'https://via.placeholder.com/400x300?text=Destination';
+                          e.target.onerror = null;
+                          e.target.src = FALLBACK_CARD_IMAGE;
                         }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
