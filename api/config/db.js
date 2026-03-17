@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 
+const toBool = (value, defaultValue = false) => {
+  if (typeof value === 'undefined') return defaultValue;
+  return ['1', 'true', 'yes', 'on'].includes(String(value).toLowerCase());
+};
+
 const connectWithDB = async () => {
+  const isMongoEnabled = toBool(process.env.MONGO_ENABLED, true);
+
+  if (!isMongoEnabled) {
+    console.log('ℹ MongoDB disabled via MONGO_ENABLED=false. Running without Mongo-backed features.');
+    return;
+  }
+
   mongoose.set('strictQuery', false);
 
   const connectOptions = {
