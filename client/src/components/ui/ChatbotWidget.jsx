@@ -196,6 +196,7 @@ const ChatbotWidget = () => {
 
       {/* Toggle button */}
       <button
+        data-chatbot-toggle
         onClick={() => setOpen((prev) => !prev)}
         className={`flex h-14 w-14 items-center justify-center rounded-full border border-[#C9A96E]/30 bg-gradient-to-r from-[#C9A96E] to-[#D4B896] text-[#0B1220] shadow-lg hover:shadow-[#C9A96E]/30 transition-all duration-300 ${
           open ? 'scale-95' : 'scale-100 hover:scale-105'

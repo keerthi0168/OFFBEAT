@@ -101,8 +101,58 @@ const ClusterInsightsSection = ({ region = 'Any', limit = 4 }) => {
         setClusters(orderedClusters);
       } catch (requestError) {
         if (ignore) return;
-        setClusters([]);
-        setError(getFriendlyMlError(requestError, 'Travel insights are not ready right now.'));
+        try {
+          const fallbackResponse = await axiosInstance.get('/tourism/random', {
+            params: { limit: Math.max(limit * 4, 16) },
+          });
+
+          const fallbackPlaces = Array.isArray(fallbackResponse.data?.destinations)
+            ? fallbackResponse.data.destinations
+            : [];
+
+          const fallbackNormalized = fallbackPlaces
+            .map(normalizeDestination)
+            .map((destination) => ({
+              ...destination,
+              cluster_name: pickClusterName(destination),
+            }));
+
+          const grouped = new Map();
+          for (const destination of fallbackNormalized) {
+            if (!grouped.has(destination.cluster_name)) {
+              grouped.set(destination.cluster_name, []);
+            }
+            grouped.get(destination.cluster_name).push(destination);
+          }
+
+          const fallbackClusters = ['Budget travel', 'Luxury travel', 'Hidden gems', 'Adventure travel']
+            .map((clusterName) => {
+              const items = grouped.get(clusterName) || [];
+              if (!items.length) return null;
+
+              const avgBudget = items.reduce((sum, item) => sum + toNumber(item.budget, 0), 0) / items.length;
+              const avgRating = items.reduce((sum, item) => sum + toNumber(item.rating, 0), 0) / items.length;
+              const avgPopularity = items.reduce((sum, item) => sum + toNumber(item.popularity_score, 0), 0) / items.length;
+
+              return {
+                cluster_name: clusterName,
+                count: items.length,
+                avg_budget: Number(avgBudget.toFixed(2)),
+                avg_rating: Number(avgRating.toFixed(2)),
+                avg_popularity: Number(avgPopularity.toFixed(2)),
+                destinations: items.slice(0, limit),
+              };
+            })
+            .filter(Boolean);
+
+          if (ignore) return;
+          setClusters(fallbackClusters);
+          setError('');
+        } catch (fallbackError) {
+          if (ignore) return;
+          setClusters([]);
+          setError(getFriendlyMlError(requestError, 'Travel insights are not ready right now.'));
+        }
       } finally {
         if (!ignore) {
           setLoading(false);

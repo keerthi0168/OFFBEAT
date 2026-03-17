@@ -65,8 +65,27 @@ const HiddenGemsSection = ({ region = 'Any', limit = 6 }) => {
         setGems(scored);
       } catch (requestError) {
         if (ignore) return;
-        setGems([]);
-        setError(getFriendlyMlError(requestError, 'Hidden gem suggestions are not ready right now.'));
+        try {
+          const fallbackResponse = await axiosInstance.get('/tourism/random', {
+            params: { limit: Math.max(limit * 2, 10) },
+          });
+          const fallbackPlaces = Array.isArray(fallbackResponse.data?.destinations)
+            ? fallbackResponse.data.destinations
+            : [];
+
+          const fallbackGems = fallbackPlaces
+            .map(normalizeGem)
+            .sort((a, b) => b.hidden_gem_probability - a.hidden_gem_probability)
+            .slice(0, limit);
+
+          if (ignore) return;
+          setGems(fallbackGems);
+          setError('');
+        } catch (fallbackError) {
+          if (ignore) return;
+          setGems([]);
+          setError(getFriendlyMlError(requestError, 'Hidden gem suggestions are not ready right now.'));
+        }
       } finally {
         if (!ignore) {
           setLoading(false);

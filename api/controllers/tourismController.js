@@ -6822,13 +6822,30 @@ const normalizeDestination = (place = {}) => {
     photos: Array.isArray(place.photos) ? place.photos : [],
   };
 
+  const isUsableUrl = (value) => {
+    const raw = String(value || '').trim();
+    if (!raw) return false;
+    if (!/^https?:\/\//i.test(raw)) return false;
+    if (/example\.com/i.test(raw)) return false;
+    return true;
+  };
+
+  normalized.images = normalized.images.filter(isUsableUrl);
+  normalized.photos = normalized.photos.filter(isUsableUrl);
+
   if (!normalized.photos.length) {
     normalized.photos = getDestinationImages(normalized);
   }
 
+  normalized.photos = normalized.photos.filter(isUsableUrl);
+
   // Keep images in sync with photos so frontend <img src={place.images[0]} /> always works
   if (!normalized.images.length && normalized.photos.length) {
     normalized.images = normalized.photos;
+  }
+
+  if (!normalized.photos.length && normalized.images.length) {
+    normalized.photos = normalized.images;
   }
 
   return normalized;

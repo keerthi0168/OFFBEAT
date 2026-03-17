@@ -1,5 +1,20 @@
 import React, { useMemo, useState } from 'react';
 import { fetchSimilarDestinations, getFriendlyMlError, trackMlInteraction } from '@/utils/mlApi';
+import axiosInstance from '@/utils/axios';
+
+const localSimilarityScore = (base = '', candidate = '') => {
+  const a = String(base || '').trim().toLowerCase();
+  const b = String(candidate || '').trim().toLowerCase();
+  if (!a || !b) return 0.5;
+  if (a === b) return 1;
+  if (b.startsWith(a) || a.startsWith(b)) return 0.86;
+  if (b.includes(a) || a.includes(b)) return 0.74;
+  const aWords = new Set(a.split(/\s+/).filter(Boolean));
+  const bWords = new Set(b.split(/\s+/).filter(Boolean));
+  const overlap = [...aWords].filter((w) => bWords.has(w)).length;
+  if (!aWords.size) return 0.5;
+  return Math.min(0.92, Math.max(0.45, overlap / aWords.size));
+};
 
 const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
   const [destination, setDestination] = useState('Goa');
@@ -51,8 +66,38 @@ const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
         });
       }
     } catch (apiError) {
-      setError(getFriendlyMlError(apiError, 'Similar destinations are not ready right now.'));
-      setResults([]);
+      try {
+        const q = destination.trim() || category || 'India';
+        const fallbackResponse = await axiosInstance.get('/tourism/search', {
+          params: { q },
+        });
+        const fallbackRaw = Array.isArray(fallbackResponse.data?.results)
+          ? fallbackResponse.data.results
+          : [];
+
+        const baseName = destination.trim() || q;
+        const fallbackResults = fallbackRaw
+          .map((item) => ({
+            place_name: item.place_name || item.title || item.name || item.Destination_Name || 'Destination',
+            category: item.category || item.type || 'Nature',
+            region: item.region || item.direction || 'Any',
+            rating: Number(item.rating) || 4.2,
+            budget: Number(item.price ?? item.budgetMin ?? item.budgetMax) || 2200,
+          }))
+          .map((item) => ({
+            ...item,
+            cosine_similarity: localSimilarityScore(baseName, item.place_name),
+          }))
+          .filter((item) => item.place_name.toLowerCase() !== baseName.toLowerCase())
+          .sort((a, b) => b.cosine_similarity - a.cosine_similarity)
+          .slice(0, 6);
+
+        setResults(fallbackResults);
+        setError(fallbackResults.length ? '' : getFriendlyMlError(apiError, 'Similar destinations are not ready right now.'));
+      } catch (fallbackError) {
+        setError(getFriendlyMlError(apiError, 'Similar destinations are not ready right now.'));
+        setResults([]);
+      }
     } finally {
       setLoading(false);
     }
@@ -139,7 +184,7 @@ const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
               <h4 className="text-white font-medium">{item.place_name}</h4>
               <p className="mt-1 text-xs text-[#E5E7EB]/70">{item.category} • {item.region}</p>
               <div className="mt-2 text-xs text-[#C9A96E]">
-                Cosine Similarity: {((item.cosine_similarity || 0) * 100).toFixed(1)}%
+                Similarity score: {((item.cosine_similarity || 0) * 100).toFixed(1)}%
               </div>
               <div className="mt-1 text-xs text-[#E5E7EB]/70">
                 Rating {item.rating?.toFixed?.(1) || item.rating} • Budget ₹{Math.round(item.budget || 0)}

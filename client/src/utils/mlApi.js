@@ -72,9 +72,96 @@ export const fetchSimilarDestinations = async (params = {}) => {
   return data;
 };
 
+const toNumber = (value, fallback = 0) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const normalizePlannerPlace = (place = {}) => {
+  const price = toNumber(place?.price ?? place?.budgetMin ?? place?.budgetMax, 2200);
+  return {
+    place_name: place?.title || place?.name || place?.Destination_Name || 'Destination',
+    category: place?.category || place?.type || 'Nature',
+    region: place?.region || place?.direction || 'Any',
+    state: place?.state || place?.State || place?.address?.split(',')?.[1]?.trim() || 'India',
+    rating: toNumber(place?.rating, 4.2),
+    estimated_cost: Math.max(900, Math.round(price)),
+    highlight: place?.extraInfo || place?.description || 'Enjoy local highlights and authentic experiences.',
+  };
+};
+
+const buildFallbackTravelPlan = async (payload = {}) => {
+  const budget = Math.max(1000, toNumber(payload?.budget, 25000));
+  const numberOfDays = Math.max(1, toNumber(payload?.number_of_days, 5));
+  const preferredCategory = String(payload?.preferred_category || 'Any').trim();
+  const region = String(payload?.region || 'Any').trim();
+
+  const { data } = await axiosInstance.get('/tourism/all');
+  const allPlaces = Array.isArray(data?.destinations) ? data.destinations : [];
+
+  if (!allPlaces.length) {
+    return {
+      success: false,
+      message: 'No destinations available for itinerary right now.',
+      itinerary: [],
+      summary: { estimated_total_cost: 0 },
+    };
+  }
+
+  const categoryNeedle = preferredCategory.toLowerCase();
+  const regionNeedle = region.toLowerCase();
+
+  const filtered = allPlaces.filter((place) => {
+    const placeCategory = String(place?.category || place?.type || '').toLowerCase();
+    const placeRegion = String(place?.region || place?.direction || '').toLowerCase();
+    const categoryOk = categoryNeedle === 'any' || !categoryNeedle || placeCategory.includes(categoryNeedle);
+    const regionOk = regionNeedle === 'any' || !regionNeedle || placeRegion.includes(regionNeedle);
+    return categoryOk && regionOk;
+  });
+
+  const candidates = (filtered.length ? filtered : allPlaces)
+    .map(normalizePlannerPlace)
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, Math.max(10, numberOfDays * 3));
+
+  const dailyBudget = Math.max(800, Math.floor(budget / numberOfDays));
+  const itinerary = [];
+
+  for (let day = 1; day <= numberOfDays; day += 1) {
+    const exact = candidates.find((item) => item.estimated_cost <= dailyBudget && !itinerary.some((x) => x.destination?.place_name === item.place_name));
+    const fallback = candidates.find((item) => !itinerary.some((x) => x.destination?.place_name === item.place_name));
+    const destination = exact || fallback || candidates[(day - 1) % candidates.length];
+
+    itinerary.push({
+      day,
+      destination,
+      estimated_day_cost: destination?.estimated_cost || dailyBudget,
+      highlight: destination?.highlight || 'Explore local culture and landscapes.',
+    });
+  }
+
+  const estimatedTotal = itinerary.reduce((sum, item) => sum + toNumber(item.estimated_day_cost, 0), 0);
+
+  return {
+    success: true,
+    source: 'fallback',
+    itinerary,
+    summary: {
+      estimated_total_cost: estimatedTotal,
+      budget,
+      number_of_days: numberOfDays,
+    },
+    message: 'Showing a reliable local itinerary while AI planner warms up.',
+  };
+};
+
 export const generateTravelPlan = async (payload) => {
-  const { data } = await mlApi.post('/travel-planner', payload);
-  return data;
+  try {
+    const { data } = await mlApi.post('/travel-planner', payload);
+    return data;
+  } catch (mlError) {
+    return buildFallbackTravelPlan(payload);
+  }
 };
 
 export const askTravelAssistant = async (payload) => {

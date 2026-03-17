@@ -417,9 +417,9 @@ const ExplorePage = () => {
 
       <section className="mx-auto max-w-7xl px-6 py-16">
         <div className="space-y-3 mb-10">
-          <h2 className="text-3xl font-light text-white tracking-tight">Similar Destinations (Cosine AI)</h2>
+          <h2 className="text-3xl font-light text-white tracking-tight">Smart Similar Destinations</h2>
           <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Recommends similar destinations using category, rating, budget, and region with cosine similarity.
+            Find places that feel like your favorite destination using our AI recommendation engine.
           </p>
         </div>
         <SimilarDestinationsSection initialRegion={regionFilter} />

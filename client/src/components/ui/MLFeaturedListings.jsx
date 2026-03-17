@@ -100,10 +100,44 @@ const MLFeaturedListings = ({ query, fallbackDestination = 'Goa', limit = 5 }) =
         );
       } catch (requestError) {
         if (ignore) return;
+        try {
+          const fallbackResponse = await axiosInstance.get('/tourism/random', {
+            params: { limit: Math.max(limit, 6) },
+          });
 
-        setRecommendations([]);
-        setMatchedDestination(null);
-        setError(getFriendlyMlError(requestError, 'Smart recommendations are not ready right now.'));
+          if (ignore) return;
+
+          const fallbackResults = Array.isArray(fallbackResponse.data?.destinations)
+            ? fallbackResponse.data.destinations
+            : [];
+
+          const normalizedFallback = fallbackResults
+            .map(normalizeDestination)
+            .map((destination) => ({
+              ...destination,
+              similarity: calculateSimilarity(destination, destinationQuery),
+            }))
+            .sort((a, b) => b.similarity - a.similarity)
+            .slice(0, limit);
+
+          setRecommendations(normalizedFallback);
+          setMatchedDestination(
+            normalizedFallback[0]
+              ? {
+                  place_name: normalizedFallback[0].place_name,
+                  state: normalizedFallback[0].state,
+                  category: normalizedFallback[0].category,
+                  best_season: normalizedFallback[0].best_season,
+                }
+              : null
+          );
+          setError('');
+        } catch (fallbackError) {
+          if (ignore) return;
+          setRecommendations([]);
+          setMatchedDestination(null);
+          setError(getFriendlyMlError(requestError, 'Smart recommendations are not ready right now.'));
+        }
       } finally {
         if (!ignore) {
           setLoading(false);

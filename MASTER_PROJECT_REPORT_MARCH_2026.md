@@ -59,7 +59,7 @@ Offbeat Travel India is a full-stack travel discovery and booking platform cente
 **Strengths**
 - Solid feature breadth (auth, destination search, booking flow, chatbot, ML recommendation sections).
 - Rich UI system and modern frontend stack.
-- Good evidence of data normalization and enrichment workflows (`all_states_sync_enriched_report.json`, manifests, organization scripts).
+- Good evidence of data normalization and enrichment workflows (`dataset/reports/all_states_sync_enriched_report.json`, manifests, organization scripts).
 - Strong momentum in iterative fixes and QA responsiveness.
 
 **Critical Gaps / Constraints**

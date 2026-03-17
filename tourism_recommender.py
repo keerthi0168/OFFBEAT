@@ -10,7 +10,7 @@ Expected dataset columns:
 Usage example:
     python tourism_recommender.py \
       --model "tourism_rf_pipeline.joblib" \
-      --data "mumbai.csv" \
+    --data "dataset/csv/mumbai.csv" \
       --state "Maharashtra" \
       --category "Beach" \
       --season "Winter" \
