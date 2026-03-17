@@ -153,7 +153,7 @@ OTT website/
 
 ## Screenshots
 
-> Placeholder screenshot assets are now committed in `docs/screenshots/*.svg` so embeds render immediately. Replace each SVG with your real captured screenshot when ready.
+Updated with your latest screenshots from 2026-03-17.
 
 ### If photos are not loading
 
@@ -164,32 +164,28 @@ OTT website/
 
 ### Embedded screenshots
 
-#### 1) Explore Hero (Goa Search)
-![Explore Hero (Goa Search)](docs/screenshots/01-explore-hero-goa-search.png)
+#### 1) Search Bar with Results
+![Search Bar with Results](docs/screenshots/01-search-bar-with-results.png)
 
-#### 2) Similar Destinations Form (Goa)
-![Similar Destinations Form (Goa)](docs/screenshots/03-similar-destinations-form-goa.png)
+#### 2) AI Smart Recommendation
+![AI Smart Recommendation](docs/screenshots/02-ai-smart-recommendation.png)
 
-#### 3) AI Travel Planner Form
-![AI Travel Planner Form](docs/screenshots/04-ai-travel-planner-form.png)
+#### 3) Budget Planner
+![Budget Planner](docs/screenshots/03-budget-planner.png)
 
-#### 4) Hidden Gems Grid
-![Hidden Gems Grid](docs/screenshots/05-hidden-gems-grid.png)
+#### 4) Hidden Gems
+![Hidden Gems](docs/screenshots/04-hidden-gems.png)
 
-#### 5) Adventure Listings Grid
-![Adventure Listings Grid](docs/screenshots/06-adventure-listings-grid.png)
-
-#### 6) Chatbot Assistant
-![Chatbot Assistant](docs/screenshots/07-chatbot-assistant.svg)
+#### 5) Chatbot
+![Chatbot](docs/screenshots/05-chatbot.png)
 
 ### Direct asset links (fallback check)
 
-- [01 Explore Hero](docs/screenshots/01-explore-hero-goa-search.png)
-- [02 Similar Destinations](docs/screenshots/03-similar-destinations-form-goa.png)
-- [03 AI Planner](docs/screenshots/04-ai-travel-planner-form.png)
-- [04 Hidden Gems](docs/screenshots/05-hidden-gems-grid.png)
-- [05 Adventure Listings](docs/screenshots/06-adventure-listings-grid.png)
-- [06 Chatbot Assistant](docs/screenshots/07-chatbot-assistant.svg)
+- [01 Search Bar with Results](docs/screenshots/01-search-bar-with-results.png)
+- [02 AI Smart Recommendation](docs/screenshots/02-ai-smart-recommendation.png)
+- [03 Budget Planner](docs/screenshots/03-budget-planner.png)
+- [04 Hidden Gems](docs/screenshots/04-hidden-gems.png)
+- [05 Chatbot](docs/screenshots/05-chatbot.png)
 
 ## Quick API checks (post setup)
 

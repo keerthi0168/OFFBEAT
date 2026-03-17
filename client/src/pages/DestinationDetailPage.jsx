@@ -354,15 +354,14 @@ export default function DestinationDetailPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/explore')}
                 className="px-8 py-4 bg-gradient-to-r from-[#C9A96E] to-[#D4B896] text-[#0B1220] font-semibold rounded-xl hover:opacity-90 transition shadow-lg"
               >
                 Explore More Destinations
               </button>
               <button
                 onClick={() => {
-                  const chatWidget = document.querySelector('[data-chatbot-toggle]');
-                  if (chatWidget) chatWidget.click();
+                  window.dispatchEvent(new CustomEvent('open-chatbot'));
                 }}
                 className="px-8 py-4 bg-white/5 text-white font-semibold rounded-xl border border-white/20 hover:bg-white/10 transition"
               >
