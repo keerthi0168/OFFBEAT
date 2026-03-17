@@ -25,14 +25,16 @@ Modern React + Node platform to discover offbeat Indian destinations, with ML-as
 Create `api/.env`:
 
 ```env
+NODE_ENV=development
 PORT=8001
-MONGODB_URI=mongodb://localhost:27017/travel-db
+DB_URL=mongodb://127.0.0.1:27017/myownspace
+MONGO_ENABLED=false
 MYSQL_HOST=localhost
 MYSQL_USER=root
 MYSQL_PASSWORD=your_password
-MYSQL_DATABASE=travel_db
+MYSQL_DATABASE=myownspace
 JWT_SECRET=your_secret_key
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=http://localhost:5173,http://127.0.0.1:5173
 ```
 
 Run backend:
@@ -63,6 +65,47 @@ npm run dev
 ### 3) Optional ML service
 
 If you are running the Python recommendation service separately, start it with your Python environment in the `ml/` directory (as configured in your local setup).
+
+## Localhost troubleshooting
+
+### If localhost keeps failing on backend startup
+
+The most common recurring local issue in this project is MongoDB being installed on Windows but not actually running.
+
+Symptoms:
+
+- backend logs show `ECONNREFUSED 127.0.0.1:27017`
+- API appears noisy on every restart
+- frontend may load, but backend startup looks broken
+
+For local development, this repository supports a clean fallback mode:
+
+```env
+MONGO_ENABLED=false
+```
+
+When `MONGO_ENABLED=false` is set in `api/.env`:
+
+- the Express API still runs on `http://localhost:8001`
+- MySQL-backed/demo-safe features continue to work
+- tourism APIs and chatbot static-data flows still work
+- Mongo connection attempts are skipped entirely
+
+If you do want full Mongo-backed features later, set:
+
+```env
+MONGO_ENABLED=true
+DB_URL=mongodb://127.0.0.1:27017/myownspace
+```
+
+and make sure the local MongoDB Windows service is actually running.
+
+### Verified local dev ports
+
+- frontend: `http://localhost:5173`
+- backend: `http://localhost:8001`
+
+If you see strange PowerShell results while checking the Vite server, use a raw curl check instead of relying only on `Invoke-WebRequest`.
 
 ## API overview (quick)
 
