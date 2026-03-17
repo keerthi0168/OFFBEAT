@@ -105,6 +105,18 @@ and make sure the local MongoDB Windows service is actually running.
 - frontend: `http://localhost:5173`
 - backend: `http://localhost:8001`
 
+### If hot reload (HMR) is flaky on Windows/OneDrive
+
+This project is commonly used from OneDrive paths on Windows, where file-watch events can be unreliable.
+
+To keep development stable, Vite is configured with polling watch mode and fixed localhost HMR settings in `client/vite.config.js`:
+
+- `server.strictPort = true` (always uses `5173`)
+- `server.hmr.clientPort = 5173`
+- `server.watch.usePolling = true`
+
+If changes still don't refresh immediately, restart only the frontend dev server.
+
 If you see strange PowerShell results while checking the Vite server, use a raw curl check instead of relying only on `Invoke-WebRequest`.
 
 ## API overview (quick)
