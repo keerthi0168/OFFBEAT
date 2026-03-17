@@ -4,6 +4,7 @@ import os
 import sys
 import json
 import re
+import importlib
 from collections import Counter
 from difflib import get_close_matches
 from datetime import datetime
@@ -1586,10 +1587,16 @@ class DestinationRecommender:
             return
 
         import torch
-        from torchvision import models, transforms
 
-        weights = models.ResNet50_Weights.DEFAULT
-        model = models.resnet50(weights=weights)
+        try:
+            torchvision_models = importlib.import_module("torchvision.models")
+        except ModuleNotFoundError as error:
+            raise RuntimeError(
+                "torchvision is required for image classification features. Install with `pip install torchvision`."
+            ) from error
+
+        weights = torchvision_models.ResNet50_Weights.DEFAULT
+        model = torchvision_models.resnet50(weights=weights)
         model.eval()
 
         self.cnn_model = model
