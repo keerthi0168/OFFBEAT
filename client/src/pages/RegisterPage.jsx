@@ -89,8 +89,9 @@ const RegisterPage = () => {
           <form className="space-y-6" onSubmit={handleFormSubmit}>
             {/* Name Field */}
             <div>
-              <label className="block text-white text-sm font-light mb-3 tracking-wide">FULL NAME</label>
+              <label htmlFor="register-name" className="block text-white text-sm font-light mb-3 tracking-wide">FULL NAME</label>
               <input
+                id="register-name"
                 name="name"
                 type="text"
                 autoComplete="name"
@@ -104,8 +105,9 @@ const RegisterPage = () => {
 
             {/* Email Field */}
             <div>
-              <label className="block text-white text-sm font-light mb-3 tracking-wide">EMAIL ADDRESS</label>
+              <label htmlFor="register-email" className="block text-white text-sm font-light mb-3 tracking-wide">EMAIL ADDRESS</label>
               <input
+                id="register-email"
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -127,8 +129,9 @@ const RegisterPage = () => {
 
             {/* Password Field */}
             <div>
-              <label className="block text-white text-sm font-light mb-3 tracking-wide">PASSWORD</label>
+              <label htmlFor="register-password" className="block text-white text-sm font-light mb-3 tracking-wide">PASSWORD</label>
               <input
+                id="register-password"
                 name="password"
                 type="password"
                 autoComplete="new-password"

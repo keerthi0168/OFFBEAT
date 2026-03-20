@@ -90,8 +90,9 @@ const LoginPage = () => {
           <form className="space-y-6" onSubmit={handleFormSubmit}>
             {/* Email Field */}
             <div>
-              <label className="block text-white text-sm font-light mb-3 tracking-wide">EMAIL ADDRESS</label>
+              <label htmlFor="login-email" className="block text-white text-sm font-light mb-3 tracking-wide">EMAIL ADDRESS</label>
               <input
+                id="login-email"
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -110,8 +111,9 @@ const LoginPage = () => {
 
             {/* Password Field */}
             <div>
-              <label className="block text-white text-sm font-light mb-3 tracking-wide">PASSWORD</label>
+              <label htmlFor="login-password" className="block text-white text-sm font-light mb-3 tracking-wide">PASSWORD</label>
               <input
+                id="login-password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
