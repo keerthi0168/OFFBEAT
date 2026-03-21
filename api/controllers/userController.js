@@ -167,9 +167,9 @@ exports.login = async (req, res, next) => {
 
       const demoUser = demoUsers.get(normalizedEmail);
       if (!demoUser) {
-        return res.status(503).json({
-          message: 'Login service is temporarily unavailable. Please sign up first and try again.',
-          code: 'AUTH_SERVICE_UNAVAILABLE',
+        return res.status(401).json({
+          message: 'User not identified. Please create an account.',
+          code: 'USER_NOT_IDENTIFIED',
         });
       }
 
