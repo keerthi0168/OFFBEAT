@@ -60,7 +60,7 @@ const ExplorePage = () => {
     };
     const normalized = categoryMap[category] || category;
     const entry = rawDataset.categories.find(
-      (cat) => cat.category.toLowerCase() === String(normalized).toLowerCase(),
+      (cat) => String(cat?.category || '').toLowerCase() === String(normalized || '').toLowerCase(),
     );
     if (!entry || !entry.files?.length) return null;
     const hash = Array.from(seed || category || '')
