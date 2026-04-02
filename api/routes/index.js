@@ -13,6 +13,7 @@ const recommendationController = require('../controllers/recommendationControlle
 const tourismController = require('../controllers/tourismController');
 const datasetController = require('../controllers/datasetController');
 const mlHealthController = require('../controllers/mlHealthController');
+const { getModel } = require('../utils/mlModel');
 const { isLoggedIn } = require('../middlewares/user');
 
 // Configure multer for file uploads
@@ -64,6 +65,24 @@ router.get('/recommendations/personalized', recommendationController.getPersonal
 router.get('/recommendations/trending', recommendationController.getTrending);
 router.post('/recommendations/track', recommendationController.trackInteraction);
 router.get('/ml/health', mlHealthController.getMlHealth);
+router.post('/recommend', (req, res) => {
+	try {
+		const model = getModel();
+		const recommendations = model.getRecommendations(req.body || {}, 5);
+
+		return res.status(200).json({
+			success: true,
+			count: recommendations.length,
+			recommendations,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: 'Failed to generate recommendations',
+			error: error.message,
+		});
+	}
+});
 
 // Tourism Information routes
 router.get('/tourism/destination/:name', tourismController.getDestinationInfo);

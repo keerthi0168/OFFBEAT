@@ -1,0 +1,371 @@
+[
+  {
+    "id": "AN-S005",
+    "name": "Hut Bay Hidden Forest Trails",
+    "state": "Andaman and Nicobar",
+    "district": "South Andaman",
+    "direction": "South",
+    "region_type": "Forest & Nature",
+    "tourism_type": "Nature & Adventure",
+    "popularity": "Low",
+    "rating": 4.6,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "budget_range": "2000-3500",
+    "activities": [
+      "Trekking",
+      "Bird Watching",
+      "Photography"
+    ],
+    "crowd_level": "Low",
+    "coordinates": {
+      "lat": 10.641,
+      "lng": 92.703
+    },
+    "google_maps_url": "https://www.google.com/maps?q=Hut+Bay",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0a/Hut_Bay_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/31/Hut_Bay_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/49/Hut_Bay_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/22/Hut_Bay_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5f/Hut_Bay_5.jpg"
+    ],
+    "description": "Secluded forest trails leading to pristine beaches.\nAdvantages: Offbeat, peaceful.\nDrawbacks: Need permits, remote location.",
+    "num_images": 5,
+    "has_google_url": true,
+    "season_count": 4,
+    "activity_count": 3,
+    "description_length": 124,
+    "state_encoded": 0,
+    "region_type_onehot": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    "popularity_score_norm": 0
+  },
+  {
+    "id": "CH-005",
+    "name": "Sector 17 Hidden Alley Cafes",
+    "state": "Chandigarh",
+    "district": "Chandigarh",
+    "direction": "South",
+    "region_type": "Urban & Leisure",
+    "tourism_type": "Food & Leisure",
+    "popularity": "Medium",
+    "rating": 4.5,
+    "best_season": [
+      "All Year"
+    ],
+    "budget_range": "300-800 INR per person",
+    "activities": [
+      "Food Exploration",
+      "Photography",
+      "Shopping"
+    ],
+    "crowd_level": "Medium",
+    "coordinates": {
+      "lat": 30.733,
+      "lng": 76.779
+    },
+    "google_maps_url": "https://www.google.com/maps?q=Sector+17+Chandigarh",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0b/Sector17_Chandigarh_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/31/Sector17_Chandigarh_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/49/Sector17_Chandigarh_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/22/Sector17_Chandigarh_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5f/Sector17_Chandigarh_5.jpg"
+    ],
+    "description": "Hidden alley cafes and boutique spots in Sector 17 market.\nAdvantages: Offbeat food experiences.\nDrawbacks: Small cafes, limited seating.",
+    "num_images": 5,
+    "has_google_url": true,
+    "season_count": 1,
+    "activity_count": 3,
+    "description_length": 137,
+    "state_encoded": 1,
+    "region_type_onehot": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0
+    ],
+    "popularity_score_norm": 0
+  },
+  {
+    "id": "DD-005",
+    "name": "Ghoghla Beach Hidden Spots",
+    "state": "Daman & Diu",
+    "district": "Diu",
+    "direction": "South",
+    "region_type": "Beach & Nature",
+    "tourism_type": "Nature & Leisure",
+    "popularity": "Medium",
+    "rating": 4.5,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January",
+      "February"
+    ],
+    "budget_range": "Free",
+    "activities": [
+      "Beach Walks",
+      "Photography",
+      "Relaxation"
+    ],
+    "crowd_level": "Low",
+    "coordinates": {
+      "lat": 20.719,
+      "lng": 70.982
+    },
+    "google_maps_url": "https://www.google.com/maps?q=Ghoghla+Beach+Diu",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3b/Ghoghla_Beach_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Ghoghla_Beach_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Ghoghla_Beach_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Ghoghla_Beach_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Ghoghla_Beach_5.jpg"
+    ],
+    "description": "Secluded areas of Ghoghla Beach.\nAdvantages: Quiet, scenic.\nDrawbacks: Limited food and seating options.",
+    "num_images": 5,
+    "has_google_url": true,
+    "season_count": 5,
+    "activity_count": 3,
+    "description_length": 104,
+    "state_encoded": 2,
+    "region_type_onehot": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "popularity_score_norm": 0
+  },
+  {
+    "id": "DL-S005",
+    "name": "Lotus Temple Lesser-Known Gardens",
+    "state": "Delhi",
+    "district": "South Delhi",
+    "direction": "South",
+    "region_type": "Spiritual & Nature",
+    "tourism_type": "Culture & Spiritual",
+    "popularity": "Medium",
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "budget_range": "Free",
+    "activities": [
+      "Spiritual Visits",
+      "Photography",
+      "Nature Walks"
+    ],
+    "crowd_level": "Medium",
+    "coordinates": {
+      "lat": 28.553,
+      "lng": 77.258
+    },
+    "google_maps_url": "https://www.google.com/maps?q=Lotus+Temple+Delhi",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3b/Lotus_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Lotus_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Lotus_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Lotus_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Lotus_5.jpg"
+    ],
+    "description": "Hidden gardens and corners around Lotus Temple.\nAdvantages: Peaceful, spiritual, photogenic.\nDrawbacks: Can be crowded during holidays.",
+    "num_images": 5,
+    "has_google_url": true,
+    "season_count": 4,
+    "activity_count": 3,
+    "description_length": 135,
+    "state_encoded": 3,
+    "region_type_onehot": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "popularity_score_norm": 0
+  },
+  {
+    "id": "JK-S005",
+    "name": "Dachigam Autumn Trails",
+    "state": "Jammu & Kashmir",
+    "district": "Srinagar",
+    "direction": "South",
+    "region_type": "Forest & Hills",
+    "tourism_type": "Nature & Wildlife",
+    "popularity": "Low",
+    "rating": 4.7,
+    "best_season": [
+      "September",
+      "October"
+    ],
+    "budget_range": "Free",
+    "activities": [
+      "Hiking",
+      "Bird Watching",
+      "Photography"
+    ],
+    "crowd_level": "Low",
+    "coordinates": {
+      "lat": 34.1,
+      "lng": 74.78
+    },
+    "google_maps_url": "https://www.google.com/maps?q=Dachigam+National+Park",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/4/44/Dachigam_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/28/Dachigam_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/7/75/Dachigam_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Dachigam_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/19/Dachigam_5.jpg"
+    ],
+    "description": "Hidden forest trails in Dachigam surroundings.\nAdvantages: Wildlife, serene forests.\nDrawbacks: Slippery paths post‑rain.",
+    "num_images": 5,
+    "has_google_url": true,
+    "season_count": 2,
+    "activity_count": 3,
+    "description_length": 121,
+    "state_encoded": 4,
+    "region_type_onehot": [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "popularity_score_norm": 0
+  },
+  {
+    "id": "LD-S005",
+    "name": "Suru Valley Hidden Streams",
+    "state": "Ladakh",
+    "district": "Kargil",
+    "direction": "South",
+    "region_type": "Valley & Streams",
+    "tourism_type": "Nature & Photography",
+    "popularity": "Low",
+    "rating": 4.7,
+    "best_season": [
+      "May",
+      "June",
+      "July",
+      "August",
+      "September"
+    ],
+    "budget_range": "Free-Budget",
+    "activities": [
+      "Nature Walks",
+      "Photography",
+      "Bird Watching"
+    ],
+    "crowd_level": "Low",
+    "coordinates": {
+      "lat": 34.549,
+      "lng": 75.113
+    },
+    "google_maps_url": "https://www.google.com/maps?q=Suru+Valley",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0f/Suru_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/41/Suru_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/50/Suru_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Suru_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/91/Suru_5.jpg"
+    ],
+    "description": "Hidden streams & green patches in Suru Valley.\nAdvantages: Lush valley views.\nDrawbacks: Parts can be marshy.",
+    "num_images": 5,
+    "has_google_url": true,
+    "season_count": 5,
+    "activity_count": 3,
+    "description_length": 109,
+    "state_encoded": 5,
+    "region_type_onehot": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "popularity_score_norm": 0
+  },
+  {
+    "id": "PY-S005",
+    "name": "Sithanankuppam Fishing Village Trails",
+    "state": "Puducherry",
+    "district": "Pondicherry",
+    "direction": "South",
+    "region_type": "Coastal Village",
+    "tourism_type": "Culture & Photography",
+    "popularity": "Low",
+    "rating": 4.5,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January",
+      "February"
+    ],
+    "budget_range": "Free",
+    "activities": [
+      "Village Walks",
+      "Fishing Boats",
+      "Photography"
+    ],
+    "crowd_level": "Low",
+    "coordinates": {
+      "lat": 11.846,
+      "lng": 79.908
+    },
+    "google_maps_url": "https://www.google.com/maps?q=Sithanankuppam+Village",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Sithanankuppam_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/58/Sithanankuppam_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/69/Sithanankuppam_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/15/Sithanankuppam_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/9a/Sithanankuppam_5.jpg"
+    ],
+    "description": "Authentic coastal village paths & fishing scenes.\nAdvantages: Local culture & photography.\nDrawbacks: Unpaved paths.",
+    "num_images": 5,
+    "has_google_url": true,
+    "season_count": 5,
+    "activity_count": 3,
+    "description_length": 116,
+    "state_encoded": 6,
+    "region_type_onehot": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "popularity_score_norm": 0
+  }
+]

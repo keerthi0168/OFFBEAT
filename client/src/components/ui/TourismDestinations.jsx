@@ -118,10 +118,13 @@ const TourismDestinations = ({ category, region, personalized = false, limit = 6
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {destinations.slice(0, limit).map((dest, idx) => {
-        const imageUrl = getCategoryImage(
-          dest.category || dest.Category || 'Nature',
-          dest.title || dest.name || dest.Destination_Name || String(idx),
-        );
+        // Prefer the first image from the dataset's images array, fallback to getCategoryImage
+        const imageUrl = Array.isArray(dest.images) && dest.images.length > 0
+          ? dest.images[0]
+          : getCategoryImage(
+              dest.category || dest.Category || 'Nature',
+              dest.title || dest.name || dest.Destination_Name || String(idx),
+            );
         const destName = dest.title || dest.name || dest.Destination_Name || `Destination ${idx + 1}`;
         const destState = dest.state || dest.State || (dest.address ? dest.address.split(',')[1]?.trim() : '');
         return (

@@ -302,6 +302,8 @@ const ExplorePage = () => {
                               <img
                                 src={imageUrl}
                                 alt={destinationName}
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               />
                             </div>
@@ -381,6 +383,8 @@ const ExplorePage = () => {
                     <img
                       src={preview}
                       alt={category.category}
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
