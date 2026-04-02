@@ -10,7 +10,7 @@ const InfoCard = ({ place }) => {
       key={place._id}
     >
       <div className="flex w-full shrink-0 bg-white/5 sm:h-32 sm:w-32 ">
-        <PlaceImg place={place} />
+        <PlaceImg place={{...place, photos: place.photos?.length ? place.photos : place.images}} />
       </div>
       <div className="">
         <h2 className="text-lg md:text-xl font-light text-white">{place.title}</h2>

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const PlaceGallery = ({ place }) => {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
 
+  const images = place.photos?.length ? place.photos : place.images?.length ? place.images : [];
   if (showAllPhotos) {
     return (
       <div className="fixed inset-0 z-20 overflow-auto bg-[#0B1220] text-white">
@@ -27,10 +28,9 @@ const PlaceGallery = ({ place }) => {
               Close photos
             </button>
           </div>
-          {place?.photos?.length > 0 &&
-            place.photos.map((photo, index) => (
+          {images.length > 0 &&
+            images.map((photo, index) => (
               <div key={index} className="max-w-full">
-                {/* <Image src={photo} /> */}
                 <img src={photo} alt="" />
               </div>
             ))}
@@ -44,12 +44,12 @@ const PlaceGallery = ({ place }) => {
       <div className="hidden h-[400px] max-h-[450px] grid-cols-4 gap-2 overflow-hidden rounded-[12px] md:grid">
         {/* column 1 */}
         <div className="col-span-2 overflow-hidden">
-          {place.photos?.[0] && (
+          {images[0] && (
             <div className="h-full w-full overflow-hidden bg-white/5">
               <img
                 onClick={() => setShowAllPhotos(true)}
                 className="h-full w-full cursor-pointer object-cover"
-                src={place.photos[0]}
+                src={images[0]}
                 alt=""
               />
             </div>
@@ -59,25 +59,25 @@ const PlaceGallery = ({ place }) => {
         <div className="col-span-1 overflow-hidden">
           {/* row grid inside column 2 */}
           <div className="grid h-full grid-rows-2 gap-2">
-            {place.photos?.[1] && (
+            {images[1] && (
               // row 1
               <div className="bg-white/5">
                 <img
                   onClick={() => setShowAllPhotos(true)}
                   className="h-full w-full cursor-pointer object-cover"
-                  src={place.photos[1]}
+                  src={images[1]}
                   alt=""
                 />
               </div>
             )}
 
-            {place.photos?.[2] && (
+            {images[2] && (
               // row 2
               <div className="bg-white/5">
                 <img
                   onClick={() => setShowAllPhotos(true)}
                   className="h-full w-full cursor-pointer object-cover"
-                  src={place.photos[2]}
+                  src={images[2]}
                   alt=""
                 />
               </div>
@@ -88,25 +88,25 @@ const PlaceGallery = ({ place }) => {
         <div className="col-span-1 overflow-hidden">
           {/* row grid inside column 3 */}
           <div className="grid h-full grid-rows-2 gap-2">
-            {place.photos?.[3] && (
+            {images[3] && (
               // row 1
               <div className="h-full bg-white/5">
                 <img
                   onClick={() => setShowAllPhotos(true)}
                   className="h-full w-full cursor-pointer object-cover"
-                  src={place.photos[3]}
+                  src={images[3]}
                   alt=""
                 />
               </div>
             )}
 
-            {place.photos?.[4] && (
+            {images[4] && (
               // row 2
               <div className="h-full bg-white/5">
                 <img
                   onClick={() => setShowAllPhotos(true)}
                   className="h-full w-full cursor-pointer object-cover"
-                  src={place.photos[4]}
+                  src={images[4]}
                   alt=""
                 />
               </div>
@@ -117,12 +117,12 @@ const PlaceGallery = ({ place }) => {
 
       {/* Mobile devices */}
       <div className="flex overflow-hidden rounded-[12px] md:hidden">
-        {place.photos?.[0] && (
+        {images[0] && (
           <div className="h-full">
             <img
               onClick={() => setShowAllPhotos(true)}
               className="h-full cursor-pointer object-cover"
-              src={place.photos[0]}
+              src={images[0]}
               alt=""
             />
           </div>

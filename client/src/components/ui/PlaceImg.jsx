@@ -1,7 +1,8 @@
 import React from 'react';
 
 const PlaceImg = ({ place, index = 0, className = null }) => {
-  if (!place.photos?.length) {
+  const images = place.photos?.length ? place.photos : place.images?.length ? place.images : [];
+  if (!images.length) {
     return '';
   }
   if (!className) {
@@ -9,7 +10,7 @@ const PlaceImg = ({ place, index = 0, className = null }) => {
   }
   return (
     <img
-      src={place.photos[index]}
+      src={images[index]}
       alt=""
       className={className}
       onError={(e) => {
