@@ -1,23 +1,28 @@
 import React from 'react';
 
 const PlaceImg = ({ place, index = 0, className = null }) => {
-  const images = place.photos?.length ? place.photos : place.images?.length ? place.images : [];
+  // Always check both fields, fallback to empty array
+  const images = Array.isArray(place.images) && place.images.length > 0
+    ? place.images
+    : (Array.isArray(place.photos) && place.photos.length > 0 ? place.photos : []);
   if (!images.length) {
-    return '';
-  }
-  if (!className) {
-    className = 'object-cover';
+    return (
+      <img
+        src={"/assets/placeholder.svg"}
+        alt="No image available"
+        className={className || "rounded-xl object-cover w-full h-full"}
+      />
+    );
   }
   return (
     <img
       src={images[index]}
-      alt=""
-      className={className}
-      onError={(e) => {
+      alt={place.name || place.title || "Destination"}
+      className={className || "rounded-xl object-cover w-full h-full"}
+      loading="lazy"
+      onError={e => {
         e.currentTarget.src = '/assets/placeholder.svg';
       }}
     />
   );
 };
-
-export default PlaceImg;

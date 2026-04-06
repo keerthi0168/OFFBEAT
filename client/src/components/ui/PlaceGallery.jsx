@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 const PlaceGallery = ({ place }) => {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
 
-  const images = place.photos?.length ? place.photos : place.images?.length ? place.images : [];
+  // Always check both fields, fallback to empty array
+  const images = Array.isArray(place.images) && place.images.length > 0
+    ? place.images
+    : (Array.isArray(place.photos) && place.photos.length > 0 ? place.photos : []);
   if (showAllPhotos) {
     return (
       <div className="fixed inset-0 z-20 overflow-auto bg-[#0B1220] text-white">

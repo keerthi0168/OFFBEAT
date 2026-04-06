@@ -76,7 +76,24 @@ npm run dev -- --host
 - Frontend: `http://localhost:5173`
 - Backend: `http://localhost:8001`
 
-## Project structure (updated)
+
+## Datasets Used
+
+This project uses several curated datasets for recommendations and ML:
+
+- `api/data/indian_travel_dataset.json` — Main travel dataset
+- `dataset/hidden_places_states.json` — Hidden/offbeat places by state (JSON, with images and ML features)
+- `dataset/hidden_places_territories.json` — Hidden/offbeat places by union territory (JSON, with images and ML features)
+- `api/data/realTourismData.js` — JS-format dataset for frontend
+
+**How these are used:**
+- The ML pipeline (`tourism_ml_pipeline.py`) loads the main dataset and also references both hidden places JSONs for feature engineering, scaling, normalization, and recommendations. These JSONs are not merged but loaded and processed in parallel for a clean, modular workflow.
+- Backend and frontend are patched to support both `images` and `photos` fields for robust image display.
+
+**Scaling/Normalization:**
+- All numeric features from the JSON datasets are scaled/normalized in the ML pipeline for better model performance and fair recommendations.
+
+See `ML_FEATURES.md` for more details on feature engineering and normalization.
 
 ```text
 OTT website/
@@ -105,6 +122,18 @@ OTT website/
 ├─ DEPLOYMENT.md
 └─ README.md
 ```
+
+
+## ML Pipeline Usage
+
+To train the recommendation model using all datasets (including hidden places):
+
+```bash
+python tourism_ml_pipeline.py --data api/data/indian_travel_dataset.json --model-out tourism_rf_pipeline.joblib
+# (The script will automatically load and use hidden_places_states.json and hidden_places_territories.json as well)
+```
+
+You can also edit the list of extra datasets in `tourism_ml_pipeline.py` for custom experiments.
 
 ## API quick view
 

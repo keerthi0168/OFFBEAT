@@ -19,6 +19,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
+
+import json
 from pathlib import Path
 
 import joblib
@@ -44,12 +46,28 @@ REQUIRED_COLUMNS = [
 ]
 
 
-def load_dataset(csv_path: str) -> pd.DataFrame:
+
+def load_csv_dataset(csv_path: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     missing_cols = [c for c in REQUIRED_COLUMNS if c not in df.columns]
     if missing_cols:
         raise ValueError(f"Dataset is missing required columns: {missing_cols}")
     return df
+
+# New: Load JSON dataset (list of dicts)
+def load_json_dataset(json_path: str, mapping: dict = None) -> pd.DataFrame:
+    with open(json_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    # Optionally map/rename fields to match REQUIRED_COLUMNS
+    if mapping:
+        data = [
+            {mapping.get(k, k): v for k, v in item.items()}
+            for item in data
+        ]
+    df = pd.DataFrame(data)
+    # Only keep required columns if present
+    keep_cols = [c for c in REQUIRED_COLUMNS if c in df.columns]
+    return df[keep_cols]
 
 
 def prepare_target(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
@@ -126,9 +144,31 @@ def build_pipeline(X: pd.DataFrame) -> Pipeline:
     return pipeline
 
 
-def train_evaluate_save(data_path: str, model_out: str) -> None:
-    # 1) Load data
-    df = load_dataset(data_path)
+
+def train_evaluate_save(data_path: str, model_out: str, extra_jsons: list = None) -> None:
+    # 1) Load main data (CSV or JSON)
+    if data_path.endswith('.csv'):
+        df = load_csv_dataset(data_path)
+    elif data_path.endswith('.json'):
+        df = load_json_dataset(data_path)
+    else:
+        raise ValueError("Unsupported file type for main dataset")
+
+    # 2) Optionally load and append extra JSON datasets
+    if extra_jsons:
+        for json_path in extra_jsons:
+            # Try to map fields if needed (user can edit mapping below)
+            mapping = {
+                'name': 'place_name',
+                'category': 'category',
+                'state': 'state',
+                'best_season': 'best_season',
+                'rating': 'rating',
+                'popularity_score': 'popularity_score',
+                'budget_range': 'budget',
+            }
+            df_extra = load_json_dataset(json_path, mapping)
+            df = pd.concat([df, df_extra], ignore_index=True)
 
     # 2/3/4/5) Preprocessing, missing values, encoding, scaling (inside pipeline)
     X, y = prepare_target(df)
@@ -186,6 +226,12 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+
 if __name__ == "__main__":
     args = parse_args()
-    train_evaluate_save(args.data, args.model_out)
+    # Example: add hidden places datasets here
+    extra_jsons = [
+        "dataset/hidden_places_states.json",
+        "dataset/hidden_places_territories.json",
+    ]
+    train_evaluate_save(args.data, args.model_out, extra_jsons=extra_jsons)
