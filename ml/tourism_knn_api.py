@@ -2186,7 +2186,10 @@ def create_app() -> Flask:
             return jsonify({"success": False, "message": str(error)}), 500
 
     @app.route("/user-recommendations", methods=["GET", "OPTIONS"])
-    def user_recommendations():
+
+    # --- User-based Collaborative Filtering ---
+    @app.route("/cf/user-recommendations", methods=["GET", "OPTIONS"])
+    def cf_user_recommendations():
         if request.method == "OPTIONS":
             return ("", 204)
 
@@ -2196,9 +2199,41 @@ def create_app() -> Flask:
         if not user_id:
             return jsonify({"success": False, "message": "Query parameter 'user_id' is required"}), 400
 
+        # Load user interactions
+        interactions_path = Path(__file__).parent / "data" / "user_interactions.csv"
+        if not interactions_path.exists():
+            return jsonify({"success": True, "recommendations": []})
+        df = pd.read_csv(interactions_path)
+        user_items = df[df['user_id'] == user_id]['place_name'].unique().tolist()
+        if not user_items:
+            return jsonify({"success": True, "recommendations": []})
+        # Use item-based similarity for each item, aggregate
+        all_recs = []
+        for item in user_items:
+            try:
+                recs = recommender.similar_destinations(destination=item, top_k=top_k)['results']
+                all_recs.extend([r['place_name'] for r in recs if r['place_name'] not in user_items])
+            except Exception:
+                continue
+        from collections import Counter
+        ranked = [item for item, _ in Counter(all_recs).most_common(top_k)]
+        # Return full payloads
+        rec_payloads = [recommender._row_to_payload(recommender.df[recommender.df['place_name'] == name].iloc[0]) for name in ranked if not recommender.df[recommender.df['place_name'] == name].empty]
+        return jsonify({"success": True, "recommendations": rec_payloads})
+
+    # --- Item-based Collaborative Filtering ---
+    @app.route("/cf/item-recommendations", methods=["GET", "OPTIONS"])
+    def cf_item_recommendations():
+        if request.method == "OPTIONS":
+            return ("", 204)
+
+        place_name = request.args.get("place_name", "").strip()
+        top_k = max(1, min(int(request.args.get("limit", 8)), 20))
+        if not place_name:
+            return jsonify({"success": False, "message": "Query parameter 'place_name' is required"}), 400
         try:
-            payload = recommender.get_user_recommendations(user_id=user_id, top_k=top_k)
-            return jsonify({"success": True, **payload})
+            recs = recommender.similar_destinations(destination=place_name, top_k=top_k)['results']
+            return jsonify({"success": True, "recommendations": recs})
         except Exception as error:
             return jsonify({"success": False, "message": str(error)}), 500
 
