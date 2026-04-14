@@ -3,8 +3,17 @@ import { Link } from 'react-router-dom';
 import { trackEvent } from '@/utils/analytics';
 
 const PlaceCard = ({ place }) => {
-  const { _id: placeId, photos, images, address, title, price } = place;
-  const displayImages = photos?.length ? photos : images?.length ? images : [];
+  const { _id: placeId, photos, images, address, title, price, image, photo, cover, thumbnail, img } = place;
+  // Robust main image selection
+  const mainImage =
+    (Array.isArray(photos) && photos[0]) ||
+    (Array.isArray(images) && images[0]) ||
+    image ||
+    photo ||
+    cover ||
+    thumbnail ||
+    img ||
+    '/assets/placeholder.svg';
   return (
     <Link
       to={`/place/${placeId}`}
@@ -12,20 +21,21 @@ const PlaceCard = ({ place }) => {
       onClick={() => trackEvent('view_place', { id: placeId, title, address })}
     >
       <div className="group h-80 w-full flex flex-col rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden">
-        {displayImages[0] && (
+        {mainImage ? (
           <div className="relative h-full w-full overflow-hidden">
             <img
-              src={displayImages[0]}
+              src={mainImage}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
               onError={(e) => {
-                e.currentTarget.src = '/assets/placeholder.svg';
+                e.target.onerror = null;
+                e.target.src = '/assets/placeholder.svg';
               }}
               alt={address}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent" />
           </div>
-        )}
-        {!displayImages[0] && (
+        ) : (
           <div className="h-full w-full bg-white/5 flex items-center justify-center">
             <span className="text-[#E5E7EB]/60">No image</span>
           </div>

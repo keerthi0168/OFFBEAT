@@ -217,3 +217,61 @@ exports.getCategoryImages = async (req, res) => {
     });
   }
 };
+
+// Get combined hidden places from states + territories JSON files
+exports.getHiddenPlaces = async (req, res) => {
+  try {
+    const hiddenStatesPath = path.join(__dirname, '../..', 'dataset/hidden_places_states.json');
+    const hiddenTerritoriesPath = path.join(__dirname, '../..', 'dataset/hidden_places_territories.json');
+
+    const states = readJsonIfExists(hiddenStatesPath);
+    const territories = readJsonIfExists(hiddenTerritoriesPath);
+
+    const q = String(req.query.q || '').trim().toLowerCase();
+    const region = String(req.query.region || '').trim().toLowerCase();
+    const limit = Math.max(1, Math.min(parseInt(req.query.limit, 10) || 60, 500));
+    const offset = Math.max(0, parseInt(req.query.offset, 10) || 0);
+    const onlyWithImages = String(req.query.onlyWithImages || 'true').toLowerCase() !== 'false';
+
+    const all = [...states, ...territories];
+
+    const filtered = all.filter((place) => {
+      const name = String(place?.name || '').toLowerCase();
+      const state = String(place?.state || '').toLowerCase();
+      const district = String(place?.district || '').toLowerCase();
+      const description = String(place?.description || '').toLowerCase();
+      const tourismType = String(place?.tourism_type || '').toLowerCase();
+      const direction = String(place?.direction || '').toLowerCase();
+      const hasImages = Array.isArray(place?.images) && place.images.length > 0;
+
+      const matchesQ =
+        !q ||
+        name.includes(q) ||
+        state.includes(q) ||
+        district.includes(q) ||
+        description.includes(q) ||
+        tourismType.includes(q);
+
+      const matchesRegion = !region || region === 'any' || direction.includes(region);
+      const matchesImagePolicy = !onlyWithImages || hasImages;
+
+      return matchesQ && matchesRegion && matchesImagePolicy;
+    });
+
+    const paged = filtered.slice(offset, offset + limit);
+
+    res.status(200).json({
+      success: true,
+      count: filtered.length,
+      limit,
+      offset,
+      places: paged,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Error fetching hidden places',
+      error: err.message,
+    });
+  }
+};

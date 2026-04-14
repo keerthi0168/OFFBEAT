@@ -100,5 +100,6 @@ router.get('/tourism/all', tourismController.getAllDestinations);
 router.get('/dataset/manifest', datasetController.getManifest);
 router.get('/dataset/categories', datasetController.getCategories);
 router.get('/dataset/category/:category', datasetController.getCategoryImages);
+router.get('/dataset/hidden-places', datasetController.getHiddenPlaces);
 
 module.exports = router;

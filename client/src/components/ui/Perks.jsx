@@ -1,10 +1,13 @@
 import React from 'react';
 
 const Perks = ({ selected, handleFormData }) => {
+  const itemClass =
+    'flex cursor-pointer items-center gap-2 rounded-xl border border-[#35536C] bg-[#16354D] p-4 text-[#E6EDF3] transition hover:border-[#D4AF7F]/70 hover:bg-[#1A3D57]';
+
   return (
     <div className="mt-2 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
       <label
-        className="flex cursor-pointer items-center gap-2 rounded-2xl border p-4"
+        className={itemClass}
         key="perks"
       >
         <input
@@ -30,7 +33,7 @@ const Perks = ({ selected, handleFormData }) => {
 
         <span>Wifi</span>
       </label>
-      <label className="flex cursor-pointer items-center gap-2 rounded-2xl border p-4">
+      <label className={itemClass}>
         <input
           type="checkbox"
           checked={selected.includes('parking')}
@@ -54,7 +57,7 @@ const Perks = ({ selected, handleFormData }) => {
 
         <span>Free parking spot</span>
       </label>
-      <label className="flex cursor-pointer items-center gap-2 rounded-2xl border p-4">
+      <label className={itemClass}>
         <input
           type="checkbox"
           checked={selected.includes('tv')}
@@ -78,7 +81,7 @@ const Perks = ({ selected, handleFormData }) => {
 
         <span>TV</span>
       </label>
-      <label className="flex cursor-pointer items-center gap-2 rounded-2xl border p-4">
+      <label className={itemClass}>
         <input
           type="checkbox"
           checked={selected.includes('radio')}
@@ -102,7 +105,7 @@ const Perks = ({ selected, handleFormData }) => {
 
         <span>Radio</span>
       </label>
-      <label className="flex cursor-pointer items-center gap-2 rounded-2xl border p-4">
+      <label className={itemClass}>
         <input
           type="checkbox"
           checked={selected.includes('pets')}
@@ -126,7 +129,7 @@ const Perks = ({ selected, handleFormData }) => {
 
         <span>Pets</span>
       </label>
-      <label className="flex cursor-pointer items-center gap-2 rounded-2xl border p-4">
+      <label className={itemClass}>
         <input
           type="checkbox"
           checked={selected.includes('enterence')}

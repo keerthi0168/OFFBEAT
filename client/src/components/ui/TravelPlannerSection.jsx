@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { generateTravelPlan } from '@/utils/mlApi';
 
 const TravelPlannerSection = ({ initialRegion = 'Any' }) => {
+  const navigate = useNavigate();
   const [budget, setBudget] = useState(25000);
   const [numberOfDays, setNumberOfDays] = useState(5);
   const [preferredCategory, setPreferredCategory] = useState('Any');
@@ -103,17 +105,51 @@ const TravelPlannerSection = ({ initialRegion = 'Any' }) => {
 
       {plan?.itinerary?.length > 0 && (
         <div className="mt-6 space-y-3">
-          <div className="text-sm text-[#E5E7EB]/80">
-            Estimated total: ₹{Math.round(plan.summary?.estimated_total_cost || 0)}
+          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-[#E5E7EB]/85">
+            <div>Estimated total: ₹{Math.round(plan.summary?.estimated_total_cost || 0)}</div>
+            <div className="mt-1">
+              Route quality: <span className="text-[#C9A96E]">{Math.round(plan.summary?.route_quality_score || 0)}%</span>
+            </div>
+            <div className="mt-1 text-xs text-[#E5E7EB]/70">
+              Regions covered: {(plan.summary?.covered_regions || []).join(', ') || 'N/A'}
+            </div>
           </div>
+
           {plan.itinerary.map((dayPlan) => (
             <div key={dayPlan.day} className="rounded-xl border border-white/10 bg-black/20 p-4">
               <div className="text-[#C9A96E] text-sm font-medium">Day {dayPlan.day}</div>
-              <div className="text-white mt-1">{dayPlan.destination?.place_name}</div>
+              <button
+                type="button"
+                onClick={() => navigate(`/destination/${encodeURIComponent(dayPlan.destination?.place_name || '')}`)}
+                className="mt-1 text-left text-white hover:text-[#C9A96E] transition"
+              >
+                {dayPlan.destination?.place_name}
+              </button>
               <div className="text-xs text-[#E5E7EB]/70 mt-1">
                 {dayPlan.destination?.category} • {dayPlan.destination?.region} • ₹{Math.round(dayPlan.estimated_day_cost || 0)}
               </div>
-              <div className="text-xs text-[#E5E7EB]/60 mt-1">{dayPlan.highlight}</div>
+              <div className="text-xs text-[#E5E7EB]/60 mt-2">{dayPlan.highlight}</div>
+
+              <div className="mt-2 text-xs text-[#E5E7EB]/75">
+                Cost split: Stay ₹{Math.round(dayPlan.cost_breakdown?.stay || 0)} · Food ₹{Math.round(dayPlan.cost_breakdown?.food || 0)} · Local transport ₹{Math.round(dayPlan.cost_breakdown?.local_transport || 0)} · Activities ₹{Math.round(dayPlan.cost_breakdown?.activities || 0)}
+              </div>
+
+              {!!dayPlan.destination?.best_season?.length && (
+                <div className="mt-2 text-xs text-[#E5E7EB]/70">
+                  Best season: {dayPlan.destination.best_season.slice(0, 4).join(', ')}
+                </div>
+              )}
+
+              <div className="mt-2 grid gap-2 md:grid-cols-2">
+                <div className="rounded-lg bg-white/5 p-2 text-xs text-emerald-200/90">
+                  <span className="font-medium">Pros:</span>{' '}
+                  {(dayPlan.pros || []).slice(0, 2).join(' • ') || 'Good local value'}
+                </div>
+                <div className="rounded-lg bg-white/5 p-2 text-xs text-amber-200/90">
+                  <span className="font-medium">Watchouts:</span>{' '}
+                  {(dayPlan.cons || []).slice(0, 2).join(' • ') || 'Plan local commute ahead'}
+                </div>
+              </div>
             </div>
           ))}
         </div>

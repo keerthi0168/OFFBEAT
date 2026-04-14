@@ -63,14 +63,34 @@ const IndexPage = () => {
         </div>
       </section>
 
+
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="space-y-3 mb-12">
-          <h2 className="text-4xl font-light text-white tracking-tight">Featured Destinations</h2>
+          <h2 className="text-4xl font-light text-white tracking-tight">Explore by Category</h2>
           <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Explore popular offbeat places across India.
+            Browse our collection of 300+ authentic destination photographs.
           </p>
         </div>
-        <TourismDestinations limit={6} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {destinations.map((dest, idx) => (
+            <div key={`${dest.name}-${idx}`} className="group relative h-64 overflow-hidden rounded-2xl cursor-pointer border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300" onClick={() => window.location.href = `/destination/${encodeURIComponent(dest.name)}` }>
+              <img
+                src={dest.image}
+                alt={dest.name}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = '/assets/placeholder.svg';
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <div className="text-lg font-light text-white">{dest.name}</div>
+                {dest.category && <div className="text-sm text-[#C9A96E] font-light">{dest.category}</div>}
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-24">

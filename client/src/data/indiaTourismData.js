@@ -1,62 +1,63 @@
 export const destinations = [
   {
     name: 'Taj Mahal, Agra',
-    image:
-      'https://img.freepik.com/free-photo/mesmerizing-shot-famous-historic-taj-mahal-agra-india_181624-16028.jpg?size=626&ext=jpg&uid=R116989314&ga=GA1.2.2084330140.1695034425&semt=ais',
+    image: 'https://img.freepik.com/free-photo/mesmerizing-shot-famous-historic-taj-mahal-agra-india_181624-16028.jpg?size=626&ext=jpg&uid=R116989314&ga=GA1.2.2084330140.1695034425&semt=ais',
+    description: 'A UNESCO World Heritage site and one of the Seven Wonders of the World, the Taj Mahal is an ivory-white marble mausoleum in Agra, India.'
   },
   {
     name: 'Kerala Backwaters, Kumarakom',
     image: 'https://www.ekeralatourism.net/wp-content/uploads/2018/03/Kumarakom.jpg',
+    description: 'A network of tranquil canals, rivers, and lakes, the Kerala Backwaters offer a unique houseboat experience amidst lush greenery.'
   },
   {
     name: 'Kashmir Valleys, Gulmarg',
-    image:
-      'https://img.freepik.com/free-photo/beautiful-shot-small-village-surrounded-by-lake-snowy-hills_181624-37802.jpg?size=626&ext=jpg&uid=R116989314&ga=GA1.2.2084330140.1695034425&semt=sph',
+    image: 'https://img.freepik.com/free-photo/beautiful-shot-small-village-surrounded-by-lake-snowy-hills_181624-37802.jpg?size=626&ext=jpg&uid=R116989314&ga=GA1.2.2084330140.1695034425&semt=sph',
+    description: 'Known as the "Meadow of Flowers", Gulmarg is a popular hill station and skiing destination in the Kashmir Valley.'
   },
   {
     name: 'Varanasi Ghats, Uttar Pradesh',
-    image:
-      'https://img.freepik.com/free-photo/ancient-ruins-angkor-majestic-spirituality-praying-generated-by-ai_188544-35475.jpg?t=st=1695225235~exp=1695228835~hmac=ec44db5c33acce2fc3b8990f8fa4cb858f6102d2752a11a2ec5915736c1c8796&w=1060',
+    image: 'https://img.freepik.com/free-photo/ancient-ruins-angkor-majestic-spirituality-praying-generated-by-ai_188544-35475.jpg?t=st=1695225235~exp=1695228835~hmac=ec44db5c33acce2fc3b8990f8fa4cb858f6102d2752a11a2ec5915736c1c8796&w=1060',
+    description: 'The ghats of Varanasi are famous for their spiritual significance and vibrant rituals along the Ganges River.'
   },
   {
     name: 'Munnar Tea Hills',
-    image:
-      'https://img.freepik.com/free-photo/india-fog-tea-cool-tea-eaves_1376-20.jpg?w=1060&t=st=1700648098~exp=1700648698~hmac=6b21a531af7e56b513b90fd4f896db41915b191beacad50ae89663de5f5ef2a9',
+    image: 'https://img.freepik.com/free-photo/india-fog-tea-cool-tea-eaves_1376-20.jpg?w=1060&t=st=1700648098~exp=1700648698~hmac=6b21a531af7e56b513b90fd4f896db41915b191beacad50ae89663de5f5ef2a9',
+    description: 'Munnar is renowned for its rolling tea plantations, misty hills, and cool climate.'
   },
   {
     name: 'Alleppey Houseboats',
-    image:
-      'https://img.freepik.com/premium-photo/phtoo-houseboat-kerala-backwaters_978318-19.jpg?w=740',
+    image: 'https://img.freepik.com/premium-photo/phtoo-houseboat-kerala-backwaters_978318-19.jpg?w=740',
+    description: 'Experience the unique houseboats of Alleppey, floating through the scenic backwaters of Kerala.'
   },
   {
     name: 'Dal Lake, Srinagar',
-    image:
-      'https://img.freepik.com/premium-photo/lifestyle-dal-lake-man-drive-boat-middle-dal-lake-mountain-background_35312-254.jpg?w=900',
+    image: 'https://img.freepik.com/premium-photo/lifestyle-dal-lake-man-drive-boat-middle-dal-lake-mountain-background_35312-254.jpg?w=900',
+    description: 'Dal Lake is famous for its houseboats, shikaras, and stunning views of the surrounding mountains.'
   },
   {
     name: 'Sonamarg Trails',
-    image:
-      'https://img.freepik.com/premium-photo/village-mt-everest-trekking-route-with-beautiful-view-mountain-river_73740-55.jpg?size=626&ext=jpg&ga=GA1.1.533346386.1700635793&semt=ais',
+    image: 'https://img.freepik.com/premium-photo/village-mt-everest-trekking-route-with-beautiful-view-mountain-river_73740-55.jpg?size=626&ext=jpg&ga=GA1.1.533346386.1700635793&semt=ais',
+    description: 'Sonamarg is a breathtaking valley with trekking trails, meadows, and river views.'
   },
   {
     name: 'Kovalam Beach',
-    image:
-      'https://img.freepik.com/premium-photo/leaning-palm-maasin-river-siargao_186382-12395.jpg?w=900',
+    image: 'https://img.freepik.com/premium-photo/leaning-palm-maasin-river-siargao_186382-12395.jpg?w=900',
+    description: 'Kovalam is a popular beach destination in Kerala, known for its crescent-shaped coastline.'
   },
   {
     name: 'Varkala Cliffs',
-    image:
-      'https://img.freepik.com/premium-photo/boat-carrying-tourists-floating-down-river-background-palm-trees-beautiful-sunset-sun-sets-horizon-shine-through-palm-trees_431724-2887.jpg?w=900',
+    image: 'https://img.freepik.com/premium-photo/boat-carrying-tourists-floating-down-river-background-palm-trees-beautiful-sunset-sun-sets-horizon-shine-through-palm-trees_431724-2887.jpg?w=900',
+    description: 'Varkala is famous for its dramatic cliffs, golden beaches, and natural springs.'
   },
   {
     name: 'Periyar Wildlife Sanctuary',
-    image:
-      'https://img.freepik.com/premium-photo/beautiful-daisy-flower_888087-1975.jpg?w=900',
+    image: 'https://img.freepik.com/premium-photo/beautiful-daisy-flower_888087-1975.jpg?w=900',
+    description: 'A protected area in Kerala, Periyar is home to elephants, tigers, and scenic boat rides.'
   },
   {
     name: 'Pahalgam Valley',
-    image:
-      'https://img.freepik.com/premium-photo/mountain-city-top-view_31479-1.jpg?w=900',
+    image: 'https://img.freepik.com/premium-photo/mountain-city-top-view_31479-1.jpg?w=900',
+    description: 'Pahalgam is a picturesque town in Kashmir, known for its lush valleys and river views.'
   },
   {
     name: 'Shalimar Bagh, Srinagar',

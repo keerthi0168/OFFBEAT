@@ -39,6 +39,10 @@ const PlacesFormPage = () => {
     price,
   } = formData;
 
+  const fieldClass =
+    'mt-2 w-full rounded-xl border border-[#2E4D67] bg-[#10273A] px-4 py-3 text-[#E6EDF3] placeholder:text-[#6B7C93] focus:border-[#D4AF7F] focus:outline-none focus:ring-2 focus:ring-[#D4AF7F]/40';
+  const areaClass = `${fieldClass} min-h-[160px] resize-y`;
+
   const isValidPlaceData = () => {
     if (title.trim() === '') {
       toast.error("Title can't be empty!");
@@ -113,8 +117,8 @@ const PlacesFormPage = () => {
   const preInput = (header, description) => {
     return (
       <>
-        <h2 className="mt-4 text-2xl">{header}</h2>
-        <p className="text-sm text-gray-500">{description}</p>
+        <h2 className="mt-6 text-2xl font-semibold text-[#E6EDF3]">{header}</h2>
+        <p className="mt-1 text-sm text-[#A9B4C2]">{description}</p>
       </>
     );
   };
@@ -154,12 +158,12 @@ const PlacesFormPage = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="min-h-screen bg-[#0B1C2C] p-4 text-[#E6EDF3]">
       <AccountNav />
-      <form onSubmit={savePlace}>
+      <form onSubmit={savePlace} className="mx-auto mt-4 max-w-6xl space-y-6 rounded-2xl border border-[#24415A] bg-[#10273A] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
         {preInput(
           'Title',
-          'title for your place. Should be short and catchy as in advertisement',
+          'Title for your place. Keep it short, meaningful, and traveler-friendly.',
         )}
         <input
           type="text"
@@ -167,6 +171,7 @@ const PlacesFormPage = () => {
           value={title}
           onChange={handleFormData}
           placeholder="title, for example: My lovely apt"
+          className={fieldClass}
         />
 
         {preInput('Address', 'address to this place')}
@@ -176,30 +181,33 @@ const PlacesFormPage = () => {
           value={address}
           onChange={handleFormData}
           placeholder="address"
+          className={fieldClass}
         />
 
-        {preInput('Photos', 'more = better')}
+        {preInput('Photos', 'Upload at least 5 clear photos to help users trust your listing.')}
 
         <PhotosUploader
           addedPhotos={addedPhotos}
           setAddedPhotos={setAddedPhotos}
         />
 
-        {preInput('Description', 'discription of the place')}
+        {preInput('Description', 'Describe your place for users: vibe, nearby attractions, and what makes it special.')}
         <textarea
           value={description}
           name="description"
           onChange={handleFormData}
+          className={areaClass}
         />
 
-        {preInput('Perks', ' select all the perks of your place')}
+        {preInput('Perks', 'Select all the perks available at your place.')}
         <Perks selected={perks} handleFormData={handleFormData} />
 
-        {preInput('Extra info', 'house rules, etc ')}
+        {preInput('Extra info', 'House rules, check-in details, safety notes, etc.')}
         <textarea
           value={extraInfo}
           name="extraInfo"
           onChange={handleFormData}
+          className={areaClass}
         />
 
         {preInput(
@@ -209,27 +217,29 @@ const PlacesFormPage = () => {
         )}
         <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-4">
           <div>
-            <h3 className="mt-2 -mb-1">Max no. of guests</h3>
+            <h3 className="mt-2 -mb-1 text-sm text-[#A9B4C2]">Max no. of guests</h3>
             <input
               type="text"
               name="maxGuests"
               value={maxGuests}
               onChange={handleFormData}
               placeholder="1"
+              className={fieldClass}
             />
           </div>
           <div>
-            <h3 className="mt-2 -mb-1">Price per night</h3>
+            <h3 className="mt-2 -mb-1 text-sm text-[#A9B4C2]">Price per night</h3>
             <input
               type="number"
               name="price"
               value={price}
               onChange={handleFormData}
               placeholder="1"
+              className={fieldClass}
             />
           </div>
         </div>
-        <button className="mx-auto my-4 flex rounded-full bg-primary py-3 px-20 text-xl font-semibold text-white">
+        <button className="mx-auto my-6 flex rounded-xl bg-gradient-to-r from-[#D4AF7F] to-[#E2C59C] py-3 px-20 text-xl font-semibold text-[#0B1C2C] shadow-lg transition hover:brightness-105">
           Save
         </button>
       </form>

@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchSimilarDestinations, getFriendlyMlError, trackMlInteraction } from '@/utils/mlApi';
 import axiosInstance from '@/utils/axios';
 
@@ -17,14 +18,43 @@ const localSimilarityScore = (base = '', candidate = '') => {
 };
 
 const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
+  const navigate = useNavigate();
   const [destination, setDestination] = useState('Goa');
   const [category, setCategory] = useState('');
   const [region, setRegion] = useState(initialRegion);
   const [rating, setRating] = useState('');
   const [budget, setBudget] = useState('');
   const [results, setResults] = useState([]);
+  const [allDestinations, setAllDestinations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    axiosInstance
+      .get('/tourism/all')
+      .then((response) => {
+        setAllDestinations(Array.isArray(response.data?.destinations) ? response.data.destinations : []);
+      })
+      .catch(() => setAllDestinations([]));
+  }, []);
+
+  const enrichResult = (item) => {
+    const placeName = item.place_name || item.title || item.name || item.Destination_Name || '';
+    const key = String(placeName).toLowerCase().trim();
+    const match = allDestinations.find((place) =>
+      String(place.title || place.name || place.Destination_Name || '').toLowerCase().trim() === key
+    ) || allDestinations.find((place) =>
+      String(place.title || place.name || place.Destination_Name || '').toLowerCase().includes(key)
+    );
+
+    return {
+      ...item,
+      destinationName: placeName || 'Destination',
+      description: match?.description || item.description || 'No detailed description available.',
+      state: match?.state || match?.State || item.state || 'India',
+      district: match?.district || item.district || '',
+    };
+  };
 
   const hasFeatureFilters = useMemo(() => {
     return Boolean(category || (region && region !== 'Any') || rating || budget);
@@ -56,7 +86,7 @@ const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
         return;
       }
 
-      setResults(response.results || []);
+      setResults((response.results || []).map(enrichResult));
 
       if (destination?.trim()) {
         await trackMlInteraction({
@@ -92,7 +122,7 @@ const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
           .sort((a, b) => b.cosine_similarity - a.cosine_similarity)
           .slice(0, 6);
 
-        setResults(fallbackResults);
+        setResults(fallbackResults.map(enrichResult));
         setError(fallbackResults.length ? '' : getFriendlyMlError(apiError, 'Similar destinations are not ready right now.'));
       } catch (fallbackError) {
         setError(getFriendlyMlError(apiError, 'Similar destinations are not ready right now.'));
@@ -180,16 +210,23 @@ const SimilarDestinationsSection = ({ initialRegion = 'Any' }) => {
       {results.length > 0 && (
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {results.map((item, index) => (
-            <div key={`${item.place_name}-${index}`} className="rounded-xl border border-white/10 bg-black/20 p-4">
-              <h4 className="text-white font-medium">{item.place_name}</h4>
+            <button
+              key={`${item.place_name}-${index}`}
+              type="button"
+              onClick={() => navigate(`/destination/${encodeURIComponent(item.destinationName || item.place_name || '')}`)}
+              className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-[#C9A96E]/45"
+            >
+              <h4 className="text-white font-medium">{item.destinationName || item.place_name}</h4>
               <p className="mt-1 text-xs text-[#E5E7EB]/70">{item.category} • {item.region}</p>
+              <p className="mt-1 text-xs text-[#E5E7EB]/70">{item.state}{item.district ? ` — ${item.district}` : ''}</p>
               <div className="mt-2 text-xs text-[#C9A96E]">
                 Similarity score: {((item.cosine_similarity || 0) * 100).toFixed(1)}%
               </div>
               <div className="mt-1 text-xs text-[#E5E7EB]/70">
                 Rating {item.rating?.toFixed?.(1) || item.rating} • Budget ₹{Math.round(item.budget || 0)}
               </div>
-            </div>
+              <p className="mt-2 line-clamp-2 text-xs text-[#E5E7EB]/65">{item.description}</p>
+            </button>
           ))}
         </div>
       )}

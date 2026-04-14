@@ -26,3 +26,5 @@ const PlaceImg = ({ place, index = 0, className = null }) => {
     />
   );
 };
+
+export default PlaceImg;

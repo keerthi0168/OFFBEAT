@@ -346,7 +346,7 @@ const ProfilePage = () => {
                   className="bg-gradient-to-r from-[#C9A96E] to-[#D4B896] text-[#0B1220]"
                   onClick={() => navigate('/account/places/new')}
                 >
-                  <Plus className="mr-2 h-4 w-4" /> + Add Listing
+                  <Plus className="mr-2 h-4 w-4" /> Add Listing
                 </Button>
               </div>
 

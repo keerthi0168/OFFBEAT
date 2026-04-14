@@ -250,6 +250,125 @@ const parseTripDays = (message = '') => {
   return Number.isFinite(parsed) ? parsed : null;
 };
 
+const parseBudgetFromMessage = (message = '') => {
+  const normalized = String(message || '').toLowerCase();
+  const match = normalized.match(/(?:₹|rs\.?|inr)?\s*(\d{4,7})/i);
+  if (!match) return null;
+  const parsed = Number(match[1]);
+  return Number.isFinite(parsed) ? parsed : null;
+};
+
+const parseRegionFromMessage = (message = '') => {
+  const normalized = String(message || '').toLowerCase();
+  const candidates = ['north east', 'north', 'south', 'east', 'west', 'central'];
+  return candidates.find((region) => normalized.includes(region)) || null;
+};
+
+const parseCategoryFromMessage = (message = '') => {
+  const normalized = String(message || '').toLowerCase();
+  const categories = ['nature', 'heritage', 'beach', 'adventure', 'wildlife', 'religious', 'culture'];
+  return categories.find((category) => normalized.includes(category)) || null;
+};
+
+const pickItineraryCandidates = ({ places, region, category }) => {
+  const regionNeedle = String(region || '').toLowerCase();
+  const categoryNeedle = String(category || '').toLowerCase();
+
+  const filtered = places.filter((place) => {
+    const placeRegion = String(place.region || place.direction || place.Region || '').toLowerCase();
+    const placeCategory = String(place.category || place.Category || place.type || '').toLowerCase();
+
+    const regionOk = !regionNeedle || placeRegion.includes(regionNeedle);
+    const categoryOk = !categoryNeedle || placeCategory.includes(categoryNeedle);
+
+    return regionOk && categoryOk;
+  });
+
+  return (filtered.length ? filtered : places)
+    .map((place) => {
+      const budgetText = String(place.budget_range || '').trim();
+      const [minRaw, maxRaw] = budgetText.split('-').map((v) => Number(String(v || '').replace(/[^\d]/g, '')));
+      const min = Number.isFinite(minRaw) ? minRaw : 1200;
+      const max = Number.isFinite(maxRaw) ? maxRaw : 3200;
+      const avg = Math.round((min + max) / 2);
+
+      return {
+        ...place,
+        _estimatedCost: avg,
+        _rating: Number(place.rating) || 4.2,
+      };
+    })
+    .sort((a, b) => b._rating - a._rating);
+};
+
+const generateRuleBasedItinerary = ({ days = 4, budget = 25000, region = null, category = null }) => {
+  const places = loadTourismData();
+  if (!places.length) return null;
+
+  const tripDays = Math.min(Math.max(Number(days) || 4, 1), 12);
+  const totalBudget = Math.max(Number(budget) || 25000, 6000);
+  const perDayCap = Math.max(1000, Math.floor(totalBudget / tripDays));
+  const candidates = pickItineraryCandidates({ places, region, category }).slice(0, 80);
+
+  const plan = [];
+  const usedTitles = new Set();
+
+  for (let day = 1; day <= tripDays; day += 1) {
+    const prev = plan[plan.length - 1] || null;
+
+    const scored = candidates
+      .filter((c) => !usedTitles.has(String(c.title || c.Destination_Name || '').toLowerCase()))
+      .map((candidate) => {
+        let score = (candidate._rating / 5) * 40;
+
+        if (candidate._estimatedCost <= perDayCap) score += 24;
+        else score -= Math.min(16, Math.floor((candidate._estimatedCost - perDayCap) / 500));
+
+        if (prev) {
+          const sameState = String(prev.state || prev.State || '').toLowerCase() === String(candidate.state || candidate.State || '').toLowerCase();
+          const sameRegion = String(prev.region || prev.direction || '').toLowerCase() === String(candidate.region || candidate.direction || '').toLowerCase();
+          if (sameState) score += 20;
+          else if (sameRegion) score += 12;
+          else score -= 12;
+        }
+
+        return { candidate, score };
+      })
+      .sort((a, b) => b.score - a.score);
+
+    const selected = scored[0]?.candidate || candidates[(day - 1) % candidates.length];
+    usedTitles.add(String(selected.title || selected.Destination_Name || '').toLowerCase());
+    plan.push(selected);
+  }
+
+  const totalEstimated = plan.reduce((sum, p) => sum + (p._estimatedCost || 1800), 0);
+
+  return {
+    days: tripDays,
+    budget: totalBudget,
+    estimated: totalEstimated,
+    plan,
+  };
+};
+
+const formatItineraryReply = (itinerary) => {
+  if (!itinerary?.plan?.length) return null;
+
+  const lines = itinerary.plan.map((place, idx) => {
+    const name = place.title || place.Destination_Name || 'Destination';
+    const region = place.region || place.direction || 'Region';
+    const est = place._estimatedCost || 1800;
+    const desc = String(place.description || place.extraInfo || '').replace(/\s+/g, ' ').trim();
+    const shortDesc = desc.length > 95 ? `${desc.slice(0, 95)}...` : desc;
+    return `Day ${idx + 1}: ${name} (${region}) • ~₹${est} — ${shortDesc}`;
+  });
+
+  return [
+    `Here’s a smarter ${itinerary.days}-day itinerary with route continuity and budget-fit (estimated total: ₹${itinerary.estimated}).`,
+    ...lines,
+  ].join('\n');
+};
+
 const handleContextualFollowup = (message, sessionContext = {}) => {
   if (!sessionContext?.lastDestination) return null;
 
@@ -506,6 +625,39 @@ exports.chat = (req, res) => {
       });
     }
 
+    const lowerMessage = String(message || '').toLowerCase();
+    const itineraryIntent = /(itinerary|trip plan|travel plan|plan my trip|plan a trip|\b\d+\s*day)/.test(lowerMessage);
+    if (itineraryIntent) {
+      const days = parseTripDays(message) || 4;
+      const budget = parseBudgetFromMessage(message) || 25000;
+      const region = parseRegionFromMessage(message);
+      const category = parseCategoryFromMessage(message);
+
+      const itinerary = generateRuleBasedItinerary({ days, budget, region, category });
+      if (itinerary?.plan?.length) {
+        const firstName = itinerary.plan[0]?.title || itinerary.plan[0]?.Destination_Name || null;
+        chatbotData.contextMemory.set(sessionId, {
+          ...(chatbotData.contextMemory.get(sessionId) || {}),
+          lastCategory: 'itinerary',
+          lastMessage: message,
+          lastDestination: firstName,
+          timestamp: Date.now(),
+        });
+
+        return res.json({
+          response: formatItineraryReply(itinerary),
+          category: 'itinerary',
+          confidence: 'high',
+          suggestions: [
+            'Show cheaper itinerary options',
+            'Best time for this itinerary',
+            'Add heritage places only',
+            'Plan same-state trip only',
+          ],
+        });
+      }
+    }
+
     // Check for tourism-related queries first
     const tourismResponse = handleTourismQuery(message, personalization);
     if (tourismResponse && tourismResponse.isTourism) {
@@ -565,12 +717,12 @@ exports.chat = (req, res) => {
         ];
       }
     } else {
-      response = "I'm not sure I understand. Could you rephrase that? I can help with property searches, bookings, pricing, amenities, and more!";
+      response = "I can help with destination info, itinerary planning, budget suggestions, and hidden gems across India. Try asking like: 'Plan 5 days in South India under 30000'.";
       suggestions = [
-        'Show available properties',
-        'How to book a property?',
-        'What are the prices?',
-        'Help me find accommodation'
+        'Plan 4 day trip under 25000',
+        'Best hidden gems in North India',
+        'Beach destinations with budget',
+        'Tell me about Araku Valley'
       ];
     }
 

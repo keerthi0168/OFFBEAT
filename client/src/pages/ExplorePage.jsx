@@ -1,491 +1,511 @@
-import React, { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import axiosInstance from '@/utils/axios';
-import TourismDestinations from '@/components/ui/TourismDestinations';
-import PlaceCard from '@/components/ui/PlaceCard';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Spinner from '@/components/ui/Spinner';
+import TourismDestinations from '@/components/ui/TourismDestinations';
 import MLFeaturedListings from '@/components/ui/MLFeaturedListings';
 import HiddenGemsSection from '@/components/ui/HiddenGemsSection';
 import ClusterInsightsSection from '@/components/ui/ClusterInsightsSection';
 import SimilarDestinationsSection from '@/components/ui/SimilarDestinationsSection';
 import TravelPlannerSection from '@/components/ui/TravelPlannerSection';
-import mlApi from '@/utils/mlApi';
-import { trackEvent } from '@/utils/analytics';
-import { getPersonalizationSignals } from '@/utils/analytics';
+import HiddenPlacesGallery from '@/components/ui/HiddenPlacesGallery';
+import axiosInstance from '@/utils/axios';
 
 const ExplorePage = () => {
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
-  const [tourismResults, setTourismResults] = useState([]);
-  const [propertyResults, setPropertyResults] = useState([]);
+  const [regionFilter, setRegionFilter] = useState('Any');
+  const [allPlaces, setAllPlaces] = useState([]);
+  const [results, setResults] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const [rawDataset, setRawDataset] = useState(null);
-  const [regionFilter, setRegionFilter] = useState('Any');
+  const [showAdvancedFeatures, setShowAdvancedFeatures] = useState(true);
+  const [showHiddenGallery, setShowHiddenGallery] = useState(false);
+  const [realImageMap, setRealImageMap] = useState({});
+  const [localImageMap, setLocalImageMap] = useState({});
 
-  const isAnyRegion = (value) => {
-    const normalized = String(value || '').toLowerCase().trim();
-    return normalized === 'any' || normalized === 'all' || normalized === 'all regions';
+  const slugify = (value = '') =>
+    String(value)
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+
+  const getLocalCandidates = (place = {}) => {
+    const title = place.title || place.name || '';
+    const state = place.state || place.State || '';
+    const slugTitle = slugify(title);
+    const slugComposite = slugify(`${title}-${state}`);
+
+    const keys = [
+      place.id,
+      title,
+      `${title}|${state}`,
+      slugTitle,
+      slugComposite,
+    ]
+      .map((k) => String(k || '').trim().toLowerCase())
+      .filter(Boolean);
+
+    for (const key of keys) {
+      if (Array.isArray(realImageMap[key]) && realImageMap[key].length) {
+        return realImageMap[key];
+      }
+    }
+
+    for (const key of keys) {
+      if (Array.isArray(localImageMap[key]) && localImageMap[key].length) {
+        return localImageMap[key];
+      }
+    }
+
+    if (Array.isArray(realImageMap.__default) && realImageMap.__default.length) {
+      return realImageMap.__default;
+    }
+
+    return Array.isArray(localImageMap.__default) ? localImageMap.__default : [];
   };
 
-  const matchesRegionFilter = (destination, selectedRegion) => {
-    if (!selectedRegion || isAnyRegion(selectedRegion)) return true;
-    const needle = String(selectedRegion).toLowerCase();
-    const searchable = [
-      destination.region,
-      destination.direction,
-      destination.state,
-      destination.city,
-      destination.address,
-      destination.location,
+  const createInlineFallbackImage = (place = {}) => {
+    const title = String(place?.title || place?.name || 'Destination').replace(/[<&>]/g, '').slice(0, 42);
+    return `data:image/svg+xml,${encodeURIComponent(`
+      <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'>
+        <defs>
+          <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+            <stop offset='0%' stop-color='#060B1E'/>
+            <stop offset='100%' stop-color='#1A3456'/>
+          </linearGradient>
+        </defs>
+        <rect width='1200' height='800' fill='url(#g)'/>
+        <circle cx='950' cy='170' r='140' fill='#14B8A6' opacity='0.18'/>
+        <rect x='80' y='580' width='1040' height='160' rx='24' fill='rgba(255,255,255,0.06)' stroke='rgba(212,178,122,0.45)'/>
+        <text x='120' y='665' fill='#D4B27A' font-size='52' font-family='Segoe UI, Arial' font-weight='700'>${title}</text>
+      </svg>
+    `)}`;
+  };
+
+  useEffect(() => {
+    fetch('/assets/real-image-map.json')
+      .then((res) => res.json())
+      .then((payload) => setRealImageMap(payload?.map || {}))
+      .catch(() => setRealImageMap({}));
+
+    fetch('/assets/local-image-map.json')
+      .then((res) => res.json())
+      .then((payload) => setLocalImageMap(payload?.map || {}))
+      .catch(() => setLocalImageMap({}));
+
+    const mergePlaces = (apiPlaces = [], localPlaces = []) => {
+      const merged = [...apiPlaces, ...localPlaces];
+      const seen = new Set();
+      return merged.filter((place) => {
+        const key = String(place.id || `${place.title || place.name}-${place.state || place.address || ''}`)
+          .toLowerCase()
+          .trim();
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    };
+
+    setLoading(true);
+    Promise.all([
+      axiosInstance.get('/tourism/all').then((r) => (Array.isArray(r.data?.destinations) ? r.data.destinations : [])).catch(() => []),
+      fetch('/assets/combined_hidden_places.json').then((res) => res.json()).then((d) => (Array.isArray(d) ? d : [])).catch(() => []),
+    ])
+      .then(([apiPlaces, localPlaces]) => {
+        setAllPlaces(mergePlaces(apiPlaces, localPlaces));
+      })
+      .catch(() => setAllPlaces([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const normalizeImageCandidates = (place = {}) => {
+    const inlineFallback = createInlineFallbackImage(place);
+    const localCandidates = getLocalCandidates(place);
+
+    const urls = [
+      ...(Array.isArray(place.images) ? place.images : []),
+      ...(Array.isArray(place.photos) ? place.photos : []),
+      place.image,
     ]
       .filter(Boolean)
-      .join(' ')
-      .toLowerCase();
+      .map((u) => String(u).trim())
+      .filter((u) => /^https?:\/\//i.test(u));
 
-    return searchable.includes(needle);
+    const expanded = urls.flatMap((u) => {
+      if (/upload\.wikimedia\.org/i.test(u)) {
+        const fileName = u.split('/').pop()?.split('?')[0]?.split('#')[0];
+        const direct = fileName ? `https://commons.wikimedia.org/wiki/Special:FilePath/${fileName}` : null;
+        return direct ? [u, direct] : [u];
+      }
+      return [u];
+    });
+
+    const query = [place.title || place.name, place.state, place.address, 'india', 'travel', 'landscape']
+      .filter(Boolean)
+      .join(' ');
+
+    const seed = encodeURIComponent(String(place.id || place.name || 'destination'));
+    const fallbackCandidates = [
+      `https://picsum.photos/seed/${seed}/1600/900`,
+      `https://picsum.photos/seed/${seed}-2/1600/900`,
+      `https://picsum.photos/seed/${seed}-3/1600/900`,
+      `https://loremflickr.com/1600/900/${encodeURIComponent('india,travel,landscape')}?lock=${seed}-a`,
+      `https://loremflickr.com/1600/900/${encodeURIComponent('india,nature,heritage')}?lock=${seed}-b`,
+    ];
+
+    return [...new Set([inlineFallback, ...localCandidates, ...expanded, ...fallbackCandidates])];
   };
 
-  const getCategoryImage = (category, seed = '') => {
-    if (!rawDataset?.categories?.length) return null;
-    const categoryMap = {
-      Beach: 'Beach',
-      Heritage: 'Temple',
-      Religious: 'Temple',
-      Nature: 'Garden',
-      Adventure: 'Hill Station',
-      'National Park': 'National park',
-      'Wildlife': 'National park',
-    };
-    const normalized = categoryMap[category] || category;
-    const entry = rawDataset.categories.find(
-      (cat) => String(cat?.category || '').toLowerCase() === String(normalized || '').toLowerCase(),
+  useEffect(() => {
+    const term = String(query || '').trim().toLowerCase();
+    if (!term || term.length < 1) {
+      setSuggestions([]);
+      return;
+    }
+
+    const ranked = allPlaces
+      .map((place) => {
+        const title = String(place.title || place.name || '').trim();
+        const state = String(place.state || '').trim();
+        const district = String(place.district || '').trim();
+        const hay = `${title} ${state} ${district}`.toLowerCase();
+        let score = 0;
+        if (title.toLowerCase() === term) score += 100;
+        if (title.toLowerCase().startsWith(term)) score += 80;
+        if (hay.includes(term)) score += 30;
+        if (state.toLowerCase().startsWith(term)) score += 20;
+        return score > 0 ? { place, score } : null;
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 8)
+      .map((item) => item.place);
+
+    setSuggestions(ranked);
+  }, [query, allPlaces]);
+
+  const RealImage = ({ place, alt }) => {
+    const candidates = useMemo(() => normalizeImageCandidates(place), [place]);
+    const [index, setIndex] = useState(0);
+    const [failedCount, setFailedCount] = useState(0);
+
+    const fallbackSvg = `data:image/svg+xml,${encodeURIComponent(`
+      <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'>
+        <defs>
+          <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+            <stop offset='0%' stop-color='#050817'/>
+            <stop offset='100%' stop-color='#121A33'/>
+          </linearGradient>
+        </defs>
+        <rect width='1200' height='800' fill='url(#g)'/>
+        <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#E5E7EB' font-size='48' font-family='Arial'>${String(alt || 'Destination')}</text>
+      </svg>
+    `)}`;
+
+    if (!candidates.length) {
+      return (
+        <div className="h-64 w-full flex items-center justify-center bg-gray-800 text-gray-400">
+          No image
+        </div>
+      );
+    }
+
+    return (
+      <img
+        src={failedCount >= candidates.length ? fallbackSvg : candidates[index]}
+        alt={alt}
+        className="w-full h-64 object-cover"
+        loading="lazy"
+        onError={() => {
+          setFailedCount((prev) => prev + 1);
+          setIndex((prev) => (prev + 1 < candidates.length ? prev + 1 : prev));
+        }}
+      />
     );
-    if (!entry || !entry.files?.length) return null;
-    const hash = Array.from(seed || category || '')
-      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const index = entry.files.length ? hash % entry.files.length : 0;
-    return entry.files[index]?.url || entry.files[0]?.url || null;
   };
 
-  const handleSearch = async (value = query) => {
-    const term = value.trim();
-    if (!term && isAnyRegion(regionFilter)) return;
+  const handleSearch = (searchTerm = query) => {
+    const term = String(searchTerm || '').trim().toLowerCase();
+    if (!term) {
+      setResults([]);
+      setHasSearched(false);
+      return;
+    }
 
     setLoading(true);
     setHasSearched(true);
 
-    try {
-      if (!term && !isAnyRegion(regionFilter)) {
-        const tourismResponse = await axiosInstance.get(
-          `/tourism/region/${encodeURIComponent(regionFilter)}`,
-        );
-        setTourismResults(tourismResponse.data?.destinations || []);
-        setPropertyResults([]);
-        return;
-      }
+    const filtered = allPlaces.filter((place) => {
+      const text = [
+        place.name,
+        place.title,
+        place.state,
+        place.district,
+        place.address,
+        place.region,
+        place.region_type,
+        place.tourism_type,
+        place.description,
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
 
-      if (term.length <= 2) {
-        const [tourismResponse, propertyResponse] = await Promise.all([
-          axiosInstance.get('/tourism/search', {
-            params: {
-              q: term,
-            },
-          }),
-          axiosInstance.get(`/search/${encodeURIComponent(term)}`),
-        ]);
+      const regionOk =
+        regionFilter === 'Any' ||
+        String(place.direction || '').toLowerCase() === String(regionFilter).toLowerCase();
 
-        const tourismRaw = tourismResponse.data?.results || [];
-        const filteredTourism = tourismRaw.filter((dest) =>
-          matchesRegionFilter(dest, regionFilter),
-        );
+      return text.includes(term) && regionOk;
+    });
 
-        setTourismResults(filteredTourism);
-        setPropertyResults(propertyResponse.data || []);
-
-        trackEvent('keyword_search', {
-          term,
-          region: regionFilter,
-          results: filteredTourism.length,
-          signals: getPersonalizationSignals(),
-        });
-
-        return;
-      }
-
-      const propertyResponsePromise = axiosInstance.get(`/search/${encodeURIComponent(term)}`);
-
-      let tourismRaw = [];
-      let strategy = 'semantic';
-
-      try {
-        const semanticResponse = await mlApi.get('/semantic-search', {
-          params: {
-            query: term,
-            region: regionFilter,
-            limit: 10,
-          },
-        });
-
-        tourismRaw = semanticResponse.data?.results || [];
-      } catch (semanticError) {
-        console.warn('Semantic search unavailable, falling back to lexical search:', semanticError?.message || semanticError);
-        strategy = 'lexical_fallback_on_error';
-      }
-
-      // Fallback to lexical search when semantic model fails or returns empty/weak results.
-      if (!tourismRaw.length) {
-        const fallbackResponse = await axiosInstance.get('/tourism/search', {
-          params: {
-            q: term,
-          },
-        });
-
-        tourismRaw = fallbackResponse.data?.results || [];
-        if (strategy === 'semantic') {
-          strategy = 'lexical_fallback';
-        }
-      }
-
-      const propertyResponse = await propertyResponsePromise;
-
-      const filteredTourism = tourismRaw.filter((dest) =>
-        matchesRegionFilter(dest, regionFilter),
-      );
-
-      setTourismResults(filteredTourism);
-      setPropertyResults(propertyResponse.data || []);
-
-      trackEvent('semantic_search', {
-        term,
-        region: regionFilter,
-        results: filteredTourism.length,
-        strategy,
-        signals: getPersonalizationSignals(),
-      });
-    } catch (error) {
-      console.error('Explore search failed:', error);
-      setTourismResults([]);
-      setPropertyResults([]);
-    } finally {
-      setLoading(false);
-    }
+    setResults(filtered);
+    setLoading(false);
   };
 
-  useEffect(() => {
-    const q = searchParams.get('q');
-    if (q) {
-      setQuery(q);
-      handleSearch(q);
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
-    const loadDataset = async () => {
-      try {
-        const response = await axiosInstance.get('/dataset/manifest');
-        setRawDataset(response.data?.manifest || response.data);
-      } catch (error) {
-        console.warn('Failed to load raw dataset manifest', error);
-      }
-    };
-    loadDataset();
-  }, []);
-
   return (
-    <div className="min-h-screen">
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1220] via-[#111827] to-[#1F8A8A]" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-gradient-to-b from-[#C9A96E]/10 to-transparent rounded-full blur-3xl" />
-        <div className="relative mx-auto flex min-h-[420px] max-w-6xl flex-col items-center justify-center px-6 py-24 text-center text-white">
-          <h1 className="text-5xl font-light tracking-tight md:text-6xl">
+    <div className="min-h-screen bg-[#010B24] pb-14">
+      <section className="relative overflow-hidden border-b border-white/5 bg-[radial-gradient(110%_120%_at_45%_32%,rgba(255,255,255,0.15)_0%,rgba(2,6,23,0)_46%),radial-gradient(95%_130%_at_84%_92%,rgba(45,212,191,0.45)_0%,rgba(2,6,23,0.2)_46%,rgba(2,6,23,0.95)_80%),linear-gradient(180deg,#000F33_0%,#02102F_55%,#04122B_100%)]">
+        <div className="pointer-events-none absolute -left-28 bottom-0 h-[22rem] w-[22rem] rounded-full bg-[#1E3A8A]/25 blur-[120px]" />
+        <div className="pointer-events-none absolute right-0 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[#14B8A6]/30 blur-[130px]" />
+
+        <div className="mx-auto flex min-h-[62vh] w-full max-w-6xl flex-col items-center justify-center px-5 pb-14 pt-12 md:pt-14">
+          <h1 className="text-center text-3xl font-light tracking-tight text-white md:text-5xl">
             Discover Hidden India
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-[#E5E7EB]/70 font-light">
+          <p className="mt-2 text-center text-sm font-light text-[#E5E7EB]/70 md:text-xl">
             Offbeat destinations, authentic experiences, personalized for you
           </p>
-          <div className="mt-8 w-full max-w-3xl space-y-4">
-            <div className="inline-flex w-full items-center rounded-full border border-white/10 bg-white/5 p-3 backdrop-blur-md shadow-lg">
-              <input
-                id="destination-search"
-                name="destinationSearch"
-                className="flex-1 rounded-full bg-transparent px-4 py-3 text-sm text-[#E5E7EB] placeholder-[#E5E7EB]/40 outline-none md:text-base"
-                placeholder="Try place, city, state or UT (e.g., Daman, Goa, Kerala...)"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => (e.key === 'Enter' ? handleSearch() : null)}
-              />
-              <button
-                className="rounded-full bg-gradient-to-r from-[#C9A96E] to-[#D4B896] px-6 py-3 text-sm font-semibold text-[#0B1220] hover:from-[#D4B896] hover:to-[#E0C5A0] transition-all duration-300"
-                onClick={handleSearch}
-              >
-                Search
-              </button>
+
+          <div className="relative mt-6 w-full max-w-5xl">
+            <div className="flex items-center rounded-full border border-[#D4B27A]/35 bg-[rgba(15,23,42,0.58)] p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_55px_rgba(4,8,20,0.55)] backdrop-blur-xl">
+            <input
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setShowSuggestions(true);
+              }}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 120)}
+              placeholder="Search destination, district, state..."
+              className="h-12 flex-1 rounded-full bg-transparent px-5 text-base font-semibold text-white placeholder:text-[#E5E7EB]/60 outline-none md:h-14 md:px-7 md:text-xl"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSearch();
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => handleSearch()}
+              className="h-12 rounded-full bg-[#D4B27A] px-6 text-base font-semibold text-[#1A1207] transition hover:brightness-105 md:h-14 md:px-8 md:text-xl"
+            >
+              Search
+            </button>
             </div>
-            <div className="flex justify-center gap-3">
-              <select
-                id="region-filter"
-                name="regionFilter"
-                className="rounded-full bg-white/5 border border-white/10 px-4 py-2 text-sm text-[#E5E7EB] outline-none cursor-pointer hover:bg-white/10 transition-colors backdrop-blur-md"
-                value={regionFilter}
-                onChange={(e) => {
-                  const newRegion = e.target.value;
-                  setRegionFilter(newRegion);
-                  if (query || hasSearched) {
-                    handleSearch(query);
-                  }
-                }}
-              >
-                <option value="Any" className="bg-slate-800 text-white">All Regions</option>
-                <option value="North" className="bg-slate-800 text-white">North India</option>
-                <option value="South" className="bg-slate-800 text-white">South India</option>
-                <option value="East" className="bg-slate-800 text-white">East India</option>
-                <option value="West" className="bg-slate-800 text-white">West India</option>
-                <option value="North East" className="bg-slate-800 text-white">North East India</option>
-              </select>
-              {!isAnyRegion(regionFilter) && (
-                <button
-                  onClick={() => {
-                    setRegionFilter('Any');
-                    if (query) handleSearch(query);
-                  }}
-                  className="text-sm text-[#C9A96E] hover:text-[#D4B896] transition-colors"
-                >
-                  Clear filter
-                </button>
-              )}
-            </div>
-            <p className="text-xs text-[#E5E7EB]/60">
+
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-30 rounded-2xl border border-white/10 bg-[#0B1220]/95 p-2 shadow-2xl backdrop-blur">
+                {suggestions.map((place, idx) => {
+                  const label = place.title || place.name || 'Destination';
+                  const sub = [place.state, place.district].filter(Boolean).join(' — ');
+                  return (
+                    <button
+                      key={`${label}-${idx}`}
+                      type="button"
+                      onClick={() => {
+                        setQuery(label);
+                        setShowSuggestions(false);
+                        navigate(`/destination/${encodeURIComponent(label)}`);
+                      }}
+                      className="block w-full rounded-xl px-4 py-2 text-left hover:bg-white/5"
+                    >
+                      <div className="text-sm font-medium text-white">{label}</div>
+                      <div className="text-xs text-[#E5E7EB]/65">{sub || 'India'}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <div className="mt-5 flex flex-col items-center gap-2.5">
+            <select
+              value={regionFilter}
+              onChange={(e) => setRegionFilter(e.target.value)}
+              className="h-10 rounded-full border border-[#D4B27A]/35 bg-[rgba(30,41,59,0.62)] px-5 text-sm text-white outline-none backdrop-blur-md md:h-12 md:px-7 md:text-lg"
+            >
+              <option value="Any">All Regions</option>
+              <option value="North">North</option>
+              <option value="South">South</option>
+              <option value="East">East</option>
+              <option value="West">West</option>
+            </select>
+
+            <p className="text-xs text-[#E5E7EB]/55 md:text-sm">
               Tip: You can search by destination, district, state, or union territory name.
             </p>
           </div>
         </div>
       </section>
 
-      {hasSearched && (
-        <section className="mx-auto max-w-7xl px-6 py-16 border-t border-white/5">
-          <div className="space-y-3 mb-10">
-            <h2 className="text-3xl font-light text-white tracking-tight">Search Results</h2>
-            <p className="text-lg text-[#E5E7EB]/60 font-light">
-              {tourismResults.length + propertyResults.length > 0
-                ? `Found ${tourismResults.length + propertyResults.length} results`
-                : 'No results found yet. Try a nearby spelling or search by state/UT (example: Daman, Diu, Dadra).'}
-            </p>
+      {loading && (
+        <div className="py-10 flex justify-center">
+          <Spinner />
+        </div>
+      )}
+
+      {hasSearched && !loading && (
+        <section className="mx-auto max-w-7xl px-6 py-10">
+          <h2 className="mb-2 text-2xl font-light text-white md:text-3xl">Search Results</h2>
+          <p className="mb-5 text-base font-light text-[#E5E7EB]/75 md:text-xl">
+            Found <span className="text-[#C9A96E]">{results.length}</span> results.
+          </p>
+
+          <div className="mb-8 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => setShowAdvancedFeatures((prev) => !prev)}
+              className="rounded-full border border-[#C9A96E]/50 px-4 py-2 text-[#C9A96E] hover:bg-[#C9A96E]/10"
+            >
+              {showAdvancedFeatures ? 'Hide advanced features' : 'Show advanced features'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowHiddenGallery((prev) => !prev)}
+              className="rounded-full border border-[#C9A96E]/50 px-4 py-2 text-[#C9A96E] hover:bg-[#C9A96E]/10"
+            >
+              {showHiddenGallery ? 'Hide hidden places gallery' : 'Show hidden places gallery'}
+            </button>
           </div>
 
-          {loading ? (
-            <div className="flex justify-center py-20">
-              <div className="h-12 w-12 rounded-full border-4 border-[#C9A96E]/20 border-t-[#C9A96E] animate-spin"></div>
-            </div>
+          {results.length === 0 ? (
+            <p className="text-gray-400">No results found.</p>
           ) : (
-            <>
-              {tourismResults.length > 0 && (
-                <div className="mb-12">
-                  <h3 className="text-xl text-[#C9A96E] font-light mb-6">Tourism Destinations</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {tourismResults.map((dest, index) => {
-                      const destinationName =
-                        dest.place_name || dest.title || dest.name || dest.Destination_Name || `Destination-${index + 1}`;
-                      const imageUrl = getCategoryImage(
-                        dest.type || dest.category || dest.Category || 'Nature',
-                        destinationName,
-                      );
-                      return (
-                        <div
-                          key={index}
-                          onClick={() => navigate(`/destination/${encodeURIComponent(destinationName)}`)}
-                          className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-[#C9A96E]/50"
-                        >
-                          {imageUrl && (
-                            <div className="h-48 overflow-hidden">
-                              <img
-                                src={imageUrl}
-                                alt={destinationName}
-                                loading="lazy"
-                                decoding="async"
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              />
-                            </div>
-                          )}
-                          <div className="p-6">
-                            <h4 className="text-lg font-semibold text-white mb-2">
-                              {destinationName}
-                            </h4>
-                            <p className="text-sm text-[#E5E7EB]/70 mb-3 line-clamp-2">
-                              {dest.description || dest.info || 'Explore this beautiful destination'}
-                            </p>
-                            <div className="flex justify-between items-center">
-                              <div className="text-xs text-[#C9A96E]">
-                                {dest.state || dest.city || dest.location || dest.region || 'India'}
-                              </div>
-                              <div className="text-right">
-                                <div className="text-sm text-[#C9A96E] hover:text-[#D4B896] transition-colors">
-                                  View info →
-                                </div>
-                                {typeof dest.semantic_similarity === 'number' && (
-                                  <div className="text-[11px] text-[#E5E7EB]/50 mt-1">
-                                    Match {(dest.semantic_similarity * 100).toFixed(0)}%
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                            {(dest.predicted_category || dest.category) && (
-                              <div className="mt-3 inline-flex items-center rounded-full border border-[#C9A96E]/25 bg-[#C9A96E]/10 px-2 py-1 text-[11px] text-[#C9A96E]">
-                                Predicted: {dest.predicted_category || dest.category}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {results.map((item, idx) => (
+                <article
+                  key={item.id || item.name || idx}
+                  className="overflow-hidden rounded-2xl border border-white/10 bg-[rgba(15,23,42,0.62)] shadow-lg transition hover:border-[#C9A96E]/45"
+                >
+                  <RealImage place={item} alt={item.name || 'Destination'} />
 
-              {propertyResults.length > 0 && (
-                <div>
-                  <h3 className="text-xl text-[#C9A96E] font-light mb-6">Hidden Places Gallery</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {propertyResults.map((place) => (
-                      <PlaceCard key={place._id} place={place} />
-                    ))}
+                  <div className="p-5">
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/destination/${encodeURIComponent(item.title || item.name || '')}`)}
+                      className="text-left"
+                    >
+                      <h3 className="text-xl font-bold text-white hover:text-[#C9A96E]">{item.title || item.name || 'Unnamed place'}</h3>
+                    </button>
+                    <p className="mt-1 text-xs text-gray-400">{item.state || 'India'}{item.district ? ` — ${item.district}` : ''}</p>
+                    <p className="mt-3 line-clamp-3 text-sm text-gray-300">
+                      {item.description || 'No description available.'}
+                    </p>
+                    {Array.isArray(item.activities) && item.activities.length > 0 && (
+                      <p className="mt-2 line-clamp-1 text-xs text-[#E5E7EB]/65">
+                        Hidden spots: {item.activities.slice(0, 3).join(' • ')}
+                      </p>
+                    )}
+                    {(item.google_url || item.google_maps_url) && (
+                      <a
+                        href={item.google_url || item.google_maps_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-block text-xs text-[#C9A96E] hover:underline"
+                      >
+                        View on Google Maps
+                      </a>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/destination/${encodeURIComponent(item.title || item.name || '')}`)}
+                      className="mt-3 inline-block text-xs text-[#C9A96E] hover:underline"
+                    >
+                      Open full details
+                    </button>
                   </div>
-                </div>
-              )}
-            </>
+                </article>
+              ))}
+            </div>
           )}
         </section>
       )}
 
-      {rawDataset?.categories?.length > 0 && (
-        <section className="mx-auto max-w-7xl px-6 py-16">
-          <div className="space-y-3 mb-10">
-            <h2 className="text-3xl font-light text-white tracking-tight">Explore by Category</h2>
-            <p className="text-lg text-[#E5E7EB]/60 font-light">
-              Browse our collection of {rawDataset.categories.reduce((sum, cat) => sum + (cat.count || 0), 0)}+ authentic destination photographs.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {rawDataset.categories.map((category) => {
-              const preview = category.files?.[0]?.url;
-              return (
-                <div
-                  key={category.slug}
-                  className="group relative h-64 overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg cursor-pointer hover:border-[#C9A96E]/50 transition-all"
-                  onClick={() => {
-                    setRegionFilter('Any');
-                    setQuery(category.category);
-                    handleSearch(category.category);
-                  }}
-                >
-                  {preview ? (
-                    <img
-                      src={preview}
-                      alt={category.category}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  ) : (
-                    <div className="h-full w-full bg-gradient-to-br from-[#C9A96E]/20 to-transparent" />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="text-xl font-light text-white">
-                      {category.category}
-                    </div>
-                    <div className="text-sm text-[#C9A96E] mt-1">
-                      {category.count} destinations
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+      {showHiddenGallery && (
+        <section className="mx-auto max-w-7xl px-6 py-10">
+          <HiddenPlacesGallery />
         </section>
       )}
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="space-y-3 mb-10">
-          <h2 className="text-3xl font-light text-white tracking-tight">Featured Listings</h2>
-          <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Machine learning recommendations based on the destination you search for.
-          </p>
-        </div>
-        <MLFeaturedListings query={query} fallbackDestination="Goa" limit={5} />
-      </section>
+      {showAdvancedFeatures && (
+        <>
+          <section className="mx-auto max-w-7xl px-6 py-12">
+            <div className="mb-8">
+              <h2 className="text-3xl font-light text-white tracking-tight">Smart Similar Destinations</h2>
+            </div>
+            <SimilarDestinationsSection initialRegion={regionFilter} />
+          </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="space-y-3 mb-10">
-          <h2 className="text-3xl font-light text-white tracking-tight">Smart Similar Destinations</h2>
-          <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Find places that feel like your favorite destination using our AI recommendation engine.
-          </p>
-        </div>
-        <SimilarDestinationsSection initialRegion={regionFilter} />
-      </section>
+          <section className="mx-auto max-w-7xl px-6 py-12">
+            <div className="mb-8">
+              <h2 className="text-3xl font-light text-white tracking-tight">AI Travel Planner</h2>
+            </div>
+            <TravelPlannerSection initialRegion={regionFilter} />
+          </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="space-y-3 mb-10">
-          <h2 className="text-3xl font-light text-white tracking-tight">AI Travel Planner</h2>
-          <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Enter budget, trip days, category, and region to generate a complete itinerary from the tourism dataset.
-          </p>
-        </div>
-        <TravelPlannerSection initialRegion={regionFilter} />
-      </section>
+          <section className="mx-auto max-w-7xl px-6 py-12">
+            <div className="mb-8">
+              <h2 className="text-3xl font-light text-white tracking-tight">Hidden Gems</h2>
+            </div>
+            <HiddenGemsSection region={regionFilter} limit={6} />
+          </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="space-y-3 mb-10">
-          <h2 className="text-3xl font-light text-white tracking-tight">Hidden Gems</h2>
-          <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Model-picked underrated destinations with strong ratings, lower popularity, and moderate budgets.
-          </p>
-        </div>
-        <HiddenGemsSection region={regionFilter} limit={6} />
-      </section>
+          <section className="mx-auto max-w-7xl px-6 py-12">
+            <div className="mb-8">
+              <h2 className="text-3xl font-light text-white tracking-tight">Travel Clusters</h2>
+            </div>
+            <ClusterInsightsSection region={regionFilter} limit={4} />
+          </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="space-y-3 mb-10">
-          <h2 className="text-3xl font-light text-white tracking-tight">Travel Clusters</h2>
-          <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Unsupervised KMeans clusters for Budget travel, Luxury travel, Hidden gems, and Adventure travel.
-          </p>
-        </div>
-        <ClusterInsightsSection region={regionFilter} limit={4} />
-      </section>
+          <section className="mx-auto max-w-7xl px-6 py-12">
+            <div className="mb-8">
+              <h2 className="text-3xl font-light text-white tracking-tight">ML Featured Listings</h2>
+            </div>
+            <MLFeaturedListings region={regionFilter} limit={6} />
+          </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="space-y-3 mb-10">
-          <h2 className="text-3xl font-light text-white tracking-tight">Destination Explorer</h2>
-          <p className="text-lg text-[#E5E7EB]/60 font-light">
-            Curated places by category from our tourism dataset.
-          </p>
-        </div>
+          <section className="mx-auto max-w-7xl px-6 py-12">
+            <div className="mb-8">
+              <h2 className="text-3xl font-light text-white tracking-tight">Destination Explorer</h2>
+              <p className="text-[#E5E7EB]/70 mt-2">Curated categories shown in compact batches.</p>
+            </div>
 
-        <div className="space-y-12">
-          <div>
-            <h3 className="text-xl text-[#C9A96E] font-light mb-4">🏛️ Heritage</h3>
-            <TourismDestinations category="Heritage" limit={6} />
-          </div>
-          <div>
-            <h3 className="text-xl text-[#C9A96E] font-light mb-4">🏖️ Beach</h3>
-            <TourismDestinations category="Beach" limit={6} />
-          </div>
-          <div>
-            <h3 className="text-xl text-[#C9A96E] font-light mb-4">🌿 Nature</h3>
-            <TourismDestinations category="Nature" limit={6} />
-          </div>
-          <div>
-            <h3 className="text-xl text-[#C9A96E] font-light mb-4">⛰️ Adventure</h3>
-            <TourismDestinations category="Adventure" limit={6} />
-          </div>
-        </div>
-      </section>
+            <div className="space-y-10">
+              <div>
+                <h3 className="text-xl text-[#C9A96E] font-light mb-4">🏛️ Heritage</h3>
+                <TourismDestinations category="Heritage" limit={6} />
+              </div>
+              <div>
+                <h3 className="text-xl text-[#C9A96E] font-light mb-4">🏖️ Beach</h3>
+                <TourismDestinations category="Beach" limit={6} />
+              </div>
+              <div>
+                <h3 className="text-xl text-[#C9A96E] font-light mb-4">🌿 Nature</h3>
+                <TourismDestinations category="Nature" limit={6} />
+              </div>
+              <div>
+                <h3 className="text-xl text-[#C9A96E] font-light mb-4">⛰️ Adventure</h3>
+                <TourismDestinations category="Adventure" limit={6} />
+              </div>
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 };

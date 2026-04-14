@@ -21,55 +21,40 @@ function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between gap-4 border-b border-white/10 bg-[#0B1220]/80 backdrop-blur px-4 py-3 shadow-lg md:px-8">
-      <Link to="/" className="flex items-center gap-1 hover:opacity-80 transition">
+    <header className="sticky top-0 z-50 flex items-center justify-between border-b border-white/10 bg-[#101624]/90 backdrop-blur px-6 py-3 shadow-md">
+      <Link to="/" className="flex items-center gap-2 hover:opacity-90 transition">
         <Logo />
+        <span className="text-xl font-bold tracking-tight text-[#C9A96E]">Offbeat <span className="text-white">Travel India</span></span>
       </Link>
-
       <div className="flex items-center gap-3">
         {!user && (
           <>
             <Link
               to="/login"
-              className="rounded-2xl border border-[#C9A96E]/40 bg-white/5 px-4 py-2 text-sm text-[#E5E7EB] font-semibold transition hover:bg-white/10"
+              className="rounded-xl border border-[#C9A96E]/40 bg-white/5 px-4 py-2 text-sm text-[#E5E7EB] font-semibold transition hover:bg-white/10"
             >
               Log in
             </Link>
             <Link
               to="/signup"
-              className="rounded-2xl bg-gradient-to-r from-[#C9A96E] to-[#D4B896] px-4 py-2 text-sm font-semibold text-[#0B1220] transition hover:from-[#D4B896] hover:to-[#E0C5A0] shadow-md hover:shadow-lg"
+              className="rounded-xl bg-gradient-to-r from-[#C9A96E] to-[#D4B896] px-4 py-2 text-sm font-semibold text-[#0B1220] transition hover:from-[#D4B896] hover:to-[#E0C5A0] shadow-md hover:shadow-lg"
             >
               Sign up
             </Link>
           </>
         )}
-
         {user && (
           <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="flex items-center gap-2 rounded-2xl border border-[#C9A96E]/40 bg-white/5 px-4 py-2 text-[#E5E7EB] transition hover:border-[#C9A96E]/70 hover:bg-white/10"
+              className="flex items-center gap-2 rounded-xl border border-[#C9A96E]/40 bg-white/5 px-4 py-2 text-[#E5E7EB] transition hover:border-[#C9A96E]/70 hover:bg-white/10"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-6 w-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
               <div className="overflow-hidden rounded-full border border-[#C9A96E]/60 bg-gradient-to-r from-[#C9A96E] to-[#1F8A8A] text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="relative top-1 h-5 w-5"
+                  className="h-6 w-6"
                 >
                   <path
                     fillRule="evenodd"
@@ -78,13 +63,10 @@ function Header() {
                   />
                 </svg>
               </div>
-              <div className="hidden md:block font-light text-[#E5E7EB]">
-                {user.name?.split(' ')[0]}
-              </div>
+              <span className="hidden md:block font-light text-[#E5E7EB]">{user.name?.split(' ')[0]}</span>
             </button>
-
             {showMenu && (
-              <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white/5 shadow-lg border border-white/10 backdrop-blur">
+              <div className="absolute right-0 mt-2 w-48 rounded-xl bg-white/5 shadow-lg border border-white/10 backdrop-blur">
                 <Link
                   to="/account"
                   className="block px-4 py-2 text-sm text-[#E5E7EB] hover:bg-[#C9A96E]/10 transition font-light"

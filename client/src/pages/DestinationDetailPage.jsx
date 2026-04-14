@@ -21,15 +21,199 @@ const FALLBACK_HERO_IMAGE = createFallbackImage('Beautiful Destination');
 const FALLBACK_CARD_IMAGE = createFallbackImage('Destination');
 const FALLBACK_THUMB_IMAGE = createFallbackImage('Photo');
 
-const pickPrimaryImage = (place) => {
-  const candidates = [
-    place?.photos?.[0],
-    place?.images?.[0],
+const slugify = (value = '') =>
+  String(value)
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+
+const normalizeImageUrl = (value) => {
+  if (!value) return null;
+  if (typeof value === 'string') return value.trim();
+  if (typeof value === 'object') {
+    return String(value.url || value.src || value.image || '').trim() || null;
+  }
+  return null;
+};
+
+const toImageCandidates = (url) => {
+  const clean = normalizeImageUrl(url);
+  if (!clean || !/^https?:\/\//i.test(clean)) return [];
+
+  if (/upload\.wikimedia\.org/i.test(clean)) {
+    const fileName = clean.split('/').pop()?.split('?')[0]?.split('#')[0];
+    const filePath = fileName
+      ? `https://commons.wikimedia.org/wiki/Special:FilePath/${fileName}`
+      : null;
+    return filePath ? [filePath, clean] : [clean];
+  }
+
+  return [clean];
+};
+
+const isLikelyPlaceholder = (url = '') => {
+  const val = String(url).toLowerCase();
+  return (
+    val.startsWith('data:image/svg+xml') ||
+    val.includes('/local-destination-images/') ||
+    val.includes('placeholder')
+  );
+};
+
+const isRandomHost = (url = '') => /picsum\.photos|loremflickr\.com/i.test(String(url));
+
+const isRelevantToPlace = (url = '', place = {}) => {
+  const hay = decodeURIComponent(String(url || '').toLowerCase());
+  const title = String(place?.title || place?.name || place?.Destination_Name || '').toLowerCase();
+  const state = String(place?.state || place?.State || '').toLowerCase();
+  const tokens = title.split(/[^a-z0-9]+/).filter((t) => t.length >= 4).slice(0, 3);
+  const stateTokens = state.split(/[^a-z0-9]+/).filter((t) => t.length >= 4).slice(0, 2);
+  return [...tokens, ...stateTokens].some((t) => hay.includes(t));
+};
+
+const getLocalCandidates = (place = {}, localImageMap = {}, realImageMap = {}) => {
+  const title = place.title || place.name || place.Destination_Name || '';
+  const state = place.state || place.State || place.address?.split(',')?.[1]?.trim() || '';
+  const slugTitle = slugify(title);
+  const slugComposite = slugify(`${title}-${state}`);
+
+  const keys = [
+    place.id,
+    title,
+    `${title}|${state}`,
+    slugTitle,
+    slugComposite,
+  ]
+    .map((k) => String(k || '').trim().toLowerCase())
+    .filter(Boolean);
+
+  for (const key of keys) {
+    if (Array.isArray(realImageMap[key]) && realImageMap[key].length) {
+      return realImageMap[key];
+    }
+  }
+
+  for (const key of keys) {
+    if (Array.isArray(localImageMap[key]) && localImageMap[key].length) {
+      return localImageMap[key];
+    }
+  }
+
+  if (Array.isArray(realImageMap.__default) && realImageMap.__default.length) {
+    return realImageMap.__default;
+  }
+
+  return Array.isArray(localImageMap.__default) ? localImageMap.__default : [];
+};
+
+const createInlineFallbackImage = (place = {}) => {
+  const title = String(place?.title || place?.name || place?.Destination_Name || 'Destination')
+    .replace(/[<&>]/g, '')
+    .slice(0, 44);
+
+  return `data:image/svg+xml,${encodeURIComponent(`
+    <svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900' viewBox='0 0 1600 900'>
+      <defs>
+        <linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'>
+          <stop offset='0%' stop-color='#070D1F'/>
+          <stop offset='100%' stop-color='#193754'/>
+        </linearGradient>
+      </defs>
+      <rect width='1600' height='900' fill='url(#bg)'/>
+      <circle cx='1260' cy='180' r='150' fill='#14B8A6' opacity='0.2'/>
+      <rect x='120' y='650' width='1360' height='170' rx='28' fill='rgba(255,255,255,0.06)' stroke='rgba(212,178,122,0.42)'/>
+      <text x='170' y='745' fill='#D4B27A' font-size='64' font-family='Segoe UI, Arial' font-weight='700'>${title}</text>
+    </svg>
+  `)}`;
+};
+
+const buildImagePool = (place, localImageMap = {}, realImageMap = {}) => {
+  const localCandidates = getLocalCandidates(place, localImageMap, realImageMap);
+
+  const raw = [
+    ...(Array.isArray(place?.photos) ? place.photos : []),
+    ...(Array.isArray(place?.images) ? place.images : []),
     place?.photo,
     place?.image,
   ];
 
-  return candidates.find((value) => typeof value === 'string' && value.trim().length > 0) || FALLBACK_CARD_IMAGE;
+  const expanded = raw.flatMap((item) => toImageCandidates(item));
+
+  const realFirst = [
+    ...expanded.filter((url) => !isLikelyPlaceholder(url) && !isRandomHost(url) && isRelevantToPlace(url, place)),
+    ...localCandidates
+      .flatMap((item) => toImageCandidates(item))
+      .filter((url) => !isLikelyPlaceholder(url) && !isRandomHost(url) && isRelevantToPlace(url, place)),
+  ];
+
+  const merged = [...new Set(realFirst.filter(Boolean))];
+  return merged;
+};
+
+const pickPrimaryImage = (place, localImageMap = {}, realImageMap = {}) => {
+  return buildImagePool(place, localImageMap, realImageMap)[0] || FALLBACK_CARD_IMAGE;
+};
+
+const parseProsCons = (description = '') => {
+  const raw = String(description || '');
+  const lower = raw.toLowerCase();
+
+  const advantagesMatch = lower.includes('advantages:')
+    ? raw.split(/advantages:/i)[1]?.split(/drawbacks:|cons:/i)[0]
+    : null;
+  const drawbacksMatch = lower.includes('drawbacks:')
+    ? raw.split(/drawbacks:/i)[1]
+    : (lower.includes('cons:') ? raw.split(/cons:/i)[1] : null);
+
+  const toList = (chunk) =>
+    String(chunk || '')
+      .split(/\.|\n|;/)
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .slice(0, 4);
+
+  const pros = toList(advantagesMatch);
+  const cons = toList(drawbacksMatch);
+
+  return {
+    pros: pros.length ? pros : ['Scenic destination with strong travel potential', 'Good for curated offbeat experiences'],
+    cons: cons.length ? cons : ['Plan transport and stay in advance during peak season'],
+  };
+};
+
+const buildHotelSuggestions = (destination = {}) => {
+  const destinationName = destination.title || destination.name || 'Destination';
+  const state = destination.state || destination.State || destination.address?.split(',')?.[1]?.trim() || 'India';
+  const budgetRange = String(destination.budget_range || '').trim();
+
+  const [minRaw, maxRaw] = budgetRange.split('-').map((v) => Number(String(v || '').replace(/[^\d]/g, '')));
+  const min = Number.isFinite(minRaw) ? minRaw : 1200;
+  const max = Number.isFinite(maxRaw) ? maxRaw : Math.max(2800, min + 1800);
+  const avg = Math.round((min + max) / 2);
+
+  return [
+    {
+      name: `${destinationName} Heritage Retreat`,
+      tier: 'Premium',
+      approxPrice: Math.max(avg + 900, min + 1200),
+      features: ['Breakfast included', 'Guided local experience', 'Airport/rail pickup support'],
+    },
+    {
+      name: `${state} Boutique Residency`,
+      tier: 'Mid-range',
+      approxPrice: avg,
+      features: ['Central access', 'Family rooms', 'Local cuisine options'],
+    },
+    {
+      name: `${destinationName} Backpacker Stay`,
+      tier: 'Budget',
+      approxPrice: Math.max(min, 900),
+      features: ['Clean essentials', 'Wi-Fi', 'Flexible check-in'],
+    },
+  ];
 };
 
 export default function DestinationDetailPage() {
@@ -40,8 +224,20 @@ export default function DestinationDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+  const [realImageMap, setRealImageMap] = useState({});
+  const [localImageMap, setLocalImageMap] = useState({});
 
   useEffect(() => {
+    fetch('/assets/real-image-map.json')
+      .then((res) => res.json())
+      .then((payload) => setRealImageMap(payload?.map || {}))
+      .catch(() => setRealImageMap({}));
+
+    fetch('/assets/local-image-map.json')
+      .then((res) => res.json())
+      .then((payload) => setLocalImageMap(payload?.map || {}))
+      .catch(() => setLocalImageMap({}));
+
     if (!name || name === 'undefined') {
       setError('No destination specified');
       setLoading(false);
@@ -123,8 +319,15 @@ export default function DestinationDetailPage() {
     );
   }
 
-  const photos = destination.photos || [];
+  const photos = buildImagePool(destination, localImageMap, realImageMap);
   const hasPhotos = photos.length > 0;
+  const destinationName = destination.title || destination.name || String(name || 'Destination');
+  const destinationAddress =
+    destination.address ||
+    [destination.district, destination.state].filter(Boolean).join(', ') ||
+    'India';
+  const { pros, cons } = parseProsCons(destination.description || destination.extraInfo);
+  const hotelSuggestions = buildHotelSuggestions(destination);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0B1220] via-[#111827] to-[#0B1220]">
@@ -156,7 +359,7 @@ export default function DestinationDetailPage() {
           <div className="relative h-[60vh] md:h-[70vh] overflow-hidden">
             <img
               src={photos[activePhotoIndex]}
-              alt={destination.title}
+              alt={destinationName}
               className="w-full h-full object-cover"
               onError={(e) => {
                 e.target.onerror = null;
@@ -191,14 +394,14 @@ export default function DestinationDetailPage() {
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
               <div className="max-w-7xl mx-auto">
                 <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-                  {destination.title}
+                  {destinationName}
                 </h1>
                 <div className="flex items-center gap-2 text-white/90 text-lg">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                   </svg>
-                  <span>{destination.address}</span>
+                  <span>{destinationAddress}</span>
                 </div>
               </div>
             </div>
@@ -221,11 +424,10 @@ export default function DestinationDetailPage() {
                     >
                       <img
                         src={photo}
-                        alt={`${destination.title} - ${index + 1}`}
+                        alt={`${destinationName} - ${index + 1}`}
                         className="w-24 h-16 object-cover"
                         onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = FALLBACK_THUMB_IMAGE;
+                          e.currentTarget.style.display = 'none';
                         }}
                       />
                     </button>
@@ -255,12 +457,12 @@ export default function DestinationDetailPage() {
         </div>
 
         {/* Highlights & Amenities */}
-        {destination.perks && destination.perks.length > 0 && (
+        {(destination.perks?.length > 0 || destination.activities?.length > 0) && (
           <div className="mb-12">
             <div className="bg-gradient-to-br from-[#C9A96E]/10 to-[#6C5BA7]/10 backdrop-blur-sm rounded-2xl border border-[#C9A96E]/20 p-6 md:p-8">
               <h2 className="text-3xl font-bold text-white mb-6">✨ Experience Highlights</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {destination.perks.map((perk, index) => (
+                {(destination.perks?.length ? destination.perks : destination.activities || []).map((perk, index) => (
                   <div
                     key={index}
                     className="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10 hover:border-[#C9A96E]/40 transition"
@@ -278,6 +480,43 @@ export default function DestinationDetailPage() {
           </div>
         )}
 
+        <div className="mb-12 grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl border border-emerald-300/20 bg-emerald-500/5 p-6">
+            <h3 className="text-2xl font-semibold text-white mb-3">✅ Why visit</h3>
+            <ul className="space-y-2 text-[#E5E7EB]/85">
+              {pros.map((item, index) => (
+                <li key={`pro-${index}`} className="text-sm">• {item}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl border border-amber-300/20 bg-amber-500/5 p-6">
+            <h3 className="text-2xl font-semibold text-white mb-3">⚠️ Things to consider</h3>
+            <ul className="space-y-2 text-[#E5E7EB]/85">
+              {cons.map((item, index) => (
+                <li key={`con-${index}`} className="text-sm">• {item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mb-12 rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
+          <h2 className="text-3xl font-bold text-white mb-4">🛏️ Suggested hotel options</h2>
+          <p className="text-[#E5E7EB]/70 mb-6">Curated by your selected destination budget and travel profile.</p>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {hotelSuggestions.map((hotel, index) => (
+              <div key={`hotel-${index}`} className="rounded-xl border border-white/10 bg-black/20 p-4">
+                <div className="text-lg font-semibold text-white">{hotel.name}</div>
+                <div className="mt-1 text-xs text-[#C9A96E]">{hotel.tier}</div>
+                <div className="mt-2 text-sm text-[#E5E7EB]/85">Approx. ₹{Math.round(hotel.approxPrice)} / night</div>
+                <div className="mt-2 text-xs text-[#E5E7EB]/70">
+                  {hotel.features.join(' • ')}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Travel Information */}
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-white mb-6">📍 Travel Information</h2>
@@ -292,7 +531,7 @@ export default function DestinationDetailPage() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold text-white mb-2">Location</h3>
-                  <p className="text-[#E5E7EB]/80">{destination.address}</p>
+                  <p className="text-[#E5E7EB]/80">{destinationAddress}</p>
                 </div>
               </div>
             </div>
@@ -340,7 +579,7 @@ export default function DestinationDetailPage() {
               {similarPlaces.map((place, index) => {
                 const placeName = place.title || place.Destination_Name || 'Destination';
                 const placeAddress = place.address || place.State || '';
-                const placePhoto = pickPrimaryImage(place);
+                const placePhoto = pickPrimaryImage(place, localImageMap, realImageMap);
                 
                 return (
                   <div
@@ -379,7 +618,7 @@ export default function DestinationDetailPage() {
         <div className="text-center bg-gradient-to-br from-[#6C5BA7]/20 to-[#C9A96E]/20 backdrop-blur-sm rounded-2xl border border-white/10 p-8 md:p-12">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Ready to Explore {destination.title}?
+              Ready to Explore {destinationName}?
             </h2>
             <p className="text-[#E5E7EB]/80 text-lg mb-8">
               Discover more hidden gems and plan your perfect journey across India's offbeat destinations.

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07122A"/>
+      <stop offset="100%" stop-color="#18345A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.2" r="0.7">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+
+  <circle cx="745" cy="435" r="180" fill="#14b8a6" opacity="0.14"/>
+  <circle cx="905" cy="365" r="120" fill="#1d4ed8" opacity="0.18"/>
+
+  <rect x="120" y="610" rx="28" ry="28" width="1360" height="190" fill="url(#card)" stroke="rgba(212,178,122,0.38)"/>
+  <text x="170" y="700" fill="#D9B97F" font-family="Segoe UI, Arial, sans-serif" font-size="58" font-weight="700">Alleppey Backwaters</text>
+  <text x="172" y="752" fill="#e5e7eb" font-family="Segoe UI, Arial, sans-serif" font-size="30" opacity="0.88">Kerala • Offbeat India</text>
+</svg>

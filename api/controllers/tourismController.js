@@ -6732,14 +6732,17 @@ const loadStateDatasetFiles = () => {
     const datasetDir = path.join(__dirname, '../../dataset');
     if (!fs.existsSync(datasetDir)) return [];
 
-    const files = fs
-      .readdirSync(datasetDir)
-      .filter((file) => file.toLowerCase().endsWith('.json'));
+    // Only load the two intended hidden places files
+    const files = [
+      'hidden_places_states.json',
+      'hidden_places_territories.json',
+    ];
 
     const records = [];
     for (const file of files) {
       try {
         const filePath = path.join(datasetDir, file);
+        if (!fs.existsSync(filePath)) continue;
         const raw = fs.readFileSync(filePath, 'utf-8');
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed)) {
@@ -6818,8 +6821,9 @@ const normalizeDestination = (place = {}) => {
       place.budgetTier ||
       (typeof place.price === 'number' ? (place.price < 5000 ? 'Low' : 'Mid') : ''),
     activities: place.activities || place.perks || [],
-    images: Array.isArray(place.images) ? place.images : [],
-    photos: Array.isArray(place.photos) ? place.photos : [],
+    // Always include images and photos from the source, or fallback to empty array
+    images: Array.isArray(place.images) && place.images.length > 0 ? place.images : (Array.isArray(place.photos) ? place.photos : []),
+    photos: Array.isArray(place.photos) && place.photos.length > 0 ? place.photos : (Array.isArray(place.images) ? place.images : []),
   };
 
   const isUsableUrl = (value) => {

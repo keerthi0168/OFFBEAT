@@ -1,0 +1,2220 @@
+[
+  {
+    "id": "AP001",
+    "name": "Araku Valley",
+    "state": "Andhra Pradesh",
+    "district": "Visakhapatnam",
+    "region": "Hill Station",
+    "tourism_type": "Nature & Tribal Tourism",
+    "description": "Araku Valley is a scenic hill station known for coffee plantations, waterfalls, and tribal culture. The train journey through tunnels is a major highlight. While beautiful, it has started gaining popularity, leading to moderate crowds during peak season. Limited luxury accommodations and connectivity issues in remote spots can be drawbacks, but it remains one of the best offbeat destinations in Andhra.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/4/4e/Araku_Valley.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/60/Araku_Train.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/89/Araku_Coffee.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/27/Araku_Hills.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/94/Araku_Scenery.jpg",
+      "https://source.unsplash.com/1600x900/?Araku%20Valley%2CAndhra%20Pradesh%2CVisakhapatnam%2CHill%20Station%2CNature%20%26%20Tribal%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Araku%20Valley%2CAndhra%20Pradesh%2CVisakhapatnam%2CHill%20Station%2CNature%20%26%20Tribal%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Araku%20Valley%2CAndhra%20Pradesh%2CVisakhapatnam%2CHill%20Station%2CNature%20%26%20Tribal%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ap001-andhra-pradesh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ap001-andhra-pradesh-2",
+      "https://picsum.photos/seed/ap001-andhra-pradesh-1/1600/900",
+      "https://picsum.photos/seed/ap001-andhra-pradesh-2/1600/900",
+      "https://picsum.photos/seed/ap001-andhra-pradesh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Araku%20Valley%2CAndhra%20Pradesh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "https://maps.google.com/?q=Araku+Valley+Andhra+Pradesh",
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Coffee Plantation Visits",
+      "Train Ride",
+      "Tribal Museum"
+    ],
+    "coordinates": {
+      "lat": 18.327,
+      "lng": 82.877
+    },
+    "source": ""
+  },
+  {
+    "id": "AP005",
+    "name": "Gandikota",
+    "state": "Andhra Pradesh",
+    "district": "Kadapa",
+    "region": "Canyon",
+    "tourism_type": "Adventure & Heritage",
+    "description": "Gandikota is often called the 'Grand Canyon of India' due to its dramatic gorge carved by the Pennar River. It offers stunning sunset views and a historic fort. Facilities are basic, and safety precautions are needed near cliffs. It’s perfect for adventure seekers and photographers.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/6/6b/Gandikota_Canyon.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/89/Gandikota_Fort.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3a/Gandikota_River.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/1b/Gandikota_Sunset.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/7/7d/Gandikota_View.jpg",
+      "https://source.unsplash.com/1600x900/?Gandikota%2CAndhra%20Pradesh%2CKadapa%2CCanyon%2CAdventure%20%26%20Heritage%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Gandikota%2CAndhra%20Pradesh%2CKadapa%2CCanyon%2CAdventure%20%26%20Heritage%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Gandikota%2CAndhra%20Pradesh%2CKadapa%2CCanyon%2CAdventure%20%26%20Heritage%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ap005-andhra-pradesh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ap005-andhra-pradesh-2",
+      "https://picsum.photos/seed/ap005-andhra-pradesh-1/1600/900",
+      "https://picsum.photos/seed/ap005-andhra-pradesh-2/1600/900",
+      "https://picsum.photos/seed/ap005-andhra-pradesh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Gandikota%2CAndhra%20Pradesh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "https://maps.google.com/?q=Gandikota+Andhra+Pradesh",
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Camping",
+      "Fort Visit",
+      "Sunset Views"
+    ],
+    "coordinates": {
+      "lat": 14.816,
+      "lng": 78.283
+    },
+    "source": ""
+  },
+  {
+    "id": "AP015",
+    "name": "Ahobilam",
+    "state": "Andhra Pradesh",
+    "district": "Nandyal",
+    "region": "Temple & Hills",
+    "tourism_type": "Spiritual & Adventure",
+    "description": "Ahobilam combines spirituality with trekking, featuring temples located across hills and forests. The terrain is challenging, and infrastructure is limited, but it offers a unique experience for both devotees and trekkers.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/5/5b/Ahobilam.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3d/Temple_hills.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/7/7b/Forest_trek.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2a/Hill_temple.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6e/Nature_hills.jpg",
+      "https://source.unsplash.com/1600x900/?Ahobilam%2CAndhra%20Pradesh%2CNandyal%2CTemple%20%26%20Hills%2CSpiritual%20%26%20Adventure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ahobilam%2CAndhra%20Pradesh%2CNandyal%2CTemple%20%26%20Hills%2CSpiritual%20%26%20Adventure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ahobilam%2CAndhra%20Pradesh%2CNandyal%2CTemple%20%26%20Hills%2CSpiritual%20%26%20Adventure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ap015-andhra-pradesh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ap015-andhra-pradesh-2",
+      "https://picsum.photos/seed/ap015-andhra-pradesh-1/1600/900",
+      "https://picsum.photos/seed/ap015-andhra-pradesh-2/1600/900",
+      "https://picsum.photos/seed/ap015-andhra-pradesh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ahobilam%2CAndhra%20Pradesh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "https://maps.google.com/?q=Ahobilam+Andhra+Pradesh",
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Temple Visits",
+      "Trekking"
+    ],
+    "coordinates": {
+      "lat": 15.13,
+      "lng": 78.72
+    },
+    "source": ""
+  },
+  {
+    "id": "AR010",
+    "name": "Namdapha National Park Buffer Areas",
+    "state": "Arunachal Pradesh",
+    "district": "Changlang",
+    "region": "Forest",
+    "tourism_type": "Wildlife & Eco Tourism",
+    "description": "Namdapha buffer areas offer raw jungle experiences with rich biodiversity. Sightings of rare species are possible but not guaranteed. Dense forests, lack of infrastructure, and safety concerns make it suitable only for experienced travelers.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3a/Namdapha.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/7/7f/Forest_view.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6c/Wildlife_area.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2b/Jungle_path.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/8c/Nature_forest.jpg",
+      "https://source.unsplash.com/1600x900/?Namdapha%20National%20Park%20Buffer%20Areas%2CArunachal%20Pradesh%2CChanglang%2CForest%2CWildlife%20%26%20Eco%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Namdapha%20National%20Park%20Buffer%20Areas%2CArunachal%20Pradesh%2CChanglang%2CForest%2CWildlife%20%26%20Eco%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Namdapha%20National%20Park%20Buffer%20Areas%2CArunachal%20Pradesh%2CChanglang%2CForest%2CWildlife%20%26%20Eco%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ar010-arunachal-pradesh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ar010-arunachal-pradesh-2",
+      "https://picsum.photos/seed/ar010-arunachal-pradesh-1/1600/900",
+      "https://picsum.photos/seed/ar010-arunachal-pradesh-2/1600/900",
+      "https://picsum.photos/seed/ar010-arunachal-pradesh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Namdapha%20National%20Park%20Buffer%20Areas%2CArunachal%20Pradesh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "https://maps.google.com/?q=Namdapha+National+Park+Arunachal+Pradesh",
+    "rating": 4.8,
+    "best_season": [
+      "November",
+      "December",
+      "March",
+      "April"
+    ],
+    "activities": [
+      "Wildlife Trekking",
+      "Bird Watching"
+    ],
+    "coordinates": {
+      "lat": 27.5,
+      "lng": 96.4
+    },
+    "source": ""
+  },
+  {
+    "id": "ASS006",
+    "name": "Majuli Hidden Villages",
+    "state": "Assam",
+    "district": "Majuli",
+    "region": "River Island",
+    "tourism_type": "Cultural Tourism",
+    "description": "World’s largest river island with hidden villages and monasteries. Advantages include rich culture and scenic beauty. Drawbacks include flood risks and ferry dependency.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/35/Majuli_Island.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/52/Majuli_Village.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/22/Majuli_Culture.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/63/Majuli_Sunset.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/18/Majuli_River.jpg",
+      "https://source.unsplash.com/1600x900/?Majuli%20Hidden%20Villages%2CAssam%2CMajuli%2CRiver%20Island%2CCultural%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Majuli%20Hidden%20Villages%2CAssam%2CMajuli%2CRiver%20Island%2CCultural%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Majuli%20Hidden%20Villages%2CAssam%2CMajuli%2CRiver%20Island%2CCultural%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ass006-assam-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ass006-assam-2",
+      "https://picsum.photos/seed/ass006-assam-1/1600/900",
+      "https://picsum.photos/seed/ass006-assam-2/1600/900",
+      "https://picsum.photos/seed/ass006-assam-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Majuli%20Hidden%20Villages%2CAssam%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "https://maps.google.com/?q=Majuli,Assam",
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Cultural Tours",
+      "Cycling",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 26.95,
+      "lng": 94.2
+    },
+    "source": ""
+  },
+  {
+    "id": "BHR010",
+    "name": "Kakolat Waterfall",
+    "state": "Bihar",
+    "district": "Nawada",
+    "region": "Waterfall",
+    "tourism_type": "Nature Tourism",
+    "description": "Popular yet still relatively offbeat waterfall surrounded by hills. Advantages include clean water and scenic beauty. Drawbacks include seasonal crowd and safety concerns during peak flow.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3d/Kakolat_Waterfall.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/22/Kakolat_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Kakolat_Stream.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6b/Kakolat_Forest.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/19/Kakolat_Scenery.jpg",
+      "https://source.unsplash.com/1600x900/?Kakolat%20Waterfall%2CBihar%2CNawada%2CWaterfall%2CNature%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Kakolat%20Waterfall%2CBihar%2CNawada%2CWaterfall%2CNature%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Kakolat%20Waterfall%2CBihar%2CNawada%2CWaterfall%2CNature%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=bhr010-bihar-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=bhr010-bihar-2",
+      "https://picsum.photos/seed/bhr010-bihar-1/1600/900",
+      "https://picsum.photos/seed/bhr010-bihar-2/1600/900",
+      "https://picsum.photos/seed/bhr010-bihar-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Kakolat%20Waterfall%2CBihar%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "https://maps.google.com/?q=Kakolat+Waterfall,Bihar",
+    "rating": 4.6,
+    "best_season": [
+      "June",
+      "July",
+      "August",
+      "September"
+    ],
+    "activities": [
+      "Swimming",
+      "Picnic",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 24.847,
+      "lng": 85.48
+    },
+    "source": ""
+  },
+  {
+    "id": "CHT010",
+    "name": "Teerathgarh Hidden Trails",
+    "state": "Chhattisgarh",
+    "district": "Bastar",
+    "region": "Forest Trails",
+    "tourism_type": "Eco Adventure",
+    "description": "Offbeat forest trails near waterfalls offering raw jungle experience. Advantages include solitude and biodiversity. Drawbacks include lack of guides and navigation difficulty.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Kanger_Trail.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Kanger_Forest_Path.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2a/Kanger_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6f/Kanger_Scenery.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4c/Kanger_Stream.jpg",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2CBastar%2CForest%20Trails%2CEco%20Adventure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2CBastar%2CForest%20Trails%2CEco%20Adventure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2CBastar%2CForest%20Trails%2CEco%20Adventure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=cht010-chhattisgarh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=cht010-chhattisgarh-2",
+      "https://picsum.photos/seed/cht010-chhattisgarh-1/1600/900",
+      "https://picsum.photos/seed/cht010-chhattisgarh-2/1600/900",
+      "https://picsum.photos/seed/cht010-chhattisgarh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "https://maps.google.com/?q=Kanger+Valley+Trails,Chhattisgarh",
+    "rating": 4.5,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Forest Trekking",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 18.81,
+      "lng": 81.96
+    },
+    "source": ""
+  },
+  {
+    "id": "CHT010",
+    "name": "Teerathgarh Hidden Trails",
+    "state": "Chhattisgarh",
+    "district": "Bastar",
+    "region": "Forest Trails",
+    "tourism_type": "Eco Adventure",
+    "description": "Offbeat forest trails near waterfalls offering raw jungle experience. Advantages include solitude and biodiversity. Drawbacks include lack of guides and navigation difficulty.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Kanger_Trail.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Kanger_Forest_Path.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2a/Kanger_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6f/Kanger_Scenery.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4c/Kanger_Stream.jpg",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2CBastar%2CForest%20Trails%2CEco%20Adventure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2CBastar%2CForest%20Trails%2CEco%20Adventure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2CBastar%2CForest%20Trails%2CEco%20Adventure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=cht010-chhattisgarh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=cht010-chhattisgarh-2",
+      "https://picsum.photos/seed/cht010-chhattisgarh-1/1600/900",
+      "https://picsum.photos/seed/cht010-chhattisgarh-2/1600/900",
+      "https://picsum.photos/seed/cht010-chhattisgarh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "https://maps.google.com/?q=Kanger+Valley+Trails,Chhattisgarh",
+    "rating": 4.5,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Forest Trekking",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 18.81,
+      "lng": 81.96
+    },
+    "source": ""
+  },
+  {
+    "id": "CHT010",
+    "name": "Teerathgarh Hidden Trails",
+    "state": "Chhattisgarh",
+    "district": "Bastar",
+    "region": "Forest Trails",
+    "tourism_type": "Eco Adventure",
+    "description": "Offbeat forest trails near waterfalls offering raw jungle experience. Advantages include solitude and biodiversity. Drawbacks include lack of guides and navigation difficulty.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Kanger_Trail.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Kanger_Forest_Path.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2a/Kanger_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6f/Kanger_Scenery.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4c/Kanger_Stream.jpg",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2CBastar%2CForest%20Trails%2CEco%20Adventure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2CBastar%2CForest%20Trails%2CEco%20Adventure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2CBastar%2CForest%20Trails%2CEco%20Adventure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=cht010-chhattisgarh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=cht010-chhattisgarh-2",
+      "https://picsum.photos/seed/cht010-chhattisgarh-1/1600/900",
+      "https://picsum.photos/seed/cht010-chhattisgarh-2/1600/900",
+      "https://picsum.photos/seed/cht010-chhattisgarh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Teerathgarh%20Hidden%20Trails%2CChhattisgarh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "https://maps.google.com/?q=Kanger+Valley+Trails,Chhattisgarh",
+    "rating": 4.5,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Forest Trekking",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 18.81,
+      "lng": 81.96
+    },
+    "source": ""
+  },
+  {
+    "id": "GOA_N005",
+    "name": "Querim Beach",
+    "state": "Goa",
+    "district": "North Goa",
+    "region": "Beach",
+    "tourism_type": "Coastal",
+    "description": "Northernmost quiet beach with river meeting sea. Drawbacks: isolated, fewer eateries.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1f/Querim_Beach.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2e/Querim_Shore.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3d/Querim_Sand.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4c/Querim_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5b/Querim_Coast.jpg",
+      "https://source.unsplash.com/1600x900/?Querim%20Beach%2CGoa%2CNorth%20Goa%2CBeach%2CCoastal%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Querim%20Beach%2CGoa%2CNorth%20Goa%2CBeach%2CCoastal%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Querim%20Beach%2CGoa%2CNorth%20Goa%2CBeach%2CCoastal%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-n005-goa-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-n005-goa-2",
+      "https://picsum.photos/seed/goa-n005-goa-1/1600/900",
+      "https://picsum.photos/seed/goa-n005-goa-2/1600/900",
+      "https://picsum.photos/seed/goa-n005-goa-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Querim%20Beach%2CGoa%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Relaxation",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 15.72,
+      "lng": 73.685
+    },
+    "source": ""
+  },
+  {
+    "id": "GOA_N010",
+    "name": "Bicholim Countryside Trails",
+    "state": "Goa",
+    "district": "North Goa",
+    "region": "Countryside",
+    "tourism_type": "Eco Tourism",
+    "description": "Hidden countryside with lush greenery and local life. Drawbacks: not tourist-developed, navigation can be tricky.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1a/Bicholim_Field.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2b/Bicholim_Trail.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Bicholim_Green.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Bicholim_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Bicholim_Road.jpg",
+      "https://source.unsplash.com/1600x900/?Bicholim%20Countryside%20Trails%2CGoa%2CNorth%20Goa%2CCountryside%2CEco%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Bicholim%20Countryside%20Trails%2CGoa%2CNorth%20Goa%2CCountryside%2CEco%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Bicholim%20Countryside%20Trails%2CGoa%2CNorth%20Goa%2CCountryside%2CEco%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-n010-goa-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-n010-goa-2",
+      "https://picsum.photos/seed/goa-n010-goa-1/1600/900",
+      "https://picsum.photos/seed/goa-n010-goa-2/1600/900",
+      "https://picsum.photos/seed/goa-n010-goa-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Bicholim%20Countryside%20Trails%2CGoa%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.5,
+    "best_season": [
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Cycling",
+      "Nature Walk"
+    ],
+    "coordinates": {
+      "lat": 15.588,
+      "lng": 73.928
+    },
+    "source": ""
+  },
+  {
+    "id": "GOA_N015",
+    "name": "Assonora Countryside",
+    "state": "Goa",
+    "district": "North Goa",
+    "region": "Countryside",
+    "tourism_type": "Rural Tourism",
+    "description": "Hidden rural area with lush fields and authentic Goan lifestyle. Drawbacks: no tourist services, hard to navigate.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1c/Assonora_Field.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2d/Assonora_Road.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3e/Assonora_Green.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4f/Assonora_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5a/Assonora_Nature.jpg",
+      "https://source.unsplash.com/1600x900/?Assonora%20Countryside%2CGoa%2CNorth%20Goa%2CCountryside%2CRural%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Assonora%20Countryside%2CGoa%2CNorth%20Goa%2CCountryside%2CRural%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Assonora%20Countryside%2CGoa%2CNorth%20Goa%2CCountryside%2CRural%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-n015-goa-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-n015-goa-2",
+      "https://picsum.photos/seed/goa-n015-goa-1/1600/900",
+      "https://picsum.photos/seed/goa-n015-goa-2/1600/900",
+      "https://picsum.photos/seed/goa-n015-goa-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Assonora%20Countryside%2CGoa%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.5,
+    "best_season": [
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Cycling",
+      "Nature Walk"
+    ],
+    "coordinates": {
+      "lat": 15.594,
+      "lng": 73.875
+    },
+    "source": ""
+  },
+  {
+    "id": "GOA_S010",
+    "name": "Cotigao Wildlife Sanctuary",
+    "state": "Goa",
+    "district": "South Goa",
+    "region": "Forest",
+    "tourism_type": "Wildlife",
+    "description": "Dense forest sanctuary with tall trees. Drawbacks: wildlife sightings are rare.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1c/Cotigao_Forest.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2d/Cotigao_Trees.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3e/Cotigao_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4f/Cotigao_Wildlife.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5a/Cotigao_Green.jpg",
+      "https://source.unsplash.com/1600x900/?Cotigao%20Wildlife%20Sanctuary%2CGoa%2CSouth%20Goa%2CForest%2CWildlife%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Cotigao%20Wildlife%20Sanctuary%2CGoa%2CSouth%20Goa%2CForest%2CWildlife%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Cotigao%20Wildlife%20Sanctuary%2CGoa%2CSouth%20Goa%2CForest%2CWildlife%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-s010-goa-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-s010-goa-2",
+      "https://picsum.photos/seed/goa-s010-goa-1/1600/900",
+      "https://picsum.photos/seed/goa-s010-goa-2/1600/900",
+      "https://picsum.photos/seed/goa-s010-goa-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Cotigao%20Wildlife%20Sanctuary%2CGoa%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.6,
+    "best_season": [
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Wildlife Watching",
+      "Nature Walk"
+    ],
+    "coordinates": {
+      "lat": 14.988,
+      "lng": 74.184
+    },
+    "source": ""
+  },
+  {
+    "id": "GOA_S015",
+    "name": "Poinguinim Village",
+    "state": "Goa",
+    "district": "South Goa",
+    "region": "Village",
+    "tourism_type": "Rural Tourism",
+    "description": "Remote village near Karnataka border offering authentic Goan lifestyle. Drawbacks: very limited connectivity and facilities.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1e/Poinguinim_Village.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Poinguinim_Field.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3a/Poinguinim_Road.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4b/Poinguinim_Nature.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Poinguinim_View.jpg",
+      "https://source.unsplash.com/1600x900/?Poinguinim%20Village%2CGoa%2CSouth%20Goa%2CVillage%2CRural%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Poinguinim%20Village%2CGoa%2CSouth%20Goa%2CVillage%2CRural%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Poinguinim%20Village%2CGoa%2CSouth%20Goa%2CVillage%2CRural%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-s015-goa-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=goa-s015-goa-2",
+      "https://picsum.photos/seed/goa-s015-goa-1/1600/900",
+      "https://picsum.photos/seed/goa-s015-goa-2/1600/900",
+      "https://picsum.photos/seed/goa-s015-goa-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Poinguinim%20Village%2CGoa%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.4,
+    "best_season": [
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Village Walk",
+      "Cultural Experience"
+    ],
+    "coordinates": {
+      "lat": 14.993,
+      "lng": 74.085
+    },
+    "source": ""
+  },
+  {
+    "id": "GUJ_N015",
+    "name": "Ambaji Hills Hidden Trails",
+    "state": "Gujarat",
+    "district": "Banaskantha",
+    "region": "Hills",
+    "tourism_type": "Spiritual & Trekking",
+    "description": "Offbeat trekking routes near famous temple town. Drawbacks: can get crowded during festivals.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/10/Ambaji_Hills.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/21/Ambaji_Trek.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/32/Ambaji_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/43/Ambaji_Sunset.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/54/Ambaji_Green.jpg",
+      "https://source.unsplash.com/1600x900/?Ambaji%20Hills%20Hidden%20Trails%2CGujarat%2CBanaskantha%2CHills%2CSpiritual%20%26%20Trekking%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ambaji%20Hills%20Hidden%20Trails%2CGujarat%2CBanaskantha%2CHills%2CSpiritual%20%26%20Trekking%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ambaji%20Hills%20Hidden%20Trails%2CGujarat%2CBanaskantha%2CHills%2CSpiritual%20%26%20Trekking%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=guj-n015-gujarat-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=guj-n015-gujarat-2",
+      "https://picsum.photos/seed/guj-n015-gujarat-1/1600/900",
+      "https://picsum.photos/seed/guj-n015-gujarat-2/1600/900",
+      "https://picsum.photos/seed/guj-n015-gujarat-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ambaji%20Hills%20Hidden%20Trails%2CGujarat%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.6,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Trekking",
+      "Temple Visit"
+    ],
+    "coordinates": {
+      "lat": 24.33,
+      "lng": 72.85
+    },
+    "source": ""
+  },
+  {
+    "id": "GUJ_S015",
+    "name": "Ghoghla Coastal Stretch",
+    "state": "Gujarat",
+    "district": "Diu (UT border)",
+    "region": "Beach",
+    "tourism_type": "Coastal Tourism",
+    "description": "Clean and less crowded beach near Diu border. Drawbacks: limited public transport.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/18/Ghoghla_Beach.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/29/Ghoghla_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3a/Ghoghla_Sunset.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4b/Ghoghla_Sea.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Ghoghla_Sand.jpg",
+      "https://source.unsplash.com/1600x900/?Ghoghla%20Coastal%20Stretch%2CGujarat%2CDiu%20(UT%20border)%2CBeach%2CCoastal%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ghoghla%20Coastal%20Stretch%2CGujarat%2CDiu%20(UT%20border)%2CBeach%2CCoastal%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ghoghla%20Coastal%20Stretch%2CGujarat%2CDiu%20(UT%20border)%2CBeach%2CCoastal%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=guj-s015-gujarat-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=guj-s015-gujarat-2",
+      "https://picsum.photos/seed/guj-s015-gujarat-1/1600/900",
+      "https://picsum.photos/seed/guj-s015-gujarat-2/1600/900",
+      "https://picsum.photos/seed/guj-s015-gujarat-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ghoghla%20Coastal%20Stretch%2CGujarat%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.6,
+    "best_season": [
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Beach Walk",
+      "Water Sports"
+    ],
+    "coordinates": {
+      "lat": 20.72,
+      "lng": 70.92
+    },
+    "source": ""
+  },
+  {
+    "id": "HR_S005",
+    "name": "Nahar Singh Palace (Hidden Side)",
+    "state": "Haryana",
+    "district": "Faridabad",
+    "region": "Heritage",
+    "tourism_type": "Cultural",
+    "description": "Historic palace with less explored corners and quiet ambiance. Drawbacks: partially commercialized and entry restrictions.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1a/Nahar_Singh_Palace.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2b/Nahar_Fort.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Nahar_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Nahar_Architecture.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Nahar_Heritage.jpg",
+      "https://source.unsplash.com/1600x900/?Nahar%20Singh%20Palace%20(Hidden%20Side)%2CHaryana%2CFaridabad%2CHeritage%2CCultural%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Nahar%20Singh%20Palace%20(Hidden%20Side)%2CHaryana%2CFaridabad%2CHeritage%2CCultural%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Nahar%20Singh%20Palace%20(Hidden%20Side)%2CHaryana%2CFaridabad%2CHeritage%2CCultural%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=hr-s005-haryana-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=hr-s005-haryana-2",
+      "https://picsum.photos/seed/hr-s005-haryana-1/1600/900",
+      "https://picsum.photos/seed/hr-s005-haryana-2/1600/900",
+      "https://picsum.photos/seed/hr-s005-haryana-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Nahar%20Singh%20Palace%20(Hidden%20Side)%2CHaryana%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.3,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Heritage Walk",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 28.34,
+      "lng": 77.32
+    },
+    "source": ""
+  },
+  {
+    "id": "HP_S005",
+    "name": "Kareri Lake",
+    "state": "Himachal Pradesh",
+    "district": "Kangra",
+    "region": "Lake",
+    "tourism_type": "Trekking",
+    "description": "Crystal-clear alpine lake accessible via scenic trek. Drawbacks: physically demanding trek and no facilities.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1a/Kareri_Lake.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2b/Kareri_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Kareri_Trek.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Kareri_Snow.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Kareri_Mountains.jpg",
+      "https://source.unsplash.com/1600x900/?Kareri%20Lake%2CHimachal%20Pradesh%2CKangra%2CLake%2CTrekking%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Kareri%20Lake%2CHimachal%20Pradesh%2CKangra%2CLake%2CTrekking%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Kareri%20Lake%2CHimachal%20Pradesh%2CKangra%2CLake%2CTrekking%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=hp-s005-himachal-pradesh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=hp-s005-himachal-pradesh-2",
+      "https://picsum.photos/seed/hp-s005-himachal-pradesh-1/1600/900",
+      "https://picsum.photos/seed/hp-s005-himachal-pradesh-2/1600/900",
+      "https://picsum.photos/seed/hp-s005-himachal-pradesh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Kareri%20Lake%2CHimachal%20Pradesh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.8,
+    "best_season": [
+      "May",
+      "June",
+      "September"
+    ],
+    "activities": [
+      "Trekking",
+      "Camping"
+    ],
+    "coordinates": {
+      "lat": 32.3,
+      "lng": 76.3
+    },
+    "source": ""
+  },
+  {
+    "id": "JK_S005",
+    "name": "Purmandal",
+    "state": "Jammu and Kashmir",
+    "district": "Samba",
+    "region": "Spiritual Town",
+    "tourism_type": "Religious",
+    "description": "Ancient temple town on Devika river, often called mini Kashi. Drawbacks: limited tourist infrastructure.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1d/Purmandal.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2e/Purmandal_Temple.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3f/Purmandal_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/40/Purmandal_River.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/51/Purmandal_Scenery.jpg",
+      "https://source.unsplash.com/1600x900/?Purmandal%2CJammu%20and%20Kashmir%2CSamba%2CSpiritual%20Town%2CReligious%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Purmandal%2CJammu%20and%20Kashmir%2CSamba%2CSpiritual%20Town%2CReligious%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Purmandal%2CJammu%20and%20Kashmir%2CSamba%2CSpiritual%20Town%2CReligious%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=jk-s005-jammu-and-kashmir-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=jk-s005-jammu-and-kashmir-2",
+      "https://picsum.photos/seed/jk-s005-jammu-and-kashmir-1/1600/900",
+      "https://picsum.photos/seed/jk-s005-jammu-and-kashmir-2/1600/900",
+      "https://picsum.photos/seed/jk-s005-jammu-and-kashmir-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Purmandal%2CJammu%20and%20Kashmir%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.4,
+    "best_season": [
+      "October",
+      "November",
+      "February"
+    ],
+    "activities": [
+      "Temple Visit",
+      "River Walk"
+    ],
+    "coordinates": {
+      "lat": 32.65,
+      "lng": 75.05
+    },
+    "source": ""
+  },
+  {
+    "id": "JH-N005",
+    "name": "Palamu Fort",
+    "state": "Jharkhand",
+    "district": "Latehar",
+    "region": "Historical Site",
+    "tourism_type": "Heritage Tourism",
+    "description": "Ancient fort ruins hidden inside forests near Betla. It offers a mix of history and nature with very few tourists.\n\nAdvantages: Unique heritage site, scenic surroundings.\nDrawbacks: Poor maintenance, limited information boards.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0d/Palamu_Fort.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2d/Palamu_Ruins.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5b/Palamu_Forest.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/8e/Palamu_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3a/Palamu_Hills.jpg",
+      "https://source.unsplash.com/1600x900/?Palamu%20Fort%2CJharkhand%2CLatehar%2CHistorical%20Site%2CHeritage%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Palamu%20Fort%2CJharkhand%2CLatehar%2CHistorical%20Site%2CHeritage%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Palamu%20Fort%2CJharkhand%2CLatehar%2CHistorical%20Site%2CHeritage%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=jh-n005-jharkhand-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=jh-n005-jharkhand-2",
+      "https://picsum.photos/seed/jh-n005-jharkhand-1/1600/900",
+      "https://picsum.photos/seed/jh-n005-jharkhand-2/1600/900",
+      "https://picsum.photos/seed/jh-n005-jharkhand-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Palamu%20Fort%2CJharkhand%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.4,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January",
+      "February"
+    ],
+    "activities": [
+      "Exploration",
+      "Photography",
+      "History Walk"
+    ],
+    "coordinates": {
+      "lat": 23.8,
+      "lng": 84.2
+    },
+    "source": ""
+  },
+  {
+    "id": "JH-S005",
+    "name": "Palkot Wildlife Sanctuary",
+    "state": "Jharkhand",
+    "district": "Gumla",
+    "region": "Forest & Wildlife",
+    "tourism_type": "Wildlife Tourism",
+    "description": "A hidden wildlife sanctuary with rich flora and fauna, ideal for eco-tourism and bird lovers.\n\nAdvantages: Untouched forest, high biodiversity.\nDrawbacks: Very limited facilities, difficult accessibility.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/9/9a/Palkot_Forest.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Palkot_Wildlife.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Palkot_Greenery.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/7/7b/Palkot_Hills.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/1a/Palkot_Sanctuary.jpg",
+      "https://source.unsplash.com/1600x900/?Palkot%20Wildlife%20Sanctuary%2CJharkhand%2CGumla%2CForest%20%26%20Wildlife%2CWildlife%20Tourism%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Palkot%20Wildlife%20Sanctuary%2CJharkhand%2CGumla%2CForest%20%26%20Wildlife%2CWildlife%20Tourism%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Palkot%20Wildlife%20Sanctuary%2CJharkhand%2CGumla%2CForest%20%26%20Wildlife%2CWildlife%20Tourism%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=jh-s005-jharkhand-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=jh-s005-jharkhand-2",
+      "https://picsum.photos/seed/jh-s005-jharkhand-1/1600/900",
+      "https://picsum.photos/seed/jh-s005-jharkhand-2/1600/900",
+      "https://picsum.photos/seed/jh-s005-jharkhand-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Palkot%20Wildlife%20Sanctuary%2CJharkhand%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.2,
+    "best_season": [
+      "November",
+      "December",
+      "January",
+      "February",
+      "March"
+    ],
+    "activities": [
+      "Wildlife Spotting",
+      "Nature Walk",
+      "Bird Watching"
+    ],
+    "coordinates": {
+      "lat": 22.85,
+      "lng": 84.7
+    },
+    "source": ""
+  },
+  {
+    "id": "KA-N010",
+    "name": "Agumbe Sunset Point (Hidden Spots)",
+    "state": "Karnataka",
+    "district": "Shivamogga",
+    "region": "Hill Viewpoint",
+    "tourism_type": "Nature",
+    "description": "Cherrapunji of South India with hidden viewpoints.\n\nAdvantages: Best sunsets.\nDrawbacks: Rain-heavy region.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/2/2a/Agumbe.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6e/Agumbe_Sunset.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3f/Agumbe_Forest.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Agumbe_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/7/7a/Agumbe_Rain.jpg",
+      "https://source.unsplash.com/1600x900/?Agumbe%20Sunset%20Point%20(Hidden%20Spots)%2CKarnataka%2CShivamogga%2CHill%20Viewpoint%2CNature%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Agumbe%20Sunset%20Point%20(Hidden%20Spots)%2CKarnataka%2CShivamogga%2CHill%20Viewpoint%2CNature%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Agumbe%20Sunset%20Point%20(Hidden%20Spots)%2CKarnataka%2CShivamogga%2CHill%20Viewpoint%2CNature%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ka-n010-karnataka-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ka-n010-karnataka-2",
+      "https://picsum.photos/seed/ka-n010-karnataka-1/1600/900",
+      "https://picsum.photos/seed/ka-n010-karnataka-2/1600/900",
+      "https://picsum.photos/seed/ka-n010-karnataka-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Agumbe%20Sunset%20Point%20(Hidden%20Spots)%2CKarnataka%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Sunset",
+      "Rainforest Walk"
+    ],
+    "coordinates": {
+      "lat": 13.508,
+      "lng": 75.091
+    },
+    "source": ""
+  },
+  {
+    "id": "KA-N020",
+    "name": "Hampi Offbeat Boulders",
+    "state": "Karnataka",
+    "district": "Vijayanagara",
+    "region": "Rock Landscape",
+    "tourism_type": "Adventure",
+    "description": "Hidden areas beyond main Hampi ruins.\n\nAdvantages: Unique terrain.\nDrawbacks: Heat + crowd in peak.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1d/Hampi_Boulders.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2e/Hampi_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3a/Hampi_Ruins.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5f/Hampi_Sunset.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6b/Hampi_River.jpg",
+      "https://source.unsplash.com/1600x900/?Hampi%20Offbeat%20Boulders%2CKarnataka%2CVijayanagara%2CRock%20Landscape%2CAdventure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Hampi%20Offbeat%20Boulders%2CKarnataka%2CVijayanagara%2CRock%20Landscape%2CAdventure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Hampi%20Offbeat%20Boulders%2CKarnataka%2CVijayanagara%2CRock%20Landscape%2CAdventure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ka-n020-karnataka-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ka-n020-karnataka-2",
+      "https://picsum.photos/seed/ka-n020-karnataka-1/1600/900",
+      "https://picsum.photos/seed/ka-n020-karnataka-2/1600/900",
+      "https://picsum.photos/seed/ka-n020-karnataka-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Hampi%20Offbeat%20Boulders%2CKarnataka%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.9,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Bouldering",
+      "Cycling",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 15.335,
+      "lng": 76.46
+    },
+    "source": ""
+  },
+  {
+    "id": "KA-S010",
+    "name": "Nugu Dam Hidden Side",
+    "state": "Karnataka",
+    "district": "Mysuru",
+    "region": "Dam",
+    "tourism_type": "Nature",
+    "description": "Peaceful dam with scenic views.\n\nAdvantages: Quiet.\nDrawbacks: No major activities.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3b/Nugu_Dam.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4c/Nugu_Lake.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5a/Nugu_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Nugu_Backwater.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6d/Nugu_Sunset.jpg",
+      "https://source.unsplash.com/1600x900/?Nugu%20Dam%20Hidden%20Side%2CKarnataka%2CMysuru%2CDam%2CNature%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Nugu%20Dam%20Hidden%20Side%2CKarnataka%2CMysuru%2CDam%2CNature%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Nugu%20Dam%20Hidden%20Side%2CKarnataka%2CMysuru%2CDam%2CNature%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ka-s010-karnataka-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ka-s010-karnataka-2",
+      "https://picsum.photos/seed/ka-s010-karnataka-1/1600/900",
+      "https://picsum.photos/seed/ka-s010-karnataka-2/1600/900",
+      "https://picsum.photos/seed/ka-s010-karnataka-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Nugu%20Dam%20Hidden%20Side%2CKarnataka%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.3,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Relaxing",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 12.124,
+      "lng": 76.34
+    },
+    "source": ""
+  },
+  {
+    "id": "KA-S020",
+    "name": "Ettina Bhuja Hidden Ridge",
+    "state": "Karnataka",
+    "district": "Chikkamagaluru",
+    "region": "Peak",
+    "tourism_type": "Adventure",
+    "description": "Unique ox-shoulder shaped mountain ridge trek.\n\nAdvantages: Unique shape & views.\nDrawbacks: Requires fitness.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Ettina.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Ettina_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Ettina_Trek.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2a/Ettina_Ridge.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6b/Ettina_Sunrise.jpg",
+      "https://source.unsplash.com/1600x900/?Ettina%20Bhuja%20Hidden%20Ridge%2CKarnataka%2CChikkamagaluru%2CPeak%2CAdventure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ettina%20Bhuja%20Hidden%20Ridge%2CKarnataka%2CChikkamagaluru%2CPeak%2CAdventure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ettina%20Bhuja%20Hidden%20Ridge%2CKarnataka%2CChikkamagaluru%2CPeak%2CAdventure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ka-s020-karnataka-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ka-s020-karnataka-2",
+      "https://picsum.photos/seed/ka-s020-karnataka-1/1600/900",
+      "https://picsum.photos/seed/ka-s020-karnataka-2/1600/900",
+      "https://picsum.photos/seed/ka-s020-karnataka-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ettina%20Bhuja%20Hidden%20Ridge%2CKarnataka%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Trekking",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 13.136,
+      "lng": 75.632
+    },
+    "source": ""
+  },
+  {
+    "id": "KL-S015",
+    "name": "Paniyeli Poru",
+    "state": "Kerala",
+    "district": "Ernakulam",
+    "region": "River",
+    "tourism_type": "Nature",
+    "description": "Rocky river stream ideal for relaxation.\n\nAdvantages: Easy access.\nDrawbacks: Can get crowded.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Paniyeli.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Paniyeli_River.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Paniyeli_Rocks.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2b/Paniyeli_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6c/Paniyeli_Stream.jpg",
+      "https://source.unsplash.com/1600x900/?Paniyeli%20Poru%2CKerala%2CErnakulam%2CRiver%2CNature%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Paniyeli%20Poru%2CKerala%2CErnakulam%2CRiver%2CNature%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Paniyeli%20Poru%2CKerala%2CErnakulam%2CRiver%2CNature%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=kl-s015-kerala-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=kl-s015-kerala-2",
+      "https://picsum.photos/seed/kl-s015-kerala-1/1600/900",
+      "https://picsum.photos/seed/kl-s015-kerala-2/1600/900",
+      "https://picsum.photos/seed/kl-s015-kerala-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Paniyeli%20Poru%2CKerala%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.5,
+    "best_season": [
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "River Walk",
+      "Picnic"
+    ],
+    "coordinates": {
+      "lat": 10.11,
+      "lng": 76.66
+    },
+    "source": ""
+  },
+  {
+    "id": "MP-N015",
+    "name": "Ujjain Hidden Temples",
+    "state": "Madhya Pradesh",
+    "district": "Ujjain",
+    "region": "Temple City",
+    "tourism_type": "Culture & Religion",
+    "description": "Offbeat temples in Ujjain.\nAdvantages: Spiritual vibes.\nDrawbacks: Can be crowded during festivals.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Ujjain_Temple.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Ujjain_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Ujjain_River.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2b/Ujjain_Cultural.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ujjain_Pilgrim.jpg",
+      "https://source.unsplash.com/1600x900/?Ujjain%20Hidden%20Temples%2CMadhya%20Pradesh%2CUjjain%2CTemple%20City%2CCulture%20%26%20Religion%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ujjain%20Hidden%20Temples%2CMadhya%20Pradesh%2CUjjain%2CTemple%20City%2CCulture%20%26%20Religion%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ujjain%20Hidden%20Temples%2CMadhya%20Pradesh%2CUjjain%2CTemple%20City%2CCulture%20%26%20Religion%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mp-n015-madhya-pradesh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mp-n015-madhya-pradesh-2",
+      "https://picsum.photos/seed/mp-n015-madhya-pradesh-1/1600/900",
+      "https://picsum.photos/seed/mp-n015-madhya-pradesh-2/1600/900",
+      "https://picsum.photos/seed/mp-n015-madhya-pradesh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ujjain%20Hidden%20Temples%2CMadhya%20Pradesh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Temple Visit",
+      "Photography",
+      "Spiritual Walks"
+    ],
+    "coordinates": {
+      "lat": 23.179,
+      "lng": 75.784
+    },
+    "source": ""
+  },
+  {
+    "id": "MP-S015",
+    "name": "Ralamandal Hills Hidden Paths",
+    "state": "Madhya Pradesh",
+    "district": "Indore",
+    "region": "Hills & Nature",
+    "tourism_type": "Nature & Adventure",
+    "description": "Hidden hiking paths.\nAdvantages: Quiet & scenic.\nDrawbacks: Needs guide.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3d/Ralamandal_Hills.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4b/Ralamandal_View.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Ralamandal_Path.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Ralamandal_Forest.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Ralamandal_Bird.jpg",
+      "https://source.unsplash.com/1600x900/?Ralamandal%20Hills%20Hidden%20Paths%2CMadhya%20Pradesh%2CIndore%2CHills%20%26%20Nature%2CNature%20%26%20Adventure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ralamandal%20Hills%20Hidden%20Paths%2CMadhya%20Pradesh%2CIndore%2CHills%20%26%20Nature%2CNature%20%26%20Adventure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ralamandal%20Hills%20Hidden%20Paths%2CMadhya%20Pradesh%2CIndore%2CHills%20%26%20Nature%2CNature%20%26%20Adventure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mp-s015-madhya-pradesh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mp-s015-madhya-pradesh-2",
+      "https://picsum.photos/seed/mp-s015-madhya-pradesh-1/1600/900",
+      "https://picsum.photos/seed/mp-s015-madhya-pradesh-2/1600/900",
+      "https://picsum.photos/seed/mp-s015-madhya-pradesh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ralamandal%20Hills%20Hidden%20Paths%2CMadhya%20Pradesh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.6,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Hiking",
+      "Photography",
+      "Bird Watching"
+    ],
+    "coordinates": {
+      "lat": 22.721,
+      "lng": 75.851
+    },
+    "source": ""
+  },
+  {
+    "id": "MH-N015",
+    "name": "Gawilghur Fort Hidden Trails",
+    "state": "Maharashtra",
+    "district": "Amravati",
+    "region": "Fort & Hills",
+    "tourism_type": "Adventure & History",
+    "description": "Hidden fort trails.\nAdvantages: Adventure & history.\nDrawbacks: Difficult access.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3b/Gawilghur_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4e/Gawilghur_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Gawilghur_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Gawilghur_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Gawilghur_5.jpg",
+      "https://source.unsplash.com/1600x900/?Gawilghur%20Fort%20Hidden%20Trails%2CMaharashtra%2CAmravati%2CFort%20%26%20Hills%2CAdventure%20%26%20History%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Gawilghur%20Fort%20Hidden%20Trails%2CMaharashtra%2CAmravati%2CFort%20%26%20Hills%2CAdventure%20%26%20History%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Gawilghur%20Fort%20Hidden%20Trails%2CMaharashtra%2CAmravati%2CFort%20%26%20Hills%2CAdventure%20%26%20History%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mh-n015-maharashtra-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mh-n015-maharashtra-2",
+      "https://picsum.photos/seed/mh-n015-maharashtra-1/1600/900",
+      "https://picsum.photos/seed/mh-n015-maharashtra-2/1600/900",
+      "https://picsum.photos/seed/mh-n015-maharashtra-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Gawilghur%20Fort%20Hidden%20Trails%2CMaharashtra%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Fort Trekking",
+      "Photography",
+      "Exploration"
+    ],
+    "coordinates": {
+      "lat": 21.124,
+      "lng": 78.75
+    },
+    "source": ""
+  },
+  {
+    "id": "MH-S008",
+    "name": "Tamhini Ghat Hidden Waterfalls",
+    "state": "Maharashtra",
+    "district": "Pune",
+    "region": "Mountain Pass & Nature",
+    "tourism_type": "Adventure & Nature",
+    "description": "Hidden waterfalls along Tamhini Ghat.\nAdvantages: Lush greenery.\nDrawbacks: Crowded on weekends.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3c/Tamhini_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Tamhini_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5f/Tamhini_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2b/Tamhini_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6e/Tamhini_5.jpg",
+      "https://source.unsplash.com/1600x900/?Tamhini%20Ghat%20Hidden%20Waterfalls%2CMaharashtra%2CPune%2CMountain%20Pass%20%26%20Nature%2CAdventure%20%26%20Nature%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Tamhini%20Ghat%20Hidden%20Waterfalls%2CMaharashtra%2CPune%2CMountain%20Pass%20%26%20Nature%2CAdventure%20%26%20Nature%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Tamhini%20Ghat%20Hidden%20Waterfalls%2CMaharashtra%2CPune%2CMountain%20Pass%20%26%20Nature%2CAdventure%20%26%20Nature%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mh-s008-maharashtra-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mh-s008-maharashtra-2",
+      "https://picsum.photos/seed/mh-s008-maharashtra-1/1600/900",
+      "https://picsum.photos/seed/mh-s008-maharashtra-2/1600/900",
+      "https://picsum.photos/seed/mh-s008-maharashtra-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Tamhini%20Ghat%20Hidden%20Waterfalls%2CMaharashtra%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.8,
+    "best_season": [
+      "Monsoon",
+      "October",
+      "November"
+    ],
+    "activities": [
+      "Trekking",
+      "Waterfall Visit",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 18.385,
+      "lng": 73.672
+    },
+    "source": ""
+  },
+  {
+    "id": "MH-S015",
+    "name": "Ratnagiri Hidden Forts & Hills",
+    "state": "Maharashtra",
+    "district": "Ratnagiri",
+    "region": "Fort & Hills",
+    "tourism_type": "Adventure & History",
+    "description": "Hidden forts and hills around Ratnagiri.\nAdvantages: Scenic and historical.\nDrawbacks: Remote and less accessible.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3b/Ratnagiri_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Ratnagiri_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Ratnagiri_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Ratnagiri_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Ratnagiri_5.jpg",
+      "https://source.unsplash.com/1600x900/?Ratnagiri%20Hidden%20Forts%20%26%20Hills%2CMaharashtra%2CRatnagiri%2CFort%20%26%20Hills%2CAdventure%20%26%20History%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ratnagiri%20Hidden%20Forts%20%26%20Hills%2CMaharashtra%2CRatnagiri%2CFort%20%26%20Hills%2CAdventure%20%26%20History%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ratnagiri%20Hidden%20Forts%20%26%20Hills%2CMaharashtra%2CRatnagiri%2CFort%20%26%20Hills%2CAdventure%20%26%20History%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mh-s015-maharashtra-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mh-s015-maharashtra-2",
+      "https://picsum.photos/seed/mh-s015-maharashtra-1/1600/900",
+      "https://picsum.photos/seed/mh-s015-maharashtra-2/1600/900",
+      "https://picsum.photos/seed/mh-s015-maharashtra-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ratnagiri%20Hidden%20Forts%20%26%20Hills%2CMaharashtra%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.6,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Fort Trekking",
+      "Photography",
+      "Nature Walks"
+    ],
+    "coordinates": {
+      "lat": 16.99,
+      "lng": 73.3
+    },
+    "source": ""
+  },
+  {
+    "id": "MN-S005",
+    "name": "Moreh Border Market Hidden Lanes",
+    "state": "Manipur",
+    "district": "Chandel",
+    "region": "Market & Culture",
+    "tourism_type": "Culture & Shopping",
+    "description": "Hidden local market lanes with unique goods.\nAdvantages: Cultural and unique shopping.\nDrawbacks: Busy traffic.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/34/Moreh_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/49/Moreh_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Moreh_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Moreh_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6b/Moreh_5.jpg",
+      "https://source.unsplash.com/1600x900/?Moreh%20Border%20Market%20Hidden%20Lanes%2CManipur%2CChandel%2CMarket%20%26%20Culture%2CCulture%20%26%20Shopping%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Moreh%20Border%20Market%20Hidden%20Lanes%2CManipur%2CChandel%2CMarket%20%26%20Culture%2CCulture%20%26%20Shopping%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Moreh%20Border%20Market%20Hidden%20Lanes%2CManipur%2CChandel%2CMarket%20%26%20Culture%2CCulture%20%26%20Shopping%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mn-s005-manipur-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mn-s005-manipur-2",
+      "https://picsum.photos/seed/mn-s005-manipur-1/1600/900",
+      "https://picsum.photos/seed/mn-s005-manipur-2/1600/900",
+      "https://picsum.photos/seed/mn-s005-manipur-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Moreh%20Border%20Market%20Hidden%20Lanes%2CManipur%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.5,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Local Shopping",
+      "Cultural Walks",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 24.077,
+      "lng": 97.417
+    },
+    "source": ""
+  },
+  {
+    "id": "ML-S005",
+    "name": "Nokrek Biosphere Reserve Inner Trails",
+    "state": "Meghalaya",
+    "district": "West Garo Hills",
+    "region": "Wildlife & Forest",
+    "tourism_type": "Nature & Wildlife",
+    "description": "Offbeat wildlife reserve trails.\nAdvantages: Biodiversity and forest.\nDrawbacks: Requires permits and guide.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/6/66/Nokrek_Biosphere.jpg",
+      "https://source.unsplash.com/1600x900/?Nokrek%20Biosphere%20Reserve%20Inner%20Trails%2CMeghalaya%2CWest%20Garo%20Hills%2CWildlife%20%26%20Forest%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Nokrek%20Biosphere%20Reserve%20Inner%20Trails%2CMeghalaya%2CWest%20Garo%20Hills%2CWildlife%20%26%20Forest%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Nokrek%20Biosphere%20Reserve%20Inner%20Trails%2CMeghalaya%2CWest%20Garo%20Hills%2CWildlife%20%26%20Forest%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ml-s005-meghalaya-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ml-s005-meghalaya-2",
+      "https://picsum.photos/seed/ml-s005-meghalaya-1/1600/900",
+      "https://picsum.photos/seed/ml-s005-meghalaya-2/1600/900",
+      "https://picsum.photos/seed/ml-s005-meghalaya-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Nokrek%20Biosphere%20Reserve%20Inner%20Trails%2CMeghalaya%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Wildlife Watching",
+      "Forest Trekking",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 25.433,
+      "lng": 90.117
+    },
+    "source": ""
+  },
+  {
+    "id": "MZ-S005",
+    "name": "Lungsen Tlang Sunrise Path",
+    "state": "Mizoram",
+    "district": "Aizawl",
+    "region": "Hills & Views",
+    "tourism_type": "Adventure & Nature",
+    "description": "Hidden sunrise trek hill with panoramic views.\nAdvantages: Spectacular sunrise.\nDrawbacks: Early trek needed.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/6/6c/Lungsen_Tlang.jpg",
+      "https://source.unsplash.com/1600x900/?Lungsen%20Tlang%20Sunrise%20Path%2CMizoram%2CAizawl%2CHills%20%26%20Views%2CAdventure%20%26%20Nature%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Lungsen%20Tlang%20Sunrise%20Path%2CMizoram%2CAizawl%2CHills%20%26%20Views%2CAdventure%20%26%20Nature%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Lungsen%20Tlang%20Sunrise%20Path%2CMizoram%2CAizawl%2CHills%20%26%20Views%2CAdventure%20%26%20Nature%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mz-s005-mizoram-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=mz-s005-mizoram-2",
+      "https://picsum.photos/seed/mz-s005-mizoram-1/1600/900",
+      "https://picsum.photos/seed/mz-s005-mizoram-2/1600/900",
+      "https://picsum.photos/seed/mz-s005-mizoram-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Lungsen%20Tlang%20Sunrise%20Path%2CMizoram%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Trekking",
+      "Sunrise Views",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 23.86,
+      "lng": 92.65
+    },
+    "source": ""
+  },
+  {
+    "id": "NL-S005",
+    "name": "Pfutsero Hidden Viewpoints",
+    "state": "Nagaland",
+    "district": "Phek",
+    "region": "Hills & Views",
+    "tourism_type": "Nature & Photography",
+    "description": "Hidden hill viewpoints near Nagaland’s highest village.\nAdvantages: Beautiful sunrise & forests.\nDrawbacks: Remote access roads.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/4/45/Pfutsero_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/22/Pfutsero_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/60/Pfutsero_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/32/Pfutsero_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/8f/Pfutsero_5.jpg",
+      "https://source.unsplash.com/1600x900/?Pfutsero%20Hidden%20Viewpoints%2CNagaland%2CPhek%2CHills%20%26%20Views%2CNature%20%26%20Photography%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Pfutsero%20Hidden%20Viewpoints%2CNagaland%2CPhek%2CHills%20%26%20Views%2CNature%20%26%20Photography%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Pfutsero%20Hidden%20Viewpoints%2CNagaland%2CPhek%2CHills%20%26%20Views%2CNature%20%26%20Photography%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=nl-s005-nagaland-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=nl-s005-nagaland-2",
+      "https://picsum.photos/seed/nl-s005-nagaland-1/1600/900",
+      "https://picsum.photos/seed/nl-s005-nagaland-2/1600/900",
+      "https://picsum.photos/seed/nl-s005-nagaland-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Pfutsero%20Hidden%20Viewpoints%2CNagaland%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Sunrise Views",
+      "Photography",
+      "Hiking"
+    ],
+    "coordinates": {
+      "lat": 25.41,
+      "lng": 94.28
+    },
+    "source": ""
+  },
+  {
+    "id": "OD-S005",
+    "name": "Chilka Lake Offbeat Islands",
+    "state": "Odisha",
+    "district": "Puri/Khurdha",
+    "region": "Lake & Nature",
+    "tourism_type": "Nature & Wildlife",
+    "description": "Offbeat islands and birdlife around Chilka Lake.\nAdvantages: Rich birdlife and peaceful boat rides.\nDrawbacks: Can get busy on weekends.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/2/29/Chilka_Lake_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Chilka_Lake_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Chilka_Lake_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/15/Chilka_Lake_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/33/Chilka_Lake_5.jpg",
+      "https://source.unsplash.com/1600x900/?Chilka%20Lake%20Offbeat%20Islands%2COdisha%2CPuri%2FKhurdha%2CLake%20%26%20Nature%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Chilka%20Lake%20Offbeat%20Islands%2COdisha%2CPuri%2FKhurdha%2CLake%20%26%20Nature%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Chilka%20Lake%20Offbeat%20Islands%2COdisha%2CPuri%2FKhurdha%2CLake%20%26%20Nature%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=od-s005-odisha-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=od-s005-odisha-2",
+      "https://picsum.photos/seed/od-s005-odisha-1/1600/900",
+      "https://picsum.photos/seed/od-s005-odisha-2/1600/900",
+      "https://picsum.photos/seed/od-s005-odisha-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Chilka%20Lake%20Offbeat%20Islands%2COdisha%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Boat Safari",
+      "Bird Watching",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 19.68,
+      "lng": 85.26
+    },
+    "source": ""
+  },
+  {
+    "id": "PB-S005",
+    "name": "Rose Garden Lesser‑Known Paths",
+    "state": "Punjab",
+    "district": "Chandigarh",
+    "region": "Garden & Nature",
+    "tourism_type": "Nature & Photography",
+    "description": "Lesser‑known corners and quieter sections of the famous garden.\nAdvantages: Beautiful blooms and nature views.\nDrawbacks: Can get busy during peak season.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/b/bc/Rose_Garden_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/25/Rose_Garden_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Rose_Garden_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/31/Rose_Garden_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6b/Rose_Garden_5.jpg",
+      "https://source.unsplash.com/1600x900/?Rose%20Garden%20Lesser%E2%80%91Known%20Paths%2CPunjab%2CChandigarh%2CGarden%20%26%20Nature%2CNature%20%26%20Photography%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Rose%20Garden%20Lesser%E2%80%91Known%20Paths%2CPunjab%2CChandigarh%2CGarden%20%26%20Nature%2CNature%20%26%20Photography%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Rose%20Garden%20Lesser%E2%80%91Known%20Paths%2CPunjab%2CChandigarh%2CGarden%20%26%20Nature%2CNature%20%26%20Photography%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=pb-s005-punjab-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=pb-s005-punjab-2",
+      "https://picsum.photos/seed/pb-s005-punjab-1/1600/900",
+      "https://picsum.photos/seed/pb-s005-punjab-2/1600/900",
+      "https://picsum.photos/seed/pb-s005-punjab-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Rose%20Garden%20Lesser%E2%80%91Known%20Paths%2CPunjab%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.8,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Garden Walks",
+      "Photography",
+      "Picnics"
+    ],
+    "coordinates": {
+      "lat": 30.733,
+      "lng": 76.779
+    },
+    "source": ""
+  },
+  {
+    "id": "RJ-S005",
+    "name": "Jaisalmer Desert Hidden Camps",
+    "state": "Rajasthan",
+    "district": "Jaisalmer",
+    "region": "Desert & Camping",
+    "tourism_type": "Adventure & Nature",
+    "description": "Hidden desert camps and dunes around Jaisalmer.\nAdvantages: Magical night skies and camps.\nDrawbacks: Can be windy and cold at night.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0d/Jaisalmer_Desert_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/33/Jaisalmer_Desert_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6f/Jaisalmer_Desert_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2e/Jaisalmer_Desert_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Jaisalmer_Desert_5.jpg",
+      "https://source.unsplash.com/1600x900/?Jaisalmer%20Desert%20Hidden%20Camps%2CRajasthan%2CJaisalmer%2CDesert%20%26%20Camping%2CAdventure%20%26%20Nature%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Jaisalmer%20Desert%20Hidden%20Camps%2CRajasthan%2CJaisalmer%2CDesert%20%26%20Camping%2CAdventure%20%26%20Nature%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Jaisalmer%20Desert%20Hidden%20Camps%2CRajasthan%2CJaisalmer%2CDesert%20%26%20Camping%2CAdventure%20%26%20Nature%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=rj-s005-rajasthan-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=rj-s005-rajasthan-2",
+      "https://picsum.photos/seed/rj-s005-rajasthan-1/1600/900",
+      "https://picsum.photos/seed/rj-s005-rajasthan-2/1600/900",
+      "https://picsum.photos/seed/rj-s005-rajasthan-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Jaisalmer%20Desert%20Hidden%20Camps%2CRajasthan%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.9,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Desert Camping",
+      "Star Gazing",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 26.915,
+      "lng": 70.916
+    },
+    "source": ""
+  },
+  {
+    "id": "TN-N010",
+    "name": "Mayiladuthurai Temple Backstreets",
+    "state": "Tamil Nadu",
+    "district": "Mayiladuthurai",
+    "region": "Temple & Culture",
+    "tourism_type": "Culture & Photography",
+    "description": "Hidden temple town backstreets and heritage corners.\nAdvantages: Local culture and architecture.\nDrawbacks: Limited tourist services.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/12/Mayiladuthurai_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/55/Mayiladuthurai_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Mayiladuthurai_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Mayiladuthurai_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/64/Mayiladuthurai_5.jpg",
+      "https://source.unsplash.com/1600x900/?Mayiladuthurai%20Temple%20Backstreets%2CTamil%20Nadu%2CMayiladuthurai%2CTemple%20%26%20Culture%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Mayiladuthurai%20Temple%20Backstreets%2CTamil%20Nadu%2CMayiladuthurai%2CTemple%20%26%20Culture%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Mayiladuthurai%20Temple%20Backstreets%2CTamil%20Nadu%2CMayiladuthurai%2CTemple%20%26%20Culture%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=tn-n010-tamil-nadu-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=tn-n010-tamil-nadu-2",
+      "https://picsum.photos/seed/tn-n010-tamil-nadu-1/1600/900",
+      "https://picsum.photos/seed/tn-n010-tamil-nadu-2/1600/900",
+      "https://picsum.photos/seed/tn-n010-tamil-nadu-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Mayiladuthurai%20Temple%20Backstreets%2CTamil%20Nadu%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.6,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Temple Walks",
+      "Cultural Walks",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 11.1,
+      "lng": 79.65
+    },
+    "source": ""
+  },
+  {
+    "id": "TN-S015",
+    "name": "Kolli Hills Hidden Viewpoints",
+    "state": "Tamil Nadu",
+    "district": "Namakkal",
+    "region": "Hills & Nature",
+    "tourism_type": "Nature & Adventure",
+    "description": "Secluded hill viewpoint trails of Kolli Hills.\nAdvantages: Quiet nature and dramatic views.\nDrawbacks: Winding roads and steep sections.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/7/7f/Kolli_Hills_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/36/Kolli_Hills_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6e/Kolli_Hills_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/16/Kolli_Hills_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Kolli_Hills_5.jpg",
+      "https://source.unsplash.com/1600x900/?Kolli%20Hills%20Hidden%20Viewpoints%2CTamil%20Nadu%2CNamakkal%2CHills%20%26%20Nature%2CNature%20%26%20Adventure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Kolli%20Hills%20Hidden%20Viewpoints%2CTamil%20Nadu%2CNamakkal%2CHills%20%26%20Nature%2CNature%20%26%20Adventure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Kolli%20Hills%20Hidden%20Viewpoints%2CTamil%20Nadu%2CNamakkal%2CHills%20%26%20Nature%2CNature%20%26%20Adventure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=tn-s015-tamil-nadu-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=tn-s015-tamil-nadu-2",
+      "https://picsum.photos/seed/tn-s015-tamil-nadu-1/1600/900",
+      "https://picsum.photos/seed/tn-s015-tamil-nadu-2/1600/900",
+      "https://picsum.photos/seed/tn-s015-tamil-nadu-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Kolli%20Hills%20Hidden%20Viewpoints%2CTamil%20Nadu%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.9,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Trekking",
+      "Sunrise Views",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 11.341,
+      "lng": 78.277
+    },
+    "source": ""
+  },
+  {
+    "id": "TG-S005",
+    "name": "Bhongir Rock Back Trails",
+    "state": "Telangana",
+    "district": "Yadadri Bhuvanagiri",
+    "region": "Rock & Nature",
+    "tourism_type": "Adventure & Photography",
+    "description": "Offbeat hiking and hidden trails around the rock.\nAdvantages: Sunset views and adventure.\nDrawbacks: Steep climb for beginners.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/7/72/Bhongir_Rock_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/47/Bhongir_Rock_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Bhongir_Rock_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bhongir_Rock_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/30/Bhongir_Rock_5.jpg",
+      "https://source.unsplash.com/1600x900/?Bhongir%20Rock%20Back%20Trails%2CTelangana%2CYadadri%20Bhuvanagiri%2CRock%20%26%20Nature%2CAdventure%20%26%20Photography%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Bhongir%20Rock%20Back%20Trails%2CTelangana%2CYadadri%20Bhuvanagiri%2CRock%20%26%20Nature%2CAdventure%20%26%20Photography%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Bhongir%20Rock%20Back%20Trails%2CTelangana%2CYadadri%20Bhuvanagiri%2CRock%20%26%20Nature%2CAdventure%20%26%20Photography%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=tg-s005-telangana-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=tg-s005-telangana-2",
+      "https://picsum.photos/seed/tg-s005-telangana-1/1600/900",
+      "https://picsum.photos/seed/tg-s005-telangana-2/1600/900",
+      "https://picsum.photos/seed/tg-s005-telangana-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Bhongir%20Rock%20Back%20Trails%2CTelangana%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.6,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Trekking",
+      "Sunset Views",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 17.515,
+      "lng": 78.888
+    },
+    "source": ""
+  },
+  {
+    "id": "TR-S005",
+    "name": "Ujjayanta Palace Hidden Gardens",
+    "state": "Tripura",
+    "district": "West Tripura",
+    "region": "Palace & Garden",
+    "tourism_type": "Culture & Relaxation",
+    "description": "Hidden gardens and quiet heritage corners of the palace grounds.\nAdvantages: Beautiful landscaping and history.\nDrawbacks: Can be busier on weekends.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/2/29/Ujjayanta_Palace_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5a/Ujjayanta_Palace_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3f/Ujjayanta_Palace_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/43/Ujjayanta_Palace_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/60/Ujjayanta_Palace_5.jpg",
+      "https://source.unsplash.com/1600x900/?Ujjayanta%20Palace%20Hidden%20Gardens%2CTripura%2CWest%20Tripura%2CPalace%20%26%20Garden%2CCulture%20%26%20Relaxation%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ujjayanta%20Palace%20Hidden%20Gardens%2CTripura%2CWest%20Tripura%2CPalace%20%26%20Garden%2CCulture%20%26%20Relaxation%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ujjayanta%20Palace%20Hidden%20Gardens%2CTripura%2CWest%20Tripura%2CPalace%20%26%20Garden%2CCulture%20%26%20Relaxation%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=tr-s005-tripura-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=tr-s005-tripura-2",
+      "https://picsum.photos/seed/tr-s005-tripura-1/1600/900",
+      "https://picsum.photos/seed/tr-s005-tripura-2/1600/900",
+      "https://picsum.photos/seed/tr-s005-tripura-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ujjayanta%20Palace%20Hidden%20Gardens%2CTripura%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.9,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Heritage Walks",
+      "Photography",
+      "Garden Strolls"
+    ],
+    "coordinates": {
+      "lat": 23.745,
+      "lng": 91.275
+    },
+    "source": ""
+  },
+  {
+    "id": "UP-N010",
+    "name": "Bithoor Hidden Heritage Lanes",
+    "state": "Uttar Pradesh",
+    "district": "Kanpur Nagar",
+    "region": "Heritage & Culture",
+    "tourism_type": "Culture & Photography",
+    "description": "Hidden heritage paths and ghats of Bithoor town.\nAdvantages: Culture, temples and riverbanks.\nDrawbacks: Some areas crowded on weekends.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/12/Bithoor_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/55/Bithoor_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Bithoor_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/40/Bithoor_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Bithoor_5.jpg",
+      "https://source.unsplash.com/1600x900/?Bithoor%20Hidden%20Heritage%20Lanes%2CUttar%20Pradesh%2CKanpur%20Nagar%2CHeritage%20%26%20Culture%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Bithoor%20Hidden%20Heritage%20Lanes%2CUttar%20Pradesh%2CKanpur%20Nagar%2CHeritage%20%26%20Culture%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Bithoor%20Hidden%20Heritage%20Lanes%2CUttar%20Pradesh%2CKanpur%20Nagar%2CHeritage%20%26%20Culture%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=up-n010-uttar-pradesh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=up-n010-uttar-pradesh-2",
+      "https://picsum.photos/seed/up-n010-uttar-pradesh-1/1600/900",
+      "https://picsum.photos/seed/up-n010-uttar-pradesh-2/1600/900",
+      "https://picsum.photos/seed/up-n010-uttar-pradesh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Bithoor%20Hidden%20Heritage%20Lanes%2CUttar%20Pradesh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Heritage Walks",
+      "Temple Visits",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 26.54,
+      "lng": 80.385
+    },
+    "source": ""
+  },
+  {
+    "id": "UP-S010",
+    "name": "Allahabad (Prayagraj) Hidden Heritage Lanes",
+    "state": "Uttar Pradesh",
+    "district": "Prayagraj",
+    "region": "Heritage & Culture",
+    "tourism_type": "Culture & Photography",
+    "description": "Hidden heritage lanes and ghats in Prayagraj.\nAdvantages: Culture, architecture, riverside serenity.\nDrawbacks: Can get crowded during festivals.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/07/Prayagraj_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/35/Prayagraj_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6d/Prayagraj_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2b/Prayagraj_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5c/Prayagraj_5.jpg",
+      "https://source.unsplash.com/1600x900/?Allahabad%20(Prayagraj)%20Hidden%20Heritage%20Lanes%2CUttar%20Pradesh%2CPrayagraj%2CHeritage%20%26%20Culture%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Allahabad%20(Prayagraj)%20Hidden%20Heritage%20Lanes%2CUttar%20Pradesh%2CPrayagraj%2CHeritage%20%26%20Culture%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Allahabad%20(Prayagraj)%20Hidden%20Heritage%20Lanes%2CUttar%20Pradesh%2CPrayagraj%2CHeritage%20%26%20Culture%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=up-s010-uttar-pradesh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=up-s010-uttar-pradesh-2",
+      "https://picsum.photos/seed/up-s010-uttar-pradesh-1/1600/900",
+      "https://picsum.photos/seed/up-s010-uttar-pradesh-2/1600/900",
+      "https://picsum.photos/seed/up-s010-uttar-pradesh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Allahabad%20(Prayagraj)%20Hidden%20Heritage%20Lanes%2CUttar%20Pradesh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December"
+    ],
+    "activities": [
+      "Heritage Walks",
+      "Temple Visits",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 25.435,
+      "lng": 81.846
+    },
+    "source": ""
+  },
+  {
+    "id": "UK-S005",
+    "name": "Ranikhet Hidden Orchards",
+    "state": "Uttarakhand",
+    "district": "Almora",
+    "region": "Hill Station & Nature",
+    "tourism_type": "Nature & Culture",
+    "description": "Hidden apple and cherry orchards in Ranikhet.\nAdvantages: Scenic, peaceful nature walks.\nDrawbacks: Remote areas, limited transport options.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/1/1c/Ranikhet_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/3d/Ranikhet_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/40/Ranikhet_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/27/Ranikhet_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5b/Ranikhet_5.jpg",
+      "https://source.unsplash.com/1600x900/?Ranikhet%20Hidden%20Orchards%2CUttarakhand%2CAlmora%2CHill%20Station%20%26%20Nature%2CNature%20%26%20Culture%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ranikhet%20Hidden%20Orchards%2CUttarakhand%2CAlmora%2CHill%20Station%20%26%20Nature%2CNature%20%26%20Culture%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ranikhet%20Hidden%20Orchards%2CUttarakhand%2CAlmora%2CHill%20Station%20%26%20Nature%2CNature%20%26%20Culture%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=uk-s005-uttarakhand-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=uk-s005-uttarakhand-2",
+      "https://picsum.photos/seed/uk-s005-uttarakhand-1/1600/900",
+      "https://picsum.photos/seed/uk-s005-uttarakhand-2/1600/900",
+      "https://picsum.photos/seed/uk-s005-uttarakhand-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ranikhet%20Hidden%20Orchards%2CUttarakhand%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.6,
+    "best_season": [
+      "March",
+      "April",
+      "September",
+      "October"
+    ],
+    "activities": [
+      "Orchard Walks",
+      "Photography",
+      "Hiking"
+    ],
+    "coordinates": {
+      "lat": 29.616,
+      "lng": 79.416
+    },
+    "source": ""
+  },
+  {
+    "id": "WB-S005",
+    "name": "Frazerganj Hidden Mangroves",
+    "state": "West Bengal",
+    "district": "South 24 Parganas",
+    "region": "Nature & Mangrove",
+    "tourism_type": "Nature & Wildlife",
+    "description": "Hidden mangrove trails in Frazerganj.\nAdvantages: Offbeat nature and wildlife experience.\nDrawbacks: Remote, limited facilities.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0c/Frazerganj_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/22/Frazerganj_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4e/Frazerganj_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/30/Frazerganj_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5a/Frazerganj_5.jpg",
+      "https://source.unsplash.com/1600x900/?Frazerganj%20Hidden%20Mangroves%2CWest%20Bengal%2CSouth%2024%20Parganas%2CNature%20%26%20Mangrove%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Frazerganj%20Hidden%20Mangroves%2CWest%20Bengal%2CSouth%2024%20Parganas%2CNature%20%26%20Mangrove%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Frazerganj%20Hidden%20Mangroves%2CWest%20Bengal%2CSouth%2024%20Parganas%2CNature%20%26%20Mangrove%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=wb-s005-west-bengal-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=wb-s005-west-bengal-2",
+      "https://picsum.photos/seed/wb-s005-west-bengal-1/1600/900",
+      "https://picsum.photos/seed/wb-s005-west-bengal-2/1600/900",
+      "https://picsum.photos/seed/wb-s005-west-bengal-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Frazerganj%20Hidden%20Mangroves%2CWest%20Bengal%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "February",
+      "March"
+    ],
+    "activities": [
+      "Mangrove Walks",
+      "Bird Watching",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 21.677,
+      "lng": 87.087
+    },
+    "source": ""
+  },
+  {
+    "id": "AN-S005",
+    "name": "Hut Bay Hidden Forest Trails",
+    "state": "Andaman and Nicobar",
+    "district": "South Andaman",
+    "region": "Forest & Nature",
+    "tourism_type": "Nature & Adventure",
+    "description": "Secluded forest trails leading to pristine beaches.\nAdvantages: Offbeat, peaceful.\nDrawbacks: Need permits, remote location.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0a/Hut_Bay_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/31/Hut_Bay_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/49/Hut_Bay_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/22/Hut_Bay_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5f/Hut_Bay_5.jpg",
+      "https://source.unsplash.com/1600x900/?Hut%20Bay%20Hidden%20Forest%20Trails%2CAndaman%20and%20Nicobar%2CSouth%20Andaman%2CForest%20%26%20Nature%2CNature%20%26%20Adventure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Hut%20Bay%20Hidden%20Forest%20Trails%2CAndaman%20and%20Nicobar%2CSouth%20Andaman%2CForest%20%26%20Nature%2CNature%20%26%20Adventure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Hut%20Bay%20Hidden%20Forest%20Trails%2CAndaman%20and%20Nicobar%2CSouth%20Andaman%2CForest%20%26%20Nature%2CNature%20%26%20Adventure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=an-s005-andaman-and-nicobar-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=an-s005-andaman-and-nicobar-2",
+      "https://picsum.photos/seed/an-s005-andaman-and-nicobar-1/1600/900",
+      "https://picsum.photos/seed/an-s005-andaman-and-nicobar-2/1600/900",
+      "https://picsum.photos/seed/an-s005-andaman-and-nicobar-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Hut%20Bay%20Hidden%20Forest%20Trails%2CAndaman%20and%20Nicobar%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.6,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Trekking",
+      "Bird Watching",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 10.641,
+      "lng": 92.703
+    },
+    "source": ""
+  },
+  {
+    "id": "CH-005",
+    "name": "Sector 17 Hidden Alley Cafes",
+    "state": "Chandigarh",
+    "district": "Chandigarh",
+    "region": "Urban & Leisure",
+    "tourism_type": "Food & Leisure",
+    "description": "Hidden alley cafes and boutique spots in Sector 17 market.\nAdvantages: Offbeat food experiences.\nDrawbacks: Small cafes, limited seating.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0b/Sector17_Chandigarh_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/3/31/Sector17_Chandigarh_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/49/Sector17_Chandigarh_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/22/Sector17_Chandigarh_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5f/Sector17_Chandigarh_5.jpg",
+      "https://source.unsplash.com/1600x900/?Sector%2017%20Hidden%20Alley%20Cafes%2CChandigarh%2CChandigarh%2CUrban%20%26%20Leisure%2CFood%20%26%20Leisure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Sector%2017%20Hidden%20Alley%20Cafes%2CChandigarh%2CChandigarh%2CUrban%20%26%20Leisure%2CFood%20%26%20Leisure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Sector%2017%20Hidden%20Alley%20Cafes%2CChandigarh%2CChandigarh%2CUrban%20%26%20Leisure%2CFood%20%26%20Leisure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ch-005-chandigarh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ch-005-chandigarh-2",
+      "https://picsum.photos/seed/ch-005-chandigarh-1/1600/900",
+      "https://picsum.photos/seed/ch-005-chandigarh-2/1600/900",
+      "https://picsum.photos/seed/ch-005-chandigarh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Sector%2017%20Hidden%20Alley%20Cafes%2CChandigarh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.5,
+    "best_season": [
+      "All Year"
+    ],
+    "activities": [
+      "Food Exploration",
+      "Photography",
+      "Shopping"
+    ],
+    "coordinates": {
+      "lat": 30.733,
+      "lng": 76.779
+    },
+    "source": ""
+  },
+  {
+    "id": "DD-005",
+    "name": "Ghoghla Beach Hidden Spots",
+    "state": "Daman & Diu",
+    "district": "Diu",
+    "region": "Beach & Nature",
+    "tourism_type": "Nature & Leisure",
+    "description": "Secluded areas of Ghoghla Beach.\nAdvantages: Quiet, scenic.\nDrawbacks: Limited food and seating options.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3b/Ghoghla_Beach_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Ghoghla_Beach_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Ghoghla_Beach_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Ghoghla_Beach_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Ghoghla_Beach_5.jpg",
+      "https://source.unsplash.com/1600x900/?Ghoghla%20Beach%20Hidden%20Spots%2CDaman%20%26%20Diu%2CDiu%2CBeach%20%26%20Nature%2CNature%20%26%20Leisure%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Ghoghla%20Beach%20Hidden%20Spots%2CDaman%20%26%20Diu%2CDiu%2CBeach%20%26%20Nature%2CNature%20%26%20Leisure%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Ghoghla%20Beach%20Hidden%20Spots%2CDaman%20%26%20Diu%2CDiu%2CBeach%20%26%20Nature%2CNature%20%26%20Leisure%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=dd-005-daman-diu-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=dd-005-daman-diu-2",
+      "https://picsum.photos/seed/dd-005-daman-diu-1/1600/900",
+      "https://picsum.photos/seed/dd-005-daman-diu-2/1600/900",
+      "https://picsum.photos/seed/dd-005-daman-diu-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Ghoghla%20Beach%20Hidden%20Spots%2CDaman%20%26%20Diu%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.5,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January",
+      "February"
+    ],
+    "activities": [
+      "Beach Walks",
+      "Photography",
+      "Relaxation"
+    ],
+    "coordinates": {
+      "lat": 20.719,
+      "lng": 70.982
+    },
+    "source": ""
+  },
+  {
+    "id": "DL-S005",
+    "name": "Lotus Temple Lesser-Known Gardens",
+    "state": "Delhi",
+    "district": "South Delhi",
+    "region": "Spiritual & Nature",
+    "tourism_type": "Culture & Spiritual",
+    "description": "Hidden gardens and corners around Lotus Temple.\nAdvantages: Peaceful, spiritual, photogenic.\nDrawbacks: Can be crowded during holidays.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/3/3b/Lotus_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/4d/Lotus_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Lotus_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Lotus_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Lotus_5.jpg",
+      "https://source.unsplash.com/1600x900/?Lotus%20Temple%20Lesser-Known%20Gardens%2CDelhi%2CSouth%20Delhi%2CSpiritual%20%26%20Nature%2CCulture%20%26%20Spiritual%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Lotus%20Temple%20Lesser-Known%20Gardens%2CDelhi%2CSouth%20Delhi%2CSpiritual%20%26%20Nature%2CCulture%20%26%20Spiritual%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Lotus%20Temple%20Lesser-Known%20Gardens%2CDelhi%2CSouth%20Delhi%2CSpiritual%20%26%20Nature%2CCulture%20%26%20Spiritual%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=dl-s005-delhi-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=dl-s005-delhi-2",
+      "https://picsum.photos/seed/dl-s005-delhi-1/1600/900",
+      "https://picsum.photos/seed/dl-s005-delhi-2/1600/900",
+      "https://picsum.photos/seed/dl-s005-delhi-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Lotus%20Temple%20Lesser-Known%20Gardens%2CDelhi%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January"
+    ],
+    "activities": [
+      "Spiritual Visits",
+      "Photography",
+      "Nature Walks"
+    ],
+    "coordinates": {
+      "lat": 28.553,
+      "lng": 77.258
+    },
+    "source": ""
+  },
+  {
+    "id": "JK-S005",
+    "name": "Dachigam Autumn Trails",
+    "state": "Jammu & Kashmir",
+    "district": "Srinagar",
+    "region": "Forest & Hills",
+    "tourism_type": "Nature & Wildlife",
+    "description": "Hidden forest trails in Dachigam surroundings.\nAdvantages: Wildlife, serene forests.\nDrawbacks: Slippery paths post‑rain.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/4/44/Dachigam_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/2/28/Dachigam_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/7/75/Dachigam_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/Dachigam_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/19/Dachigam_5.jpg",
+      "https://source.unsplash.com/1600x900/?Dachigam%20Autumn%20Trails%2CJammu%20%26%20Kashmir%2CSrinagar%2CForest%20%26%20Hills%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Dachigam%20Autumn%20Trails%2CJammu%20%26%20Kashmir%2CSrinagar%2CForest%20%26%20Hills%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Dachigam%20Autumn%20Trails%2CJammu%20%26%20Kashmir%2CSrinagar%2CForest%20%26%20Hills%2CNature%20%26%20Wildlife%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=jk-s005-jammu-kashmir-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=jk-s005-jammu-kashmir-2",
+      "https://picsum.photos/seed/jk-s005-jammu-kashmir-1/1600/900",
+      "https://picsum.photos/seed/jk-s005-jammu-kashmir-2/1600/900",
+      "https://picsum.photos/seed/jk-s005-jammu-kashmir-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Dachigam%20Autumn%20Trails%2CJammu%20%26%20Kashmir%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "September",
+      "October"
+    ],
+    "activities": [
+      "Hiking",
+      "Bird Watching",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 34.1,
+      "lng": 74.78
+    },
+    "source": ""
+  },
+  {
+    "id": "LD-S005",
+    "name": "Suru Valley Hidden Streams",
+    "state": "Ladakh",
+    "district": "Kargil",
+    "region": "Valley & Streams",
+    "tourism_type": "Nature & Photography",
+    "description": "Hidden streams & green patches in Suru Valley.\nAdvantages: Lush valley views.\nDrawbacks: Parts can be marshy.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0f/Suru_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/4/41/Suru_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/50/Suru_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Suru_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/91/Suru_5.jpg",
+      "https://source.unsplash.com/1600x900/?Suru%20Valley%20Hidden%20Streams%2CLadakh%2CKargil%2CValley%20%26%20Streams%2CNature%20%26%20Photography%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Suru%20Valley%20Hidden%20Streams%2CLadakh%2CKargil%2CValley%20%26%20Streams%2CNature%20%26%20Photography%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Suru%20Valley%20Hidden%20Streams%2CLadakh%2CKargil%2CValley%20%26%20Streams%2CNature%20%26%20Photography%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ld-s005-ladakh-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=ld-s005-ladakh-2",
+      "https://picsum.photos/seed/ld-s005-ladakh-1/1600/900",
+      "https://picsum.photos/seed/ld-s005-ladakh-2/1600/900",
+      "https://picsum.photos/seed/ld-s005-ladakh-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Suru%20Valley%20Hidden%20Streams%2CLadakh%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.7,
+    "best_season": [
+      "May",
+      "June",
+      "July",
+      "August",
+      "September"
+    ],
+    "activities": [
+      "Nature Walks",
+      "Photography",
+      "Bird Watching"
+    ],
+    "coordinates": {
+      "lat": 34.549,
+      "lng": 75.113
+    },
+    "source": ""
+  },
+  {
+    "id": "PY-S005",
+    "name": "Sithanankuppam Fishing Village Trails",
+    "state": "Puducherry",
+    "district": "Pondicherry",
+    "region": "Coastal Village",
+    "tourism_type": "Culture & Photography",
+    "description": "Authentic coastal village paths & fishing scenes.\nAdvantages: Local culture & photography.\nDrawbacks: Unpaved paths.",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Sithanankuppam_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/5/58/Sithanankuppam_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/69/Sithanankuppam_3.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/1/15/Sithanankuppam_4.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/9a/Sithanankuppam_5.jpg",
+      "https://source.unsplash.com/1600x900/?Sithanankuppam%20Fishing%20Village%20Trails%2CPuducherry%2CPondicherry%2CCoastal%20Village%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=1",
+      "https://source.unsplash.com/1600x900/?Sithanankuppam%20Fishing%20Village%20Trails%2CPuducherry%2CPondicherry%2CCoastal%20Village%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=2",
+      "https://source.unsplash.com/1600x900/?Sithanankuppam%20Fishing%20Village%20Trails%2CPuducherry%2CPondicherry%2CCoastal%20Village%2CCulture%20%26%20Photography%2Cindia%2Ctravel&sig=3",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=py-s005-puducherry-1",
+      "https://loremflickr.com/1600/900/india%2Ctravel%2Clandscape?lock=py-s005-puducherry-2",
+      "https://picsum.photos/seed/py-s005-puducherry-1/1600/900",
+      "https://picsum.photos/seed/py-s005-puducherry-2/1600/900",
+      "https://picsum.photos/seed/py-s005-puducherry-3/1600/900",
+      "https://source.unsplash.com/1600x900/?Sithanankuppam%20Fishing%20Village%20Trails%2CPuducherry%2Cindia%2Ctourism%2Clandscape&sig=91"
+    ],
+    "google_url": "",
+    "rating": 4.5,
+    "best_season": [
+      "October",
+      "November",
+      "December",
+      "January",
+      "February"
+    ],
+    "activities": [
+      "Village Walks",
+      "Fishing Boats",
+      "Photography"
+    ],
+    "coordinates": {
+      "lat": 11.846,
+      "lng": 79.908
+    },
+    "source": ""
+  }
+]
