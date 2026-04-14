@@ -1,52 +1,56 @@
-# Offbeat Travel India
+# Offbeat Travel India (OTT Website)
 
-Offbeat Travel India is a full-stack travel web app that helps users discover hidden and less-crowded destinations across India.
+A full-stack travel discovery platform focused on hidden gems and smart trip planning across India.
 
-It combines:
+This repository includes:
 
-- a modern React frontend,
-- a Node/Express API,
-- curated tourism datasets,
-- and ML-powered recommendation/chatbot features.
+- `client/` → React + Vite frontend
+- `api/` → Node.js + Express backend
+- `ml/` → Python ML service + utility scripts
+- `dataset/` → curated tourism/offbeat datasets
 
-## Project overview (simple)
+---
 
-This project is built for 3 main use cases:
+## What users can do
 
-1. **Explore places** using search + filters.
-2. **Get AI suggestions** (similar destinations, hidden gems, budget planning).
-3. **Interact with chatbot** for travel help and itinerary ideas.
+1. Explore destinations with search and filters.
+2. Get AI-assisted recommendations and similar places.
+3. Use the chatbot and planner for travel ideas.
+4. Manage auth/profile and booking flows.
 
-In short: **search, discover, and plan trips faster** with both data-driven and AI-assisted features.
+---
 
 ## Tech stack
 
-- **Frontend:** React + Vite + Tailwind CSS
-- **Backend:** Node.js + Express
-- **Database/Data:** JSON datasets + MongoDB/MySQL integration points
-- **ML:** Python service (`ml/tourism_knn_api.py`)
-- **Auth:** JWT-based user auth flows
+- **Frontend:** React, Vite, Tailwind CSS
+- **Backend:** Node.js, Express
+- **Persistence:** MongoDB + MySQL integrations
+- **ML:** Python-based recommendation endpoints (`ml/tourism_knn_api.py`)
 
-## Quick start
+---
 
-### Backend
+## Local setup
 
-Create `api/.env`:
+### 1) Backend (`api/.env`)
 
 ```env
 NODE_ENV=development
 PORT=8001
 DB_URL=mongodb://127.0.0.1:27017/myownspace
-MONGO_ENABLED=false
 MYSQL_HOST=localhost
 MYSQL_USER=root
 MYSQL_PASSWORD=your_password
 MYSQL_DATABASE=myownspace
-JWT_SECRET=your_secret_key
+JWT_SECRET=replace_with_secure_value
+SESSION_SECRET=replace_with_secure_value
+COOKIE_TIME=7
 CLIENT_URL=http://localhost:5173,http://127.0.0.1:5173
+CLOUDINARY_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
-Run:
+Start backend:
 
 ```bash
 cd api
@@ -54,16 +58,14 @@ npm install
 npm run dev
 ```
 
-### Frontend
-
-Create `client/.env`:
+### 2) Frontend (`client/.env`)
 
 ```env
 VITE_BASE_URL=http://localhost:8001
 VITE_ML_API_URL=http://localhost:5001
 ```
 
-Run:
+Start frontend:
 
 ```bash
 cd client
@@ -71,76 +73,56 @@ npm install
 npm run dev -- --host
 ```
 
-### Local URLs
+### 3) ML service (optional but recommended)
 
-- Frontend: `http://localhost:5173`
-- Backend: `http://localhost:8001`
+Run the Python ML API so planner/recommendation routes can use ML-first responses:
 
+```bash
+python ml/tourism_knn_api.py
+```
 
-## Datasets Used
+---
 
-This project uses several curated datasets for recommendations and ML:
+## Useful endpoints
 
-- `api/data/indian_travel_dataset.json` — Main travel dataset
-- `dataset/hidden_places_states.json` — Hidden/offbeat places by state (JSON, with images and ML features)
-- `dataset/hidden_places_territories.json` — Hidden/offbeat places by union territory (JSON, with images and ML features)
-- `api/data/realTourismData.js` — JS-format dataset for frontend
+- `GET /` → API health
+- `GET /tourism/search?q=<query>`
+- `GET /tourism/destination/:name`
+- `POST /chatbot/chat`
+- `POST /chatbot/assistant` (ML-first path via frontend utility)
 
-**How these are used:**
-- The ML pipeline (`tourism_ml_pipeline.py`) loads the main dataset and also references both hidden places JSONs for feature engineering, scaling, normalization, and recommendations. These JSONs are not merged but loaded and processed in parallel for a clean, modular workflow.
-- Backend and frontend are patched to support both `images` and `photos` fields for robust image display.
+---
 
-**Scaling/Normalization:**
-- All numeric features from the JSON datasets are scaled/normalized in the ML pipeline for better model performance and fair recommendations.
+## Dataset notes
 
-See `ML_FEATURES.md` for more details on feature engineering and normalization.
+Key dataset files currently used in the codebase:
+
+- `dataset/india_tourism_dataset.json`
+- `dataset/hidden_places_states.json`
+- `dataset/hidden_places_territories.json`
+- `api/data/indian_travel_dataset.json`
+
+For ML training details, see [`ML_FEATURES.md`](ML_FEATURES.md).
+
+---
+
+## Repository structure
 
 ```text
 OTT website/
-├─ client/                         # Frontend app (React + Vite)
-│  ├─ src/
-│  │  ├─ pages/                    # Page-level screens
-│  │  ├─ components/               # Reusable UI pieces
-│  │  ├─ hooks/                    # Custom React hooks
-│  │  ├─ utils/                    # Axios, ML helpers, analytics
-│  │  └─ styles/
-│  └─ public/
-├─ api/                            # Backend API (Express)
-│  ├─ controllers/                 # Business logic handlers
-│  ├─ routes/                      # API route definitions
-│  ├─ models/                      # Mongo/MySQL models
-│  ├─ middlewares/                 # Auth and request middleware
-│  ├─ config/                      # DB and app configuration
-│  └─ data/                        # Tourism/chatbot datasets
-├─ ml/                             # Python ML recommendation service
-│  └─ tourism_knn_api.py
-├─ dataset/                        # Split state/UT dataset files
-├─ docs/
-│  └─ screenshots/                 # README screenshots
+├─ client/
+├─ api/
+├─ ml/
+├─ dataset/
+├─ docs/screenshots/
 ├─ ALGORITHMS.md
-├─ DESIGN_SYSTEM.md
+├─ ML_FEATURES.md
 ├─ DEPLOYMENT.md
-└─ README.md
+├─ DESIGN_SYSTEM.md
+└─ MASTER_PROJECT_REPORT_MARCH_2026.md
 ```
 
-
-## ML Pipeline Usage
-
-To train the recommendation model using all datasets (including hidden places):
-
-```bash
-python tourism_ml_pipeline.py --data api/data/indian_travel_dataset.json --model-out tourism_rf_pipeline.joblib
-# (The script will automatically load and use hidden_places_states.json and hidden_places_territories.json as well)
-```
-
-You can also edit the list of extra datasets in `tourism_ml_pipeline.py` for custom experiments.
-
-## API quick view
-
-- `GET /tourism/search?q=<query>` — search destinations
-- `GET /tourism/destination/:name` — destination detail
-- `POST /chatbot/chat` — chatbot interaction
-- `GET /users/me` — current user profile
+---
 
 ## Screenshots
 
@@ -159,8 +141,11 @@ You can also edit the list of extra datasets in `tourism_ml_pipeline.py` for cus
 #### 5) Chatbot
 ![Chatbot](docs/screenshots/05-chatbot.png)
 
-## Notes
+---
 
-- This project merges curated data + ML scoring for better recommendations.
-- If an image URL fails in destination cards, the UI now uses local inline fallback images.
-- For docs: see `DEPLOYMENT.md`, `DESIGN_SYSTEM.md`, and `ALGORITHMS.md`.
+## Additional docs
+
+- Deployment steps: [`DEPLOYMENT.md`](DEPLOYMENT.md)
+- Algorithms and scoring: [`ALGORITHMS.md`](ALGORITHMS.md)
+- ML pipeline notes: [`ML_FEATURES.md`](ML_FEATURES.md)
+- Product + engineering report: [`MASTER_PROJECT_REPORT_MARCH_2026.md`](MASTER_PROJECT_REPORT_MARCH_2026.md)

@@ -2,6 +2,22 @@
 ## Master Technical, Product, and Operational Report
 ### Date: 16 March 2026
 
+### Addendum: 14 April 2026 (Documentation + Repository Sync)
+
+This report remains valid as the primary March 2026 baseline. The following updates are now confirmed:
+
+1. Core documentation has been refreshed to match current repository structure and runtime behavior:
+   - `README.md`
+   - `DEPLOYMENT.md`
+   - `ALGORITHMS.md`
+   - `ML_FEATURES.md`
+   - `docs/screenshots/README.md`
+2. Frontend chatbot/recommendation flow continues to use ML-first logic with fallback resilience in `client/src/utils/mlApi.js`.
+3. API health endpoint (`GET /`) and CORS origin policy in `api/index.js` remain the operational baseline for deployment checks.
+4. Current dataset maintenance priority: validate JSON integrity before training/deployment to avoid parse failures in automated scripts.
+
+> Recommendation: Treat this addendum as the latest operational context, and use the March 2026 body for architecture and long-form analysis.
+
 ---
 
 ## Document Control

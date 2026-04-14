@@ -1,23 +1,29 @@
 # Screenshot Asset Guide
 
-This folder now includes committed placeholder screenshot assets as SVGs, referenced directly by embedded images in root `README.md`.
+This folder stores screenshots used in the root `README.md`.
 
-## Current embedded asset names (active in root README)
+## Active images referenced in README
 
-1. `01-explore-hero-goa-search.png`
-2. `03-similar-destinations-form-goa.png`
-3. `04-ai-travel-planner-form.png`
-4. `05-hidden-gems-grid.png`
-5. `06-adventure-listings-grid.png`
-6. `07-chatbot-assistant.svg`
+1. `01-search-bar-with-results.png`
+2. `02-ai-smart-recommendation.png`
+3. `03-budget-planner.png`
+4. `04-hidden-gems.png`
+5. `05-chatbot.png`
 
-## Replacing placeholders with real screenshots
+## Additional assets currently available
 
-- Real PNG screenshots are now present for most visual captures (`01`, `03`, `04`, `05`, `06`).
-- Keep the same base names for future updates to avoid README link changes.
-- Optional/legacy items (`02-featured-listings-goa.png`, `08-explore-no-results-goa.svg`) are not currently embedded in root README.
-- `07-chatbot-assistant.svg` is still an SVG placeholder and can be replaced with a PNG later.
-- Validate each file path by opening it directly in GitHub before checking README rendering.
-- Once replaced and pushed, embedded screenshots in root `README.md` update automatically.
+- `01-explore-hero-goa-search.png`
+- `02-featured-listings-goa.png`
+- `03-similar-destinations-form-goa.png`
+- `04-ai-travel-planner-form.png`
+- `05-hidden-gems-grid.png`
+- `06-adventure-listings-grid.png`
 
-_Docs metadata refresh: 2026-03-16 (screenshot placeholders + embed-ready paths)._
+## Maintenance rules
+
+- Prefer PNG for screenshots.
+- Keep filenames stable once referenced in README.
+- If replacing an image, keep dimensions similar to avoid layout jumps.
+- Verify rendering after each docs update.
+
+_Last refreshed: 2026-04-14._
