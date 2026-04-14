@@ -29,6 +29,26 @@ This repository includes:
 
 ---
 
+## Reproducible environment (important for other systems)
+
+For the same behavior after cloning on another machine:
+
+- **Node.js:** 18+
+- **npm:** 9+
+- **Python:** 3.10+
+- **MySQL:** running and reachable with your `api/.env` values
+
+Then:
+
+1. Copy env templates:
+	- `api/.env.example` → `api/.env`
+	- `client/.env.example` → `client/.env`
+	- `ml/.env.example` → `ml/.env` (optional)
+2. Install dependencies in both `api/` and `client/`.
+3. Start backend, frontend, and ML service in separate terminals.
+
+---
+
 ## Local setup
 
 ### 1) Backend (`api/.env`)
@@ -111,16 +131,61 @@ For ML training details, see [`ML_FEATURES.md`](ML_FEATURES.md).
 ```text
 OTT website/
 ├─ client/
+│  ├─ src/
+│  │  ├─ pages/
+│  │  ├─ components/ui/
+│  │  ├─ utils/
+│  │  ├─ hooks/
+│  │  └─ providers/
+│  ├─ public/
+│  ├─ .env.example
+│  ├─ package.json
+│  └─ vite.config.js
 ├─ api/
+│  ├─ config/
+│  ├─ controllers/
+│  ├─ routes/
+│  ├─ models/
+│  ├─ middlewares/
+│  ├─ utils/
+│  ├─ scripts/
+│  ├─ data/
+│  ├─ .env.example
+│  ├─ index.js
+│  └─ package.json
 ├─ ml/
+│  ├─ data/
+│  ├─ tourism_knn_api.py
+│  └─ .env.example
 ├─ dataset/
-├─ docs/screenshots/
+│  ├─ india_tourism_dataset.json
+│  ├─ hidden_places_states.json
+│  └─ hidden_places_territories.json
+├─ docs/
+│  └─ screenshots/
+├─ tourism_ml_pipeline.py
 ├─ ALGORITHMS.md
 ├─ ML_FEATURES.md
 ├─ DEPLOYMENT.md
 ├─ DESIGN_SYSTEM.md
-└─ MASTER_PROJECT_REPORT_MARCH_2026.md
+├─ MASTER_PROJECT_REPORT_MARCH_2026.md
+└─ README.md
 ```
+
+---
+
+## Cross-system startup order (recommended)
+
+1. Start MySQL.
+2. Start API (`api`): `npm run dev`
+3. Start frontend (`client`): `npm run dev -- --host`
+4. Start ML service (`ml`): `python tourism_knn_api.py`
+
+Quick checks:
+
+- API health: `GET http://localhost:8001/`
+- Frontend: `http://localhost:5173`
+- ML service URL matches `VITE_ML_API_URL`
 
 ---
 
